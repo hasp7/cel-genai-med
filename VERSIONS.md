@@ -10,6 +10,17 @@ Convenção de tag: `<EdiçãoID>-aula<N>-v<major>.<minor>.<patch>`
 
 ## Aula 1 — Introdução à IA e ao ChatGPT
 
+### v0.7.0 — imagens integradas e linha do tempo do projeto (2026-09-10)
+- As duas imagens geradas a partir dos prompts entram no deck, em `aula-1/assets/`.
+  Optimizadas de PNG para JPEG progressivo: **3,7 MB → 277 KB** no total, sem perda
+  visível à escala de projeção.
+- "O projeto, sessão a sessão" reconstruído como **linha do tempo**. As três caixas iguais
+  tratavam como equivalentes coisas que não são: a pré-submissão é uma *janela* que
+  atravessa as aulas 6 e 7, a entrega é um *momento* na aula 8. Agora a barra atravessa
+  duas colunas e o ponto da aula 8 é cheio, os outros vazados.
+- A linha do tempo mostra as datas reais de cada edição — 17/24/31 out na 9ª,
+  16/23/30 out na 10ª — verificadas contra os ficheiros de edição.
+
 ### v0.6.0 — cartões a preencher o slide e placeholders de imagem (2026-09-10)
 - **Formadores em duas páginas**, ambas com o mesmo título. A primeira leva Mariana e
   Ricardo, Hélder e Sara; a segunda o resto da equipa da edição. Cartões maiores, com

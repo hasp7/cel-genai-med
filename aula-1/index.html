@@ -100,6 +100,38 @@
   .reveal .mode h3 { font-size: 18pt; margin: 10px 0 5px; }
   .reveal .mode p { font-size: 14pt; color: var(--cel-slate); margin: 0; }
 
+  /* Linha do tempo do projeto. A pré-submissão é uma janela (barra que
+     atravessa duas aulas); a entrega é um momento (marca numa só). */
+  .tl { display: flex; flex-direction: column; justify-content: center; gap: 0; }
+  .tl-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .tl-head div { text-align: center; }
+  .reveal .tl-head .a { display: block; font-family: var(--heading-font); font-weight: 600;
+                        font-size: 19pt; color: var(--cel-primary); }
+  .reveal .tl-head .d { display: block; font-size: 13pt; color: var(--cel-slate); margin-top: 2px; }
+  .tl-axis { position: relative; height: 40px; margin: 14px 0 0; }
+  .tl-axis::before { content: ""; position: absolute; top: 19px; left: 16%; right: 16%;
+                     height: 1px; background: var(--cel-light); }
+  .tl-axis .dot { position: absolute; top: 12px; width: 15px; height: 15px; border-radius: 50%;
+                  background: var(--cel-bg); border: 2px solid var(--cel-secondary);
+                  transform: translateX(-50%); }
+  .tl-axis .dot.solid { background: var(--cel-primary); border-color: var(--cel-primary); }
+  .tl-axis .dot:nth-child(1) { left: 16.6%; }
+  .tl-axis .dot:nth-child(2) { left: 50%; }
+  .tl-axis .dot:nth-child(3) { left: 83.3%; }
+  .tl-band { margin-top: 6px; }
+  .tl-band .win { grid-column: 1 / span 2; background: var(--cel-secondary); color: var(--cel-white);
+                  padding: 13px 20px; font-size: 15pt; display: flex; align-items: center;
+                  justify-content: center; text-align: center; }
+  .tl-band .pt { grid-column: 3; background: var(--cel-primary); color: var(--cel-white);
+                 padding: 13px 20px; font-size: 15pt; display: flex; align-items: center;
+                 justify-content: center; text-align: center; }
+  .tl-foot { margin-top: 16px; }
+  .reveal .tl-foot p { font-size: 13pt; color: var(--cel-slate); text-align: center; margin: 0; }
+
+  /* Foto a preencher a coluna, recortada pelo centro. */
+  .ph { margin: 0; overflow: hidden; min-height: 0; }
+  .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
   /* Placeholder de imagem por produzir.
      Convenção: título sugerido | dimensões | prompt em inglês para o modelo de imagem.
      Substituir por <img> quando a imagem existir. */
@@ -210,11 +242,7 @@
         <li>Riscos éticos, de segurança e o impacto da IA na saúde</li>
       </ul>
     </div>
-    <div class="imgph">
-      <span class="t">Médica a trabalhar com IA na consulta</span>
-      <span class="d">1200×1500</span>
-      <span class="p">A European female physician in her forties at a clinic desk, reviewing information on a laptop, warm natural window light from the left, muted teal and olive tones, shallow depth of field, documentary editorial photography, calm and competent expression, no visible patient data on screen, no logos, no text overlay, 4:5 portrait</span>
-    </div>
+    <figure class="ph"><img src="assets/medica-ia-consulta.jpg" alt="Médica a rever informação no portátil, no consultório"></figure>
   </div>
   <aside class="notes">Fechar com o projeto final: cada um aplica isto a um problema real da sua prática.</aside>
 </section>
@@ -387,26 +415,60 @@
 </section>
 
 <!-- ============ AVALIAÇÃO — 5. o percurso do projeto ============ -->
-<section class="content-slide">
+<section class="content-slide" data-ed="fm">
   <h2>O projeto, sessão a sessão</h2>
   <div class="separator"></div>
-  <div class="process">
-    <div class="step">
-      <div class="step-num">Aula 6</div>
-      <h3>Abre</h3>
-      <p>A pré-submissão fica disponível no Moodle.</p>
+  <div class="tl fill">
+    <div class="tl-row tl-head">
+      <div><span class="a">Aula 6</span><span class="d">17 out</span></div>
+      <div><span class="a">Aula 7</span><span class="d">24 out</span></div>
+      <div><span class="a">Aula 8</span><span class="d">31 out</span></div>
     </div>
-    <div class="step">
-      <div class="step-num">Aula 7</div>
-      <h3>Ideação</h3>
-      <p>Trabalho em sala sobre o projeto. A pré-submissão fecha no fim da sessão.</p>
+    <div class="tl-axis">
+      <span class="dot"></span><span class="dot"></span><span class="dot solid"></span>
     </div>
-    <div class="step">
-      <div class="step-num">Aula 8</div>
-      <h3>Entrega</h3>
-      <p>Submissão final no próprio dia, e apresentação.</p>
+    <div class="tl-row tl-band">
+      <div class="win">Pré-submissão aberta no Moodle</div>
+      <div class="pt">Submissão final e apresentação</div>
+    </div>
+    <div class="tl-row tl-foot">
+      <p></p>
+      <p>Ideação em sala · fecha no fim da sessão</p>
+      <p>No próprio dia</p>
     </div>
   </div>
+  <aside class="notes">
+    A barra atravessa duas aulas de propósito: a pré-submissão é uma janela, não um prazo
+    pontual. Quem quiser fazê-la logo na aula 6 pode.
+  </aside>
+</section>
+
+<section class="content-slide" data-ed="st">
+  <h2>O projeto, sessão a sessão</h2>
+  <div class="separator"></div>
+  <div class="tl fill">
+    <div class="tl-row tl-head">
+      <div><span class="a">Aula 6</span><span class="d">16 out</span></div>
+      <div><span class="a">Aula 7</span><span class="d">23 out</span></div>
+      <div><span class="a">Aula 8</span><span class="d">30 out</span></div>
+    </div>
+    <div class="tl-axis">
+      <span class="dot"></span><span class="dot"></span><span class="dot solid"></span>
+    </div>
+    <div class="tl-row tl-band">
+      <div class="win">Pré-submissão aberta no Moodle</div>
+      <div class="pt">Submissão final e apresentação</div>
+    </div>
+    <div class="tl-row tl-foot">
+      <p></p>
+      <p>Ideação em sala · fecha no fim da sessão</p>
+      <p>No próprio dia</p>
+    </div>
+  </div>
+  <aside class="notes">
+    A barra atravessa duas aulas de propósito: a pré-submissão é uma janela, não um prazo
+    pontual. Quem quiser fazê-la logo na aula 6 pode.
+  </aside>
 </section>
 
 <!-- ============ AVALIAÇÃO — 6. prazos e regras ============ -->
@@ -534,11 +596,7 @@
       </ul>
       <p class="muted" style="font-size:14pt;">Fica também um formulário no Moodle, para preencher até à próxima sessão.</p>
     </div>
-    <div class="imgph">
-      <span class="t">Turma em formação à distância</span>
-      <span class="d">1600×1200</span>
-      <span class="p">Grid of small video-call windows showing a diverse group of European healthcare professionals attending an online training session, mixed ages, some smiling, plain neutral backgrounds, soft even lighting, muted teal and olive colour grading, editorial documentary style, no readable text or interface chrome, 4:3 landscape</span>
-    </div>
+    <figure class="ph"><img src="assets/turma-formacao-distancia.jpg" alt="Grelha de janelas de videochamada com profissionais de saúde numa sessão online"></figure>
   </div>
   <aside class="notes">É aqui que se percebe o nível da turma. Deixar correr — vale mais do que qualquer slide.</aside>
 </section>
