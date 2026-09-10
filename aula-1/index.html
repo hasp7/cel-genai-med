@@ -34,7 +34,11 @@
   /* Formadores — dois por linha, cartões altos com espaço para a bio. */
   .people { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 20px;
             grid-auto-rows: 1fr; margin-top: 18px; }
-  .people.three { grid-template-columns: repeat(3, 1fr); }
+  /* Variante de 3 colunas — até 6 cartões. Letra menor para caber a bio toda. */
+  .people.three { grid-template-columns: repeat(3, 1fr); gap: 14px 15px; }
+  .people.three .card { padding: 16px 18px; }
+  .reveal .people.three h3 { font-size: 14.5pt; margin-bottom: 6px; }
+  .reveal .people.three p { font-size: 11pt; line-height: 1.4; }
   .people .card { padding: 22px 26px; height: auto; display: flex; flex-direction: column;
                   justify-content: center; }
   .reveal .people h3 { font-size: 17pt; margin: 0 0 7px; line-height: 1.2; }
@@ -217,7 +221,7 @@
 <section class="content-slide" data-ed="st">
   <h2>Formadores</h2>
   <div class="separator"></div>
-  <div class="people fill">
+  <div class="people three fill">
     <div class="card"><h3>Daniel Rodrigues</h3><p>Especialista em Informática em Saúde e formador em IA para a Saúde desde 2023. Investiga a aplicação de modelos de linguagem no ensino superior.</p></div>
     <div class="card"><h3>Jannine Nascimento</h3><p>Enfermeira, doutoranda em Ciências da Saúde pela UFMG e pesquisadora visitante na Universidade do Porto. Investiga saúde digital e produção científica baseada em evidências.</p></div>
     <!-- TODO: bio por escrever — trainers.yaml -->

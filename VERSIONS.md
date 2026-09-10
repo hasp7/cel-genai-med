@@ -10,6 +10,13 @@ Convenção de tag: `<EdiçãoID>-aula<N>-v<major>.<minor>.<patch>`
 
 ## Aula 1 — Introdução à IA e ao ChatGPT
 
+### v0.7.1 — segunda página de formadores da APMGF a três colunas (2026-09-10)
+- A 10ª edição tem cinco formadores na segunda página e a duas colunas ficava com uma
+  linha órfã. Passa a **três colunas**, que comporta até seis cartões em duas linhas.
+- O texto dos cartões desce nesta variante (título 17→14,5pt, bio 13→11pt) em vez de se
+  cortar conteúdo — as bios ficam inteiras.
+- A 9ª edição, com quatro, mantém-se a duas colunas.
+
 ### v0.7.0 — imagens integradas e linha do tempo do projeto (2026-09-10)
 - As duas imagens geradas a partir dos prompts entram no deck, em `aula-1/assets/`.
   Optimizadas de PNG para JPEG progressivo: **3,7 MB → 277 KB** no total, sem perda
