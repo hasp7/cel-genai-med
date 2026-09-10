@@ -59,6 +59,31 @@
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 24px; }
   .reveal .two-col h3 { font-size: 22pt; color: var(--cel-primary); margin: 0 0 10px; }
   .reveal .two-col li { font-size: 18pt; }
+
+  /* Barra de proporção 16/4 — mesma linguagem das barras do cronograma. */
+  .split-20 { display: flex; gap: 4px; margin-top: 30px; height: 118px; }
+  .split-20 .seg { display: flex; flex-direction: column; align-items: flex-start;
+                   justify-content: center; padding: 0 30px; }
+  .split-20 .seg.sub { flex: 16; background: var(--cel-primary); }
+  .split-20 .seg.apr { flex: 4;  background: var(--cel-secondary); }
+  .reveal .split-20 .v { font-family: var(--heading-font); font-weight: 700; font-size: 46pt;
+                         color: var(--cel-white); line-height: 1; }
+  .reveal .split-20 .k { font-size: 15pt; color: rgba(255,255,255,.82); margin-top: 6px; }
+
+  /* Dimensões — chips largos, uma ideia por card, sem texto de apoio. */
+  .dims { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 18px; margin-top: 26px; }
+  .dims .card { padding: 18px 22px; height: auto; }
+  .reveal .dims h3 { font-size: 18pt; margin: 0; line-height: 1.25; }
+
+  /* Modulação por formato. */
+  .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 34px; }
+  .mode { border-top: 3px solid var(--cel-secondary); padding-top: 20px; }
+  .mode.off { border-top-color: var(--cel-light); }
+  .reveal .mode .pts { font-family: var(--heading-font); font-weight: 700; font-size: 62pt;
+                       color: var(--cel-primary); line-height: 1; display: block; }
+  .mode.off .pts { color: var(--cel-light); }
+  .reveal .mode h3 { font-size: 20pt; margin: 12px 0 6px; }
+  .reveal .mode p { font-size: 15pt; color: var(--cel-slate); margin: 0; }
 </style>
 </head>
 <body>
@@ -96,6 +121,11 @@
     <li>Recursos necessários</li>
     <li>Apresentação dos formandos</li>
   </ul>
+</section>
+
+<section class="section-divider">
+  <div class="label">Parte um</div>
+  <h2>A equipa e o curso</h2>
 </section>
 
 <!-- ============ FORMADORES (por edição) ============
@@ -179,6 +209,11 @@
   </div>
 </section>
 
+<section class="section-divider">
+  <div class="label">Parte dois</div>
+  <h2>Como são avaliados</h2>
+</section>
+
 <!-- ============ AVALIAÇÃO — 1. o mapa ============ -->
 <section class="content-slide">
   <h2>Avaliação</h2>
@@ -194,42 +229,62 @@
   </aside>
 </section>
 
-<!-- ============ AVALIAÇÃO — 2. o contrato do projeto ============ -->
+<!-- ============ AVALIAÇÃO — 2. o peso das duas componentes ============ -->
 <section class="content-slide">
   <h2>O projeto final</h2>
   <div class="separator"></div>
   <p>Classificado de <strong>0 a 20</strong>, em duas componentes:</p>
-  <div class="two-col" style="margin-top: 18px;">
-    <div>
-      <h3>Submissão — 16 pontos</h3>
-      <ul style="font-size:16pt">
-        <li>Metodologia e Engenharia de Prompt</li>
-        <li>Curadoria e Validação</li>
-        <li>Ecossistema de Ferramentas</li>
-        <li>Documentação do Processo</li>
-        <li>Replicabilidade</li>
-      </ul>
-    </div>
-    <div>
-      <h3>Apresentação — 4 pontos</h3>
-      <ul style="font-size:16pt">
-        <li>Ao vivo — até aos 4 pontos</li>
-        <li>Vídeo gravado — tecto nos 3</li>
-        <li>Só submissão — 0 pontos</li>
-      </ul>
-      <p class="muted" style="font-size:14pt; margin-top:14px;">
-        Cada dimensão é classificada em quatro níveis: Limitado, Suficiente, Bom, Distinto.
-      </p>
-    </div>
+  <div class="split-20">
+    <div class="seg sub"><span class="v">16</span><span class="k">Submissão</span></div>
+    <div class="seg apr"><span class="v">4</span><span class="k">Apresentação</span></div>
   </div>
+  <p class="muted" style="font-size:16pt; margin-top:26px;">
+    Cada dimensão é classificada em quatro níveis — Limitado, Suficiente, Bom, Distinto.
+  </p>
   <aside class="notes">
-    Sublinhar a modulação por formato — é a informação que muda comportamento e por isso é dita
-    hoje e não na aula 7.
+    A barra dá a proporção de relance: o trabalho escrito é o grosso da nota.
 
     A grelha completa, com os descritivos de cada nível, é dada na aula 7 ("As Regras do Jogo").
 
     NÃO declarar a escala de classificação no slide. Se perguntarem, é: abaixo de 10 Não atingiu,
     10-13 Atingiu, 14-15 Bom, 16-17 Muito Bom, 18-20 Excelente.
+  </aside>
+</section>
+
+<!-- ============ AVALIAÇÃO — 2b. as dimensões da submissão ============ -->
+<section class="content-slide">
+  <h2>O que é olhado na submissão</h2>
+  <div class="separator"></div>
+  <div class="dims">
+    <div class="card"><h3>Metodologia e Engenharia de Prompt</h3></div>
+    <div class="card"><h3>Curadoria e Validação</h3></div>
+    <div class="card"><h3>Ecossistema de Ferramentas</h3></div>
+    <div class="card"><h3>Documentação do Processo</h3></div>
+    <div class="card"><h3>Replicabilidade</h3></div>
+  </div>
+  <p class="muted" style="font-size:15pt; margin-top:24px;">
+    As cinco dimensões não pesam todas o mesmo. A ponderação vem na aula 7.
+  </p>
+  <aside class="notes">
+    Se perguntarem os pesos: 25% metodologia, 25% curadoria e validação, 20% ferramentas,
+    20% documentação, 10% replicabilidade. Não é para pôr no slide hoje.
+  </aside>
+</section>
+
+<!-- ============ AVALIAÇÃO — 2c. modulação por formato ============ -->
+<section class="content-slide">
+  <h2>Como apresentam conta</h2>
+  <div class="separator"></div>
+  <div class="modes">
+    <div class="mode"><span class="pts">4</span><h3>Ao vivo</h3><p>Acede à cotação toda</p></div>
+    <div class="mode"><span class="pts">3</span><h3>Vídeo gravado</h3><p>Tecto nos 3 pontos</p></div>
+    <div class="mode off"><span class="pts">0</span><h3>Só submissão</h3><p>Sem pontos de apresentação</p></div>
+  </div>
+  <aside class="notes">
+    Este é o slide que muda comportamento, e por isso é dito hoje e não na aula 7 — dito em
+    novembro já ninguém reorganiza a agenda para estar presente na última sessão.
+
+    Quem não puder estar ao vivo articula com o formador a partir da pré-submissão.
   </aside>
 </section>
 
@@ -303,29 +358,39 @@
   </aside>
 </section>
 
-<!-- ============ AVALIAÇÃO — 5. prazos e regras ============ -->
+<!-- ============ AVALIAÇÃO — 5. o percurso do projeto ============ -->
+<section class="content-slide">
+  <h2>O projeto, sessão a sessão</h2>
+  <div class="separator"></div>
+  <div class="process">
+    <div class="step">
+      <div class="step-num">Aula 6</div>
+      <h3>Abre</h3>
+      <p>A pré-submissão fica disponível no Moodle.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Aula 7</div>
+      <h3>Ideação</h3>
+      <p>Trabalho em sala sobre o projeto. A pré-submissão fecha no fim da sessão.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">Aula 8</div>
+      <h3>Entrega</h3>
+      <p>Submissão final no próprio dia, e apresentação.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AVALIAÇÃO — 6. prazos e regras ============ -->
 <section class="content-slide">
   <h2>Prazos e regras</h2>
   <div class="separator"></div>
-  <div class="two-col">
-    <div>
-      <h3>Ao longo do curso</h3>
-      <ul style="font-size:16pt">
-        <li>Todas as tarefas completas <strong>até ao último dia de aulas</strong></li>
-        <li>Assiduidade diferida só na última sessão, com tolerância máxima de <strong>3 dias</strong></li>
-        <li>Ver em diferido conta em <strong>participação</strong>, não em assiduidade</li>
-        <li>Entregas fora de prazo têm penalização</li>
-      </ul>
-    </div>
-    <div>
-      <h3>O projeto, sessão a sessão</h3>
-      <ul style="font-size:16pt">
-        <li><strong>Aula 6</strong> — abre a pré-submissão</li>
-        <li><strong>Aula 7</strong> — ideação em sala; a pré-submissão fecha no fim da sessão</li>
-        <li><strong>Aula 8</strong> — submissão final no próprio dia, e apresentação</li>
-      </ul>
-    </div>
-  </div>
+  <ul style="font-size:19pt; line-height:1.9;">
+    <li>Todas as tarefas completas <strong>até ao último dia de aulas</strong></li>
+    <li>Assiduidade diferida só na última sessão, com tolerância máxima de <strong>3 dias</strong></li>
+    <li>Ver em diferido conta em <strong>participação</strong>, não em assiduidade</li>
+    <li>Entregas fora de prazo têm penalização</li>
+  </ul>
   <aside class="notes">
     Este slide não é opcional. A penalização por entregas fora de prazo só é aplicável porque as
     regras são declaradas à partida — se não for dito hoje, não se aplica depois.
@@ -333,6 +398,11 @@
     O tópico dedicado à avaliação no Moodle ainda está por criar; até lá, remeter para o Moodle
     do curso em geral.
   </aside>
+</section>
+
+<section class="section-divider">
+  <div class="label">Parte três</div>
+  <h2>Datas e recursos</h2>
 </section>
 
 <!-- ============ CRONOGRAMA (por edição) ============ -->

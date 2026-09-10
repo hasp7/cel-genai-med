@@ -10,6 +10,19 @@ Convenção de tag: `<EdiçãoID>-aula<N>-v<major>.<minor>.<patch>`
 
 ## Aula 1 — Introdução à IA e ao ChatGPT
 
+### v0.5.0 — respiração visual (2026-09-10)
+- Três **separadores de secção** (`.section-divider`, fundo petróleo): "A equipa e o curso",
+  "Como são avaliados", "Datas e recursos". O componente existia na identidade e não estava
+  a ser usado; é o que dá as pausas entre blocos que não se tocam.
+- O slide "O projeto final" abandona as duas colunas de listas: passa a uma **barra de
+  proporção 16/4**, na mesma linguagem das barras do cronograma. As cinco dimensões e a
+  modulação por formato saem para slides próprios.
+- "Como apresentam conta" ganha slide próprio com os números 4 / 3 / 0 em grande — é a
+  informação que muda comportamento.
+- "O projeto, sessão a sessão" passa a usar o componente `.process` (aulas 6, 7 e 8 ligadas
+  por linha), e "Prazos e regras" fica só com as quatro regras, a respirar.
+- Deck em **20 slides** por edição, com muito menos por slide.
+
 ### v0.4.0 — pré-submissão e entregáveis (2026-09-10)
 - Dois slides novos entre "O projeto final" e "Prazos e regras":
   **A pré-submissão** (o que é, quando abre e fecha, as seis perguntas do quiz, e a nota
