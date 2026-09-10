@@ -98,19 +98,16 @@
   </ul>
 </section>
 
-<!-- Formadores: todos ao mesmo nível, por ordem alfabética. Sem separar
-     coordenação de equipa formativa e sem variantes de card. -->
-
-
-<!-- ============ EQUIPA FORMATIVA (por edição) ============ -->
+<!-- ============ FORMADORES (por edição) ============
+     Todos ao mesmo nível, por ordem alfabética: sem separar coordenação de
+     equipa formativa e sem variantes de card. -->
 <section class="content-slide" data-ed="fm">
   <h2>Formadores</h2>
   <div class="separator"></div>
   <div class="people">
     <div class="card"><h3>Daniel Rodrigues</h3><p>Especialista em Informática em Saúde e formador em IA para a Saúde</p></div>
     <div class="card"><h3>Hélder Palheira</h3><p>Enfermeiro e Mestre em Informática Médica pela FMUP-FCUP</p></div>
-    <!-- TODO: headline por escrever — trainers.yaml, bio_source "por escrever" -->
-    <div class="card"><h3>Janinne Nascimento</h3><p></p></div>
+    <div class="card"><h3>Jannine Nascimento</h3><p>Enfermeira, doutoranda em Ciências da Saúde pela UFMG e pesquisadora visitante na Universidade do Porto</p></div>
     <div class="card"><h3>Mariana Canelas Pais</h3><p>Médica, Mestre em Informática Médica e Data Scientist Director na MTG</p></div>
     <div class="card"><h3>Miguel Oliveira</h3><p>Psicólogo especialista em Psicologia da Educação e do Trabalho, Social e das Organizações</p></div>
     <div class="card"><h3>Ricardo Cruz-Correia</h3><p>Professor associado e especialista em informática em saúde</p></div>
@@ -119,7 +116,7 @@
     <div class="card"><h3>Sara Matias Correia</h3><p>Especializada em tecnologias digitais e análise estratégica</p></div>
   </div>
   <aside class="notes">
-    Perfis de LinkedIn ficam no Moodle. Sandra e Janinne estão na primeira edição
+    Perfis de LinkedIn ficam no Moodle. Sandra e Jannine estão na primeira edição
     como formadoras — acompanhamento próximo.
   </aside>
 </section>
@@ -130,8 +127,8 @@
   <div class="people">
     <div class="card"><h3>Daniel Rodrigues</h3><p>Especialista em Informática em Saúde e formador em IA para a Saúde</p></div>
     <div class="card"><h3>Hélder Palheira</h3><p>Enfermeiro e Mestre em Informática Médica pela FMUP-FCUP</p></div>
-    <!-- TODO: headline por escrever — trainers.yaml, bio_source "por escrever" -->
-    <div class="card"><h3>Janinne Nascimento</h3><p></p></div>
+    <div class="card"><h3>Jannine Nascimento</h3><p>Enfermeira, doutoranda em Ciências da Saúde pela UFMG e pesquisadora visitante na Universidade do Porto</p></div>
+    <!-- TODO: headline por escrever — trainers.yaml -->
     <div class="card"><h3>Juliano Gaspar</h3><p></p></div>
     <div class="card"><h3>Mariana Canelas Pais</h3><p>Médica, Mestre em Informática Médica e Data Scientist Director na MTG</p></div>
     <div class="card"><h3>Miguel Oliveira</h3><p>Psicólogo especialista em Psicologia da Educação e do Trabalho, Social e das Organizações</p></div>
@@ -182,31 +179,89 @@
   </div>
 </section>
 
-<!-- ============ AVALIAÇÃO ============ -->
+<!-- ============ AVALIAÇÃO — 1. o mapa ============ -->
 <section class="content-slide">
   <h2>Avaliação</h2>
+  <div class="separator"></div>
+  <div class="people" style="grid-template-columns: repeat(3, 1fr); margin-top: 26px;">
+    <div class="card"><h3>Quizzes</h3><p>Um por sessão, no Moodle. Formativos — servem para consolidar, não para reprovar.</p></div>
+    <div class="card"><h3>Assiduidade</h3><p>Presença nas sessões síncronas, com as regras de diferido na página seguinte.</p></div>
+    <div class="card"><h3>Projeto final</h3><p>A peça avaliada com grelha publicada. Um problema real da vossa prática.</p></div>
+  </div>
+  <aside class="notes">
+    Não avançar pesos globais: a integração das três componentes numa nota única ainda não está
+    fechada (está diferida para a v2 da pipeline). O que está decidido é a grelha do projeto.
+  </aside>
+</section>
+
+<!-- ============ AVALIAÇÃO — 2. o contrato do projeto ============ -->
+<section class="content-slide">
+  <h2>O projeto final</h2>
+  <div class="separator"></div>
+  <p>Classificado de <strong>0 a 20</strong>, em duas componentes:</p>
+  <div class="two-col" style="margin-top: 18px;">
+    <div>
+      <h3>Submissão — 16 pontos</h3>
+      <ul style="font-size:16pt">
+        <li>Metodologia e Engenharia de Prompt</li>
+        <li>Curadoria e Validação</li>
+        <li>Ecossistema de Ferramentas</li>
+        <li>Documentação do Processo</li>
+        <li>Replicabilidade</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Apresentação — 4 pontos</h3>
+      <ul style="font-size:16pt">
+        <li>Ao vivo — até aos 4 pontos</li>
+        <li>Vídeo gravado — tecto nos 3</li>
+        <li>Só submissão — 0 pontos</li>
+      </ul>
+      <p class="muted" style="font-size:14pt; margin-top:14px;">
+        Cada dimensão é classificada em quatro níveis: Limitado, Suficiente, Bom, Distinto.
+      </p>
+    </div>
+  </div>
+  <aside class="notes">
+    Sublinhar a modulação por formato — é a informação que muda comportamento e por isso é dita
+    hoje e não na aula 7.
+
+    A grelha completa, com os descritivos de cada nível, é dada na aula 7 ("As Regras do Jogo").
+
+    NÃO declarar a escala de classificação no slide. Se perguntarem, é: abaixo de 10 Não atingiu,
+    10-13 Atingiu, 14-15 Bom, 16-17 Muito Bom, 18-20 Excelente.
+  </aside>
+</section>
+
+<!-- ============ AVALIAÇÃO — 3. prazos e regras ============ -->
+<section class="content-slide">
+  <h2>Prazos e regras</h2>
   <div class="separator"></div>
   <div class="two-col">
     <div>
       <h3>Ao longo do curso</h3>
-      <ul>
-        <li>Exercícios práticos e <em>quizzes</em> por sessão, no Moodle</li>
-        <li>Avaliação formativa — servem para aprender, não para reprovar</li>
+      <ul style="font-size:16pt">
+        <li>Todas as tarefas completas <strong>até ao último dia de aulas</strong></li>
+        <li>Assiduidade diferida só na última sessão, com tolerância máxima de <strong>3 dias</strong></li>
+        <li>Ver em diferido conta em <strong>participação</strong>, não em assiduidade</li>
+        <li>Entregas fora de prazo têm penalização</li>
       </ul>
     </div>
     <div>
-      <h3>Projeto final</h3>
-      <ul>
-        <li>Ideação começa na <strong>7ª sessão</strong></li>
-        <li>Apresentação individual na <strong>8ª sessão</strong></li>
-        <li>Um problema real da vossa prática profissional</li>
+      <h3>O projeto, sessão a sessão</h3>
+      <ul style="font-size:16pt">
+        <li><strong>Aula 6</strong> — abre a pré-submissão</li>
+        <li><strong>Aula 7</strong> — ideação; a pré-submissão fecha no fim da sessão. É um quiz no Moodle e é obrigatória</li>
+        <li><strong>Aula 8</strong> — submissão final no próprio dia e apresentação</li>
       </ul>
     </div>
   </div>
   <aside class="notes">
-    ATENÇÃO: a pipeline de avaliação foi revista (pré-submissão por quiz na aula 7, submissão no
-    próprio dia, rubricas com componente de apresentação). Confirmar com o Hélder se já vale para
-    esta edição antes de dar a aula — este slide ainda reflecte o modelo antigo.
+    Este slide não é opcional. A penalização por entregas fora de prazo só é aplicável porque as
+    regras são declaradas à partida — se não for dito hoje, não se aplica depois.
+
+    O tópico dedicado à avaliação no Moodle ainda está por criar; até lá, remeter para o Moodle
+    do curso em geral.
   </aside>
 </section>
 

@@ -10,6 +10,21 @@ Convenção de tag: `<EdiçãoID>-aula<N>-v<major>.<minor>.<patch>`
 
 ## Aula 1 — Introdução à IA e ao ChatGPT
 
+### v0.3.0 — avaliação em três slides (2026-09-10)
+- A secção de avaliação passa de um slide a três: **Avaliação** (mapa das componentes,
+  sem pesos globais — a integração das três numa nota única está diferida para a v2 da
+  pipeline), **O projeto final** (0-20, submissão 16 / apresentação 4, as cinco dimensões
+  nomeadas, os quatro níveis e a modulação por formato) e **Prazos e regras**, que não
+  existia.
+- Pipeline nova de avaliação aplicada às duas turmas: pré-submissão abre na aula 6, é um
+  quiz obrigatório no Moodle e fecha no fim da aula 7; submissão final no próprio dia da
+  apresentação, na aula 8.
+- Escala de classificação **deliberadamente fora do slide** — fica só como nota de orador,
+  para responder se perguntarem.
+- Jannine Nascimento com descrição, e o nome corrigido para "Jannine".
+- **Por fechar:** Sandra Amaral e Juliano Gaspar continuam sem descrição. O tópico dedicado
+  à avaliação no Moodle está por criar.
+
 ### v0.2.0 — bloco 1.1 "Apresentação do curso" (2026-09-10)
 - 11 slides, a partir do deck de referência `1.1 ChatGPT - Apresentação do curso.pptx`
   (Drive, jan/2026): tópicos, coordenação, equipa formativa, objetivos, funcionamento,
