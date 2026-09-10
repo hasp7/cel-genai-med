@@ -10,6 +10,21 @@ Convenção de tag: `<EdiçãoID>-aula<N>-v<major>.<minor>.<patch>`
 
 ## Aula 1 — Introdução à IA e ao ChatGPT
 
+### v0.6.0 — cartões a preencher o slide e placeholders de imagem (2026-09-10)
+- **Formadores em duas páginas**, ambas com o mesmo título. A primeira leva Mariana e
+  Ricardo, Hélder e Sara; a segunda o resto da equipa da edição. Cartões maiores, com
+  espaço para duas ou três linhas de bio em vez de uma.
+- Corpo de texto desce 2 a 4pt em todo o deck (títulos 30→26pt, listas 18→15pt).
+- **Cartões esticam para preencher a área do slide** mesmo quando têm pouco texto: os
+  blocos marcados `.fill` ocupam a altura disponível e as grelhas usam `grid-auto-rows: 1fr`.
+- "O que é olhado na submissão" passa a **"Dimensões de avaliação"**, com uma linha de
+  descrição em cada cartão. Sai a nota sobre pesos diferentes e sobre o detalhe na aula 7.
+- Convenção nova de **placeholder de imagem** (`.imgph`): moldura tracejada com título
+  sugerido, dimensões e o prompt em inglês pronto para um modelo de geração de imagem.
+  Dois já colocados — "Objetivos do curso" e "E vocês, quem são?". Substituir por `<img>`
+  quando as imagens existirem, com os ficheiros em `aula-1/assets/`.
+- 21 slides por edição.
+
 ### v0.5.0 — respiração visual (2026-09-10)
 - Três **separadores de secção** (`.section-divider`, fundo petróleo): "A equipa e o curso",
   "Como são avaliados", "Datas e recursos". O componente existia na identidade e não estava

@@ -11,79 +11,107 @@
 <style>
   /* Ajustes locais desta aula. Não mexer no cel-base.css — ver DESIGN.md.
      O h2 base é 44pt, calibrado para slides diagrama-primeiro com títulos curtos.
-     Este bloco é denso em texto, por isso desce para 30pt — mais próximo do
-     corpo (22pt) e por isso mais harmonioso. */
-  .reveal .content-slide h2 { font-size: 30pt; margin-bottom: 10px; }
-  .reveal .content-slide .separator { margin-bottom: 26px; }
+     Este bloco é denso, por isso desce para 26pt. Corpo e listas descem na mesma
+     proporção — o conjunto lê-se melhor com o texto a respirar do que a encher. */
+  .reveal .content-slide h2 { font-size: 26pt; margin-bottom: 8px; }
+  .reveal .content-slide .separator { margin-bottom: 22px; }
+  .reveal .content-slide > ul > li,
+  .reveal .content-slide > p { font-size: 18pt; }
+
+  /* Slides de conteúdo em coluna, para os blocos marcados .fill esticarem até
+     ao fim da área útil mesmo quando têm pouco texto dentro. */
+  .reveal .content-slide { display: flex; flex-direction: column; }
+  .fill { flex: 1 1 auto; min-height: 0; }
 
   /* Capa: o h1 base (72pt) é para títulos curtos. Aqui lidera o nome do curso,
      que é comprido, por isso 42pt com largura limitada para partir bem. */
   .reveal .cover h1 { font-size: 42pt; max-width: 15em; line-height: 1.2; margin-bottom: 18px; }
-  .reveal .cover .subtitle { font-size: 20pt; }
-  .cover .kicker { display: block; font-size: 15pt; text-transform: uppercase;
+  .reveal .cover .subtitle { font-size: 19pt; }
+  .cover .kicker { display: block; font-size: 14pt; text-transform: uppercase;
                    letter-spacing: 0.1em; font-weight: 600; color: var(--cel-secondary);
                    margin-bottom: 14px; }
 
-  /* Formadores — todos ao mesmo nível, sem hierarquia visual. */
-  .people { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 16px; margin-top: 20px; }
-  .people .card { padding: 14px 16px; height: auto; }
-  .reveal .people h3 { font-size: 15pt; margin: 0 0 3px; line-height: 1.2; }
-  .reveal .people p { font-size: 11pt; line-height: 1.35; margin: 0; color: var(--cel-slate); }
+  /* Formadores — dois por linha, cartões altos com espaço para a bio. */
+  .people { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 20px;
+            grid-auto-rows: 1fr; margin-top: 18px; }
+  .people.three { grid-template-columns: repeat(3, 1fr); }
+  .people .card { padding: 22px 26px; height: auto; display: flex; flex-direction: column;
+                  justify-content: center; }
+  .reveal .people h3 { font-size: 17pt; margin: 0 0 7px; line-height: 1.2; }
+  .reveal .people p { font-size: 13pt; line-height: 1.45; margin: 0; color: var(--cel-slate); }
 
   /* Cronograma visual — cada sessão é uma barra de 4 horas.
      Os blocos desenham-se proporcionais à duração; a falta de um bloco deixa
      lacuna tracejada, para se ver de relance os dias mais curtos. */
-  .crono { margin-top: 18px; }
+  .crono { margin-top: 14px; }
   .crono .row { display: grid; grid-template-columns: 26px 72px 1fr 128px; align-items: center;
-                gap: 14px; padding: 5px 0; }
-  .reveal .crono .n { font-size: 14pt; color: var(--cel-slate); text-align: right; }
-  .reveal .crono .dt { font-size: 16pt; font-weight: 600; color: var(--cel-primary); white-space: nowrap; }
-  .reveal .crono .hr { font-size: 13pt; color: var(--cel-slate); white-space: nowrap; text-align: right; }
-  .crono .track { display: flex; gap: 3px; height: 30px; }
+                gap: 14px; padding: 4px 0; }
+  .reveal .crono .n { font-size: 13pt; color: var(--cel-slate); text-align: right; }
+  .reveal .crono .dt { font-size: 15pt; font-weight: 600; color: var(--cel-primary); white-space: nowrap; }
+  .reveal .crono .hr { font-size: 12pt; color: var(--cel-slate); white-space: nowrap; text-align: right; }
+  .crono .track { display: flex; gap: 3px; height: 28px; }
   .crono .seg { display: flex; align-items: center; justify-content: center;
-                font-family: var(--body-font); font-size: 12pt; color: var(--cel-white); }
+                font-family: var(--body-font); font-size: 11pt; color: var(--cel-white); }
   .crono .seg.b1 { background: var(--cel-primary); }
   .crono .seg.b2 { background: var(--cel-secondary); }
   .crono .gap { border: 1px dashed var(--cel-light); }
   .crono .row.short .dt { color: var(--cel-secondary); }
   .crono .row.short .hr { color: var(--cel-secondary); font-weight: 600; }
 
-  .crono-key { display: flex; gap: 26px; align-items: center; margin-top: 22px; }
-  .reveal .crono-key span { font-size: 13pt; color: var(--cel-slate); display: flex;
+  .crono-key { display: flex; gap: 26px; align-items: center; margin-top: 18px; }
+  .reveal .crono-key span { font-size: 12pt; color: var(--cel-slate); display: flex;
                             align-items: center; gap: 8px; }
   .crono-key i { width: 20px; height: 12px; display: inline-block; }
   .crono-key i.b1 { background: var(--cel-primary); }
   .crono-key i.b2 { background: var(--cel-secondary); }
   .crono-key i.gp { border: 1px dashed var(--cel-light); }
 
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 24px; }
-  .reveal .two-col h3 { font-size: 22pt; color: var(--cel-primary); margin: 0 0 10px; }
-  .reveal .two-col li { font-size: 18pt; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 20px; }
+  .reveal .two-col h3 { font-size: 19pt; color: var(--cel-primary); margin: 0 0 9px; }
+  .reveal .two-col li { font-size: 15pt; }
+  .reveal .two-col p { font-size: 15pt; }
 
   /* Barra de proporção 16/4 — mesma linguagem das barras do cronograma. */
-  .split-20 { display: flex; gap: 4px; margin-top: 30px; height: 118px; }
+  .split-20 { display: flex; gap: 4px; margin-top: 26px; height: 112px; }
   .split-20 .seg { display: flex; flex-direction: column; align-items: flex-start;
-                   justify-content: center; padding: 0 30px; }
+                   justify-content: center; padding: 0 28px; }
   .split-20 .seg.sub { flex: 16; background: var(--cel-primary); }
   .split-20 .seg.apr { flex: 4;  background: var(--cel-secondary); }
-  .reveal .split-20 .v { font-family: var(--heading-font); font-weight: 700; font-size: 46pt;
+  .reveal .split-20 .v { font-family: var(--heading-font); font-weight: 700; font-size: 42pt;
                          color: var(--cel-white); line-height: 1; }
-  .reveal .split-20 .k { font-size: 15pt; color: rgba(255,255,255,.82); margin-top: 6px; }
+  .reveal .split-20 .k { font-size: 14pt; color: rgba(255,255,255,.82); margin-top: 6px; }
 
-  /* Dimensões — chips largos, uma ideia por card, sem texto de apoio. */
-  .dims { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 18px; margin-top: 26px; }
-  .dims .card { padding: 18px 22px; height: auto; }
-  .reveal .dims h3 { font-size: 18pt; margin: 0; line-height: 1.25; }
+  /* Dimensões de avaliação — cartões que esticam para preencher o slide. */
+  .dims { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 18px;
+          grid-auto-rows: 1fr; margin-top: 18px; }
+  .dims .card { padding: 16px 20px; height: auto; display: flex; flex-direction: column;
+                justify-content: center; }
+  .reveal .dims h3 { font-size: 16pt; margin: 0 0 5px; line-height: 1.25; }
+  .reveal .dims p { font-size: 12pt; line-height: 1.4; margin: 0; color: var(--cel-slate); }
 
   /* Modulação por formato. */
-  .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 34px; }
-  .mode { border-top: 3px solid var(--cel-secondary); padding-top: 20px; }
+  .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 26px;
+           align-content: center; }
+  .mode { border-top: 3px solid var(--cel-secondary); padding-top: 18px; }
   .mode.off { border-top-color: var(--cel-light); }
-  .reveal .mode .pts { font-family: var(--heading-font); font-weight: 700; font-size: 62pt;
+  .reveal .mode .pts { font-family: var(--heading-font); font-weight: 700; font-size: 58pt;
                        color: var(--cel-primary); line-height: 1; display: block; }
   .mode.off .pts { color: var(--cel-light); }
-  .reveal .mode h3 { font-size: 20pt; margin: 12px 0 6px; }
-  .reveal .mode p { font-size: 15pt; color: var(--cel-slate); margin: 0; }
+  .reveal .mode h3 { font-size: 18pt; margin: 10px 0 5px; }
+  .reveal .mode p { font-size: 14pt; color: var(--cel-slate); margin: 0; }
+
+  /* Placeholder de imagem por produzir.
+     Convenção: título sugerido | dimensões | prompt em inglês para o modelo de imagem.
+     Substituir por <img> quando a imagem existir. */
+  .imgph { border: 1px dashed var(--cel-light); background: rgba(184,181,157,.10);
+           display: flex; flex-direction: column; justify-content: center; gap: 8px;
+           padding: 22px 26px; min-height: 150px; }
+  .reveal .imgph .t { font-family: var(--heading-font); font-weight: 600; font-size: 14pt;
+                      color: var(--cel-primary); }
+  .reveal .imgph .d { font-family: "JetBrains Mono", monospace; font-size: 11pt;
+                      color: var(--cel-secondary); }
+  .reveal .imgph .p { font-size: 10pt; line-height: 1.45; color: var(--cel-slate);
+                      font-style: italic; }
 </style>
 </head>
 <body>
@@ -131,56 +159,63 @@
 <!-- ============ FORMADORES (por edição) ============
      Todos ao mesmo nível, por ordem alfabética: sem separar coordenação de
      equipa formativa e sem variantes de card. -->
+<section class="content-slide">
+  <h2>Formadores</h2>
+  <div class="separator"></div>
+  <div class="people fill">
+    <div class="card"><h3>Mariana Canelas Pais</h3><p>Médica e Mestre em Informática Médica pela FMUP. Data Scientist Director na MTG Research and Development Lab e docente convidada na FMUP, onde lecciona os cursos DECIDES.</p></div>
+    <div class="card"><h3>Ricardo Cruz-Correia</h3><p>Professor associado e especialista em informática em saúde. Trabalha a integração de tecnologia na saúde e na educação, com mais de vinte seminários sobre aplicação de IA generativa.</p></div>
+    <div class="card"><h3>Hélder Palheira</h3><p>Enfermeiro e Mestre em Informática Médica pela FMUP-FCUP. Desenvolve soluções digitais com IA para a saúde e integra o Grupo de Trabalho de Saúde Digital e IA da Ordem dos Enfermeiros.</p></div>
+    <div class="card"><h3>Sara Matias Correia</h3><p>Licenciada em Relações Internacionais, especializada em tecnologias digitais e análise estratégica. Acompanha o curso na comunicação e no contributo geral.</p></div>
+  </div>
+</section>
+
 <section class="content-slide" data-ed="fm">
   <h2>Formadores</h2>
   <div class="separator"></div>
-  <div class="people">
-    <div class="card"><h3>Daniel Rodrigues</h3><p>Especialista em Informática em Saúde e formador em IA para a Saúde</p></div>
-    <div class="card"><h3>Hélder Palheira</h3><p>Enfermeiro e Mestre em Informática Médica pela FMUP-FCUP</p></div>
-    <div class="card"><h3>Jannine Nascimento</h3><p>Enfermeira, doutoranda em Ciências da Saúde pela UFMG e pesquisadora visitante na Universidade do Porto</p></div>
-    <div class="card"><h3>Mariana Canelas Pais</h3><p>Médica, Mestre em Informática Médica e Data Scientist Director na MTG</p></div>
-    <div class="card"><h3>Miguel Oliveira</h3><p>Psicólogo especialista em Psicologia da Educação e do Trabalho, Social e das Organizações</p></div>
-    <div class="card"><h3>Ricardo Cruz-Correia</h3><p>Professor associado e especialista em informática em saúde</p></div>
-    <!-- TODO: headline por escrever -->
+  <div class="people fill">
+    <div class="card"><h3>Daniel Rodrigues</h3><p>Especialista em Informática em Saúde e formador em IA para a Saúde desde 2023. Investiga a aplicação de modelos de linguagem no ensino superior.</p></div>
+    <div class="card"><h3>Jannine Nascimento</h3><p>Enfermeira, doutoranda em Ciências da Saúde pela UFMG e pesquisadora visitante na Universidade do Porto. Investiga saúde digital e produção científica baseada em evidências.</p></div>
+    <div class="card"><h3>Miguel Oliveira</h3><p>Psicólogo especialista em Psicologia da Educação e em Psicologia do Trabalho. Coordena a Equipa de Cibersegurança da Ordem dos Psicólogos e é doutorando em Health Data Science na FMUP.</p></div>
+    <!-- TODO: bio por escrever — trainers.yaml -->
     <div class="card"><h3>Sandra Amaral</h3><p></p></div>
-    <div class="card"><h3>Sara Matias Correia</h3><p>Especializada em tecnologias digitais e análise estratégica</p></div>
   </div>
-  <aside class="notes">
-    Perfis de LinkedIn ficam no Moodle. Sandra e Jannine estão na primeira edição
-    como formadoras — acompanhamento próximo.
-  </aside>
 </section>
 
 <section class="content-slide" data-ed="st">
   <h2>Formadores</h2>
   <div class="separator"></div>
-  <div class="people">
-    <div class="card"><h3>Daniel Rodrigues</h3><p>Especialista em Informática em Saúde e formador em IA para a Saúde</p></div>
-    <div class="card"><h3>Hélder Palheira</h3><p>Enfermeiro e Mestre em Informática Médica pela FMUP-FCUP</p></div>
-    <div class="card"><h3>Jannine Nascimento</h3><p>Enfermeira, doutoranda em Ciências da Saúde pela UFMG e pesquisadora visitante na Universidade do Porto</p></div>
-    <!-- TODO: headline por escrever — trainers.yaml -->
+  <div class="people fill">
+    <div class="card"><h3>Daniel Rodrigues</h3><p>Especialista em Informática em Saúde e formador em IA para a Saúde desde 2023. Investiga a aplicação de modelos de linguagem no ensino superior.</p></div>
+    <div class="card"><h3>Jannine Nascimento</h3><p>Enfermeira, doutoranda em Ciências da Saúde pela UFMG e pesquisadora visitante na Universidade do Porto. Investiga saúde digital e produção científica baseada em evidências.</p></div>
+    <!-- TODO: bio por escrever — trainers.yaml -->
     <div class="card"><h3>Juliano Gaspar</h3><p></p></div>
-    <div class="card"><h3>Mariana Canelas Pais</h3><p>Médica, Mestre em Informática Médica e Data Scientist Director na MTG</p></div>
-    <div class="card"><h3>Miguel Oliveira</h3><p>Psicólogo especialista em Psicologia da Educação e do Trabalho, Social e das Organizações</p></div>
-    <div class="card"><h3>Ricardo Cruz-Correia</h3><p>Professor associado e especialista em informática em saúde</p></div>
-    <!-- TODO: headline por escrever -->
+    <div class="card"><h3>Miguel Oliveira</h3><p>Psicólogo especialista em Psicologia da Educação e em Psicologia do Trabalho. Coordena a Equipa de Cibersegurança da Ordem dos Psicólogos e é doutorando em Health Data Science na FMUP.</p></div>
+    <!-- TODO: bio por escrever — trainers.yaml -->
     <div class="card"><h3>Sandra Amaral</h3><p></p></div>
-    <div class="card"><h3>Sara Matias Correia</h3><p>Especializada em tecnologias digitais e análise estratégica</p></div>
   </div>
-  <aside class="notes">Perfis de LinkedIn ficam no Moodle.</aside>
 </section>
 
 <!-- ============ OBJETIVOS ============ -->
 <section class="content-slide">
   <h2>Objetivos do curso</h2>
   <div class="separator"></div>
-  <p>Usar ferramentas de IA generativa — ChatGPT, Gemini, NotebookLM — de forma <strong>crítica, eficaz e segura</strong> na prática clínica, na investigação e na escrita científica.</p>
-  <ul>
-    <li>Engenharia de prompts: princípios e padrões</li>
-    <li>Funcionalidades avançadas — pesquisa em tempo real, <em>deep research</em>, análise de documentos, geração de imagem</li>
-    <li>Assistentes personalizados ancorados em fontes, com instruções de segurança</li>
-    <li>Riscos éticos, de segurança e o impacto da IA na saúde</li>
-  </ul>
+  <div class="two-col fill" style="grid-template-columns: 1.25fr 1fr; align-items: stretch;">
+    <div>
+      <p style="font-size:16pt">Usar ferramentas de IA generativa — ChatGPT, Gemini, NotebookLM — de forma <strong>crítica, eficaz e segura</strong> na prática clínica, na investigação e na escrita científica.</p>
+      <ul>
+        <li>Engenharia de prompts: princípios e padrões</li>
+        <li>Funcionalidades avançadas — pesquisa, análise de documentos, geração de imagem</li>
+        <li>Assistentes personalizados ancorados em fontes</li>
+        <li>Riscos éticos, de segurança e o impacto da IA na saúde</li>
+      </ul>
+    </div>
+    <div class="imgph">
+      <span class="t">Médica a trabalhar com IA na consulta</span>
+      <span class="d">1200×1500</span>
+      <span class="p">A European female physician in her forties at a clinic desk, reviewing information on a laptop, warm natural window light from the left, muted teal and olive tones, shallow depth of field, documentary editorial photography, calm and competent expression, no visible patient data on screen, no logos, no text overlay, 4:5 portrait</span>
+    </div>
+  </div>
   <aside class="notes">Fechar com o projeto final: cada um aplica isto a um problema real da sua prática.</aside>
 </section>
 
@@ -251,24 +286,17 @@
   </aside>
 </section>
 
-<!-- ============ AVALIAÇÃO — 2b. as dimensões da submissão ============ -->
+<!-- ============ AVALIAÇÃO — 2b. dimensões de avaliação ============ -->
 <section class="content-slide">
-  <h2>O que é olhado na submissão</h2>
+  <h2>Dimensões de avaliação</h2>
   <div class="separator"></div>
-  <div class="dims">
-    <div class="card"><h3>Metodologia e Engenharia de Prompt</h3></div>
-    <div class="card"><h3>Curadoria e Validação</h3></div>
-    <div class="card"><h3>Ecossistema de Ferramentas</h3></div>
-    <div class="card"><h3>Documentação do Processo</h3></div>
-    <div class="card"><h3>Replicabilidade</h3></div>
+  <div class="dims fill">
+    <div class="card"><h3>Metodologia e Engenharia de Prompt</h3><p>Como estruturaram as instruções e que caminho seguiram até ao resultado.</p></div>
+    <div class="card"><h3>Curadoria e Validação</h3><p>O que fizeram para confirmar que o output resiste — e onde o corrigiram.</p></div>
+    <div class="card"><h3>Ecossistema de Ferramentas</h3><p>Que ferramentas escolheram, e porquê essas para este problema.</p></div>
+    <div class="card"><h3>Documentação do Processo</h3><p>Se o raciocínio está registado de forma a que outra pessoa o siga.</p></div>
+    <div class="card"><h3>Replicabilidade</h3><p>Se o que fizeram se transfere para outro contexto ou outro colega.</p></div>
   </div>
-  <p class="muted" style="font-size:15pt; margin-top:24px;">
-    As cinco dimensões não pesam todas o mesmo. A ponderação vem na aula 7.
-  </p>
-  <aside class="notes">
-    Se perguntarem os pesos: 25% metodologia, 25% curadoria e validação, 20% ferramentas,
-    20% documentação, 10% replicabilidade. Não é para pôr no slide hoje.
-  </aside>
 </section>
 
 <!-- ============ AVALIAÇÃO — 2c. modulação por formato ============ -->
@@ -497,12 +525,21 @@
 <section class="content-slide">
   <h2>E vocês, quem são?</h2>
   <div class="separator"></div>
-  <ul>
-    <li>Nome e onde trabalham</li>
-    <li>Experiência anterior com IA generativa, se alguma</li>
-    <li>O que esperam levar deste curso</li>
-  </ul>
-  <p class="muted">Fica também um formulário no Moodle, para preencher até à próxima sessão.</p>
+  <div class="two-col fill" style="grid-template-columns: 1fr 1.1fr; align-items: stretch;">
+    <div>
+      <ul style="font-size:17pt; line-height:1.9;">
+        <li>Nome e onde trabalham</li>
+        <li>Experiência anterior com IA generativa, se alguma</li>
+        <li>O que esperam levar deste curso</li>
+      </ul>
+      <p class="muted" style="font-size:14pt;">Fica também um formulário no Moodle, para preencher até à próxima sessão.</p>
+    </div>
+    <div class="imgph">
+      <span class="t">Turma em formação à distância</span>
+      <span class="d">1600×1200</span>
+      <span class="p">Grid of small video-call windows showing a diverse group of European healthcare professionals attending an online training session, mixed ages, some smiling, plain neutral backgrounds, soft even lighting, muted teal and olive colour grading, editorial documentary style, no readable text or interface chrome, 4:3 landscape</span>
+    </div>
+  </div>
   <aside class="notes">É aqui que se percebe o nível da turma. Deixar correr — vale mais do que qualquer slide.</aside>
 </section>
 
