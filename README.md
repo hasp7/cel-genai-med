@@ -16,16 +16,25 @@ Decks e materiais do curso **GenAI:med** da [Ciência e Letras](https://github.c
 
 | Caminho | O que é |
 |---|---|
-| `index.html` | Landing do curso — matriz de aulas × edições |
-| `aula-N/` | Deck vivo da aula N (`index.html`, reveal.js) |
+| `index.html` | Ponto de acesso dos formadores — lista **só** as sessões já publicadas |
+| `aula-N/` | Deck da aula N (`index.html`, reveal.js) |
 | `shared/` | `cel-base.css` (identidade dos decks), `landing.css`, logótipo |
 | `versions/` | Snapshots congelados por edição — não se mexe depois de criados |
 | `VERSIONS.md` | O que mudou entre versões, e que edição viu o quê |
 
 ## Como trabalhar
 
+> **O site é público.** A landing só deve listar sessões prontas a serem vistas — acrescentar a
+> linha da aula N ao `index.html` é o gesto que a publica. Uma aula pode existir em `aula-N/`
+> sem estar listada, mas quem souber o URL entra à mesma; para material que não pode circular,
+> ver a secção de arquivo no fim.
+
 **Enquanto a aula está viva:** editar `aula-N/index.html` directamente. O site actualiza-se no
 push, e as duas edições em curso apontam para o mesmo deck.
+
+**Etiqueta das ligações:** `aula<N>-<dia>/<mês>`, com a data em que *aquela* edição deu a sessão —
+`aula1-12/09` na 9ª, `aula1-11/09` na 10ª. É o que permite ao formador confirmar num relance que
+está a abrir o deck do dia certo.
 
 **No fim de uma edição, congelar:**
 
@@ -39,8 +48,9 @@ git tag GenAIMed0926FM-aula1-v1.0.0
 git push --follow-tags
 ```
 
-Depois, na landing, mudar a célula dessa edição para apontar ao snapshot em vez do deck vivo.
-A partir daí o deck vivo pode mudar à vontade sem alterar o que aquela turma viu.
+Depois, na landing, mudar o `href` dessa edição para o snapshot — a etiqueta (`aula1-12/09`)
+mantém-se, muda só para onde aponta. A partir daí o deck vivo pode mudar à vontade sem alterar
+o que aquela turma viu.
 
 ## Arquivar / tirar de circulação
 
