@@ -11,15 +11,24 @@
 <style>
   /* Ajustes locais desta aula. Não mexer no cel-base.css — ver DESIGN.md.
      O h2 base é 44pt, calibrado para slides diagrama-primeiro com títulos curtos.
-     Este bloco é denso em texto, por isso o tecto aqui é 36pt. */
-  .reveal .content-slide h2 { font-size: 36pt; margin-bottom: 12px; }
-  .reveal .content-slide .separator { margin-bottom: 28px; }
+     Este bloco é denso em texto, por isso desce para 30pt — mais próximo do
+     corpo (22pt) e por isso mais harmonioso. */
+  .reveal .content-slide h2 { font-size: 30pt; margin-bottom: 10px; }
+  .reveal .content-slide .separator { margin-bottom: 26px; }
 
-  .people { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 28px; margin-top: 28px; }
-  .people .card { padding: 20px 24px; height: auto; }
-  .reveal .people h3 { font-size: 19pt; margin: 0 0 4px; }
-  .reveal .people p { font-size: 14pt; line-height: 1.4; margin: 0; color: var(--cel-slate); }
-  .reveal .people .li { font-size: 12pt; color: var(--cel-secondary); margin-top: 6px; display: block; }
+  /* Capa: o h1 base (72pt) é para títulos curtos. Aqui lidera o nome do curso,
+     que é comprido, por isso 42pt com largura limitada para partir bem. */
+  .reveal .cover h1 { font-size: 42pt; max-width: 15em; line-height: 1.2; margin-bottom: 18px; }
+  .reveal .cover .subtitle { font-size: 20pt; }
+  .cover .kicker { display: block; font-size: 15pt; text-transform: uppercase;
+                   letter-spacing: 0.1em; font-weight: 600; color: var(--cel-secondary);
+                   margin-bottom: 14px; }
+
+  /* Formadores — todos ao mesmo nível, sem hierarquia visual. */
+  .people { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px 16px; margin-top: 20px; }
+  .people .card { padding: 14px 16px; height: auto; }
+  .reveal .people h3 { font-size: 15pt; margin: 0 0 3px; line-height: 1.2; }
+  .reveal .people p { font-size: 11pt; line-height: 1.35; margin: 0; color: var(--cel-slate); }
 
   /* Cronograma visual — cada sessão é uma barra de 4 horas.
      Os blocos desenham-se proporcionais à duração; a falta de um bloco deixa
@@ -58,16 +67,18 @@
 <!-- ============ CAPA (por edição) ============ -->
 <section class="cover" data-ed="fm">
   <div class="accent-line"></div>
-  <h1>Apresentação do curso</h1>
-  <p class="subtitle">GenAI:med · 9ª edição · Aula 1 — 12 de setembro de 2026</p>
+  <span class="kicker">Aula 1 · Apresentação do curso</span>
+  <h1>IA Generativa para Profissionais de Saúde — Médicos</h1>
+  <p class="subtitle">GenAI:med · 9ª edição · 12 de setembro de 2026</p>
   <img class="cover-logo" src="../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
   <aside class="notes">45 minutos. Fechar com a apresentação dos formandos, que é a parte que demora.</aside>
 </section>
 
 <section class="cover" data-ed="st">
   <div class="accent-line"></div>
-  <h1>Apresentação do curso</h1>
-  <p class="subtitle">GenAI:med · 10ª edição · APMGF · Aula 1 — 11 de setembro de 2026</p>
+  <span class="kicker">Aula 1 · Apresentação do curso</span>
+  <h1>IA Generativa para Profissionais de Saúde — Médicos</h1>
+  <p class="subtitle">GenAI:med · 10ª edição · APMGF · 11 de setembro de 2026</p>
   <img class="cover-logo" src="../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
   <aside class="notes">45 minutos. Fechar com a apresentação dos formandos, que é a parte que demora.</aside>
 </section>
@@ -77,7 +88,7 @@
   <h2>Tópicos</h2>
   <div class="separator"></div>
   <ul>
-    <li>Quem somos — coordenação e equipa formativa</li>
+    <li>Quem somos — os formadores</li>
     <li>Objetivos do curso</li>
     <li>Como funciona: sessões, materiais e Moodle</li>
     <li>Avaliação e projeto final</li>
@@ -87,90 +98,49 @@
   </ul>
 </section>
 
-<!-- ============ COORDENAÇÃO ============ -->
-<section class="content-slide">
-  <h2>Coordenação</h2>
-  <div class="separator"></div>
-  <div class="people">
-    <div class="card">
-      <h3>Mariana Canelas Pais</h3>
-      <p>Médica, Mestre em Informática Médica e Data Scientist Director na MTG Research and Development Lab</p>
-      <span class="li">linkedin.com/in/mariana-canelas-pais-304489175</span>
-    </div>
-    <div class="card">
-      <h3>Ricardo Cruz-Correia</h3>
-      <p>Professor associado e especialista em informática em saúde</p>
-      <span class="li">linkedin.com/in/ricardojccorreia</span>
-    </div>
-    <div class="card">
-      <h3>Hélder Palheira</h3>
-      <p>Enfermeiro e Mestre em Informática Médica pela FMUP-FCUP</p>
-      <span class="li">linkedin.com/in/helderpalheira</span>
-    </div>
-    <div class="card accent">
-      <h3>Sara Matias Correia</h3>
-      <p>Contributo geral e marketing · Licenciada em Relações Internacionais, especializada em tecnologias digitais e análise estratégica</p>
-      <span class="li">linkedin.com/in/sara-matias-correia-93953a205</span>
-    </div>
-  </div>
-</section>
+<!-- Formadores: todos ao mesmo nível, por ordem alfabética. Sem separar
+     coordenação de equipa formativa e sem variantes de card. -->
+
 
 <!-- ============ EQUIPA FORMATIVA (por edição) ============ -->
 <section class="content-slide" data-ed="fm">
-  <h2>Equipa formativa</h2>
+  <h2>Formadores</h2>
   <div class="separator"></div>
   <div class="people">
-    <div class="card secondary">
-      <h3>Daniel Rodrigues</h3>
-      <p>Especialista em Informática em Saúde e formador em Inteligência Artificial para a Saúde</p>
-      <span class="li">linkedin.com/in/daniel-rodrigues-ies</span>
-    </div>
-    <div class="card secondary">
-      <h3>Miguel Oliveira</h3>
-      <p>Psicólogo especialista em Psicologia da Educação e em Psicologia do Trabalho, Social e das Organizações</p>
-      <span class="li">linkedin.com/in/miguel-oliveira-8b7301125</span>
-    </div>
-    <!-- TODO: headline e bio por escrever — trainers.yaml, bio_source "por escrever" -->
-    <div class="card secondary">
-      <h3>Sandra Amaral</h3>
-      <p>Formadora</p>
-    </div>
-    <div class="card secondary">
-      <h3>Janinne Nascimento</h3>
-      <p>Formadora</p>
-    </div>
+    <div class="card"><h3>Daniel Rodrigues</h3><p>Especialista em Informática em Saúde e formador em IA para a Saúde</p></div>
+    <div class="card"><h3>Hélder Palheira</h3><p>Enfermeiro e Mestre em Informática Médica pela FMUP-FCUP</p></div>
+    <!-- TODO: headline por escrever — trainers.yaml, bio_source "por escrever" -->
+    <div class="card"><h3>Janinne Nascimento</h3><p></p></div>
+    <div class="card"><h3>Mariana Canelas Pais</h3><p>Médica, Mestre em Informática Médica e Data Scientist Director na MTG</p></div>
+    <div class="card"><h3>Miguel Oliveira</h3><p>Psicólogo especialista em Psicologia da Educação e do Trabalho, Social e das Organizações</p></div>
+    <div class="card"><h3>Ricardo Cruz-Correia</h3><p>Professor associado e especialista em informática em saúde</p></div>
+    <!-- TODO: headline por escrever -->
+    <div class="card"><h3>Sandra Amaral</h3><p></p></div>
+    <div class="card"><h3>Sara Matias Correia</h3><p>Especializada em tecnologias digitais e análise estratégica</p></div>
   </div>
-  <aside class="notes">Sandra e Janinne estão na primeira edição como formadoras — acompanhamento próximo.</aside>
+  <aside class="notes">
+    Perfis de LinkedIn ficam no Moodle. Sandra e Janinne estão na primeira edição
+    como formadoras — acompanhamento próximo.
+  </aside>
 </section>
 
 <section class="content-slide" data-ed="st">
-  <h2>Equipa formativa</h2>
+  <h2>Formadores</h2>
   <div class="separator"></div>
   <div class="people">
-    <div class="card secondary">
-      <h3>Daniel Rodrigues</h3>
-      <p>Especialista em Informática em Saúde e formador em Inteligência Artificial para a Saúde</p>
-      <span class="li">linkedin.com/in/daniel-rodrigues-ies</span>
-    </div>
-    <div class="card secondary">
-      <h3>Miguel Oliveira</h3>
-      <p>Psicólogo especialista em Psicologia da Educação e em Psicologia do Trabalho, Social e das Organizações</p>
-      <span class="li">linkedin.com/in/miguel-oliveira-8b7301125</span>
-    </div>
-    <!-- TODO: headline e bio por escrever — trainers.yaml, bio_source "por escrever" -->
-    <div class="card secondary">
-      <h3>Juliano Gaspar</h3>
-      <p>Formador</p>
-    </div>
-    <div class="card secondary">
-      <h3>Sandra Amaral</h3>
-      <p>Formadora</p>
-    </div>
-    <div class="card secondary">
-      <h3>Janinne Nascimento</h3>
-      <p>Formadora</p>
-    </div>
+    <div class="card"><h3>Daniel Rodrigues</h3><p>Especialista em Informática em Saúde e formador em IA para a Saúde</p></div>
+    <div class="card"><h3>Hélder Palheira</h3><p>Enfermeiro e Mestre em Informática Médica pela FMUP-FCUP</p></div>
+    <!-- TODO: headline por escrever — trainers.yaml, bio_source "por escrever" -->
+    <div class="card"><h3>Janinne Nascimento</h3><p></p></div>
+    <div class="card"><h3>Juliano Gaspar</h3><p></p></div>
+    <div class="card"><h3>Mariana Canelas Pais</h3><p>Médica, Mestre em Informática Médica e Data Scientist Director na MTG</p></div>
+    <div class="card"><h3>Miguel Oliveira</h3><p>Psicólogo especialista em Psicologia da Educação e do Trabalho, Social e das Organizações</p></div>
+    <div class="card"><h3>Ricardo Cruz-Correia</h3><p>Professor associado e especialista em informática em saúde</p></div>
+    <!-- TODO: headline por escrever -->
+    <div class="card"><h3>Sandra Amaral</h3><p></p></div>
+    <div class="card"><h3>Sara Matias Correia</h3><p>Especializada em tecnologias digitais e análise estratégica</p></div>
   </div>
+  <aside class="notes">Perfis de LinkedIn ficam no Moodle.</aside>
 </section>
 
 <!-- ============ OBJETIVOS ============ -->
