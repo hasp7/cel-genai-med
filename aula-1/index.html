@@ -9,24 +9,43 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/white.css" id="theme">
 <link rel="stylesheet" href="../shared/cel-base.css">
 <style>
-  /* Ajustes locais desta aula. Não mexer no cel-base.css — ver DESIGN.md. */
+  /* Ajustes locais desta aula. Não mexer no cel-base.css — ver DESIGN.md.
+     O h2 base é 44pt, calibrado para slides diagrama-primeiro com títulos curtos.
+     Este bloco é denso em texto, por isso o tecto aqui é 36pt. */
+  .reveal .content-slide h2 { font-size: 36pt; margin-bottom: 12px; }
+  .reveal .content-slide .separator { margin-bottom: 28px; }
+
   .people { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 28px; margin-top: 28px; }
   .people .card { padding: 20px 24px; height: auto; }
   .reveal .people h3 { font-size: 19pt; margin: 0 0 4px; }
   .reveal .people p { font-size: 14pt; line-height: 1.4; margin: 0; color: var(--cel-slate); }
   .reveal .people .li { font-size: 12pt; color: var(--cel-secondary); margin-top: 6px; display: block; }
 
-  table.crono { width: 100%; border-collapse: collapse; margin-top: 24px; }
-  .reveal table.crono th, .reveal table.crono td {
-    text-align: left; padding: 9px 12px; border-bottom: 1px solid #DFDFDF; font-size: 16pt;
-  }
-  .reveal table.crono thead th {
-    color: var(--cel-primary); font-family: var(--heading-font);
-    font-weight: 600; border-bottom: 2px solid var(--cel-light);
-  }
-  .reveal table.crono td.d { white-space: nowrap; font-weight: 600; color: var(--cel-primary); }
-  .reveal table.crono td.h { white-space: nowrap; color: var(--cel-slate); }
-  .reveal table.crono tr.short td { background: rgba(184,181,157,.28); }
+  /* Cronograma visual — cada sessão é uma barra de 4 horas.
+     Os blocos desenham-se proporcionais à duração; a falta de um bloco deixa
+     lacuna tracejada, para se ver de relance os dias mais curtos. */
+  .crono { margin-top: 18px; }
+  .crono .row { display: grid; grid-template-columns: 26px 72px 1fr 128px; align-items: center;
+                gap: 14px; padding: 5px 0; }
+  .reveal .crono .n { font-size: 14pt; color: var(--cel-slate); text-align: right; }
+  .reveal .crono .dt { font-size: 16pt; font-weight: 600; color: var(--cel-primary); white-space: nowrap; }
+  .reveal .crono .hr { font-size: 13pt; color: var(--cel-slate); white-space: nowrap; text-align: right; }
+  .crono .track { display: flex; gap: 3px; height: 30px; }
+  .crono .seg { display: flex; align-items: center; justify-content: center;
+                font-family: var(--body-font); font-size: 12pt; color: var(--cel-white); }
+  .crono .seg.b1 { background: var(--cel-primary); }
+  .crono .seg.b2 { background: var(--cel-secondary); }
+  .crono .gap { border: 1px dashed var(--cel-light); }
+  .crono .row.short .dt { color: var(--cel-secondary); }
+  .crono .row.short .hr { color: var(--cel-secondary); font-weight: 600; }
+
+  .crono-key { display: flex; gap: 26px; align-items: center; margin-top: 22px; }
+  .reveal .crono-key span { font-size: 13pt; color: var(--cel-slate); display: flex;
+                            align-items: center; gap: 8px; }
+  .crono-key i { width: 20px; height: 12px; display: inline-block; }
+  .crono-key i.b1 { background: var(--cel-primary); }
+  .crono-key i.b2 { background: var(--cel-secondary); }
+  .crono-key i.gp { border: 1px dashed var(--cel-light); }
 
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 24px; }
   .reveal .two-col h3 { font-size: 22pt; color: var(--cel-primary); margin: 0 0 10px; }
@@ -226,40 +245,79 @@
   <h2>Cronograma — 9ª edição</h2>
   <div class="separator"></div>
   <p class="muted">Sábados, 08h30 às 12h30 · 30 horas · 12 de setembro a 31 de outubro de 2026</p>
-  <table class="crono">
-    <thead><tr><th>#</th><th>Data</th><th>Horário</th><th>Sessão</th></tr></thead>
-    <tbody>
-      <tr><td>1</td><td class="d">12 set</td><td class="h">08h30–12h30</td><td>Introdução à IA e ao ChatGPT</td></tr>
-      <tr><td>2</td><td class="d">19 set</td><td class="h">08h30–12h30</td><td>Engenharia de Prompts</td></tr>
-      <tr class="short"><td>3</td><td class="d">26 set</td><td class="h">08h30–10h30</td><td>ChatGPT Avançado e Ferramentas</td></tr>
-      <tr><td>4</td><td class="d">3 out</td><td class="h">08h30–12h30</td><td>Gemini, NotebookLM e Escrita Científica</td></tr>
-      <tr><td>5</td><td class="d">10 out</td><td class="h">08h30–12h30</td><td>Ética, Segurança e SOPs</td></tr>
-      <tr><td>6</td><td class="d">17 out</td><td class="h">08h30–12h30</td><td>Impacto Clínico e Assistentes Personalizados</td></tr>
-      <tr><td>7</td><td class="d">24 out</td><td class="h">08h30–12h30</td><td>Laboratório de Projeto</td></tr>
-      <tr><td>8</td><td class="d">31 out</td><td class="h">08h30–12h30</td><td>Apresentação de Projetos Finais</td></tr>
-    </tbody>
-  </table>
-  <aside class="notes">A sessão 3 é a única de 2 horas — assinalada a sálvia.</aside>
+  <div class="crono">
+    <div class="row"><span class="n">1</span><span class="dt">12 set</span>
+      <div class="track"><div class="seg b1" style="flex:2">2h</div><div class="seg b2" style="flex:2">2h</div></div>
+      <span class="hr">08h30–12h30</span></div>
+    <div class="row"><span class="n">2</span><span class="dt">19 set</span>
+      <div class="track"><div class="seg b1" style="flex:2">2h</div><div class="seg b2" style="flex:2">2h</div></div>
+      <span class="hr">08h30–12h30</span></div>
+    <div class="row short"><span class="n">3</span><span class="dt">26 set</span>
+      <div class="track"><div class="seg b1" style="flex:2">2h</div><div class="gap" style="flex:2"></div></div>
+      <span class="hr">08h30–10h30</span></div>
+    <div class="row"><span class="n">4</span><span class="dt">3 out</span>
+      <div class="track"><div class="seg b1" style="flex:2">2h</div><div class="seg b2" style="flex:2">2h</div></div>
+      <span class="hr">08h30–12h30</span></div>
+    <div class="row"><span class="n">5</span><span class="dt">10 out</span>
+      <div class="track"><div class="seg b1" style="flex:2">2h</div><div class="seg b2" style="flex:2">2h</div></div>
+      <span class="hr">08h30–12h30</span></div>
+    <div class="row"><span class="n">6</span><span class="dt">17 out</span>
+      <div class="track"><div class="seg b1" style="flex:2">2h</div><div class="seg b2" style="flex:2">2h</div></div>
+      <span class="hr">08h30–12h30</span></div>
+    <div class="row"><span class="n">7</span><span class="dt">24 out</span>
+      <div class="track"><div class="seg b1" style="flex:2">2h</div><div class="seg b2" style="flex:2">2h</div></div>
+      <span class="hr">08h30–12h30</span></div>
+    <div class="row"><span class="n">8</span><span class="dt">31 out</span>
+      <div class="track"><div class="seg b1" style="flex:2">2h</div><div class="seg b2" style="flex:2">2h</div></div>
+      <span class="hr">08h30–12h30</span></div>
+  </div>
+  <div class="crono-key">
+    <span><i class="b1"></i>1º bloco</span>
+    <span><i class="b2"></i>2º bloco</span>
+    <span><i class="gp"></i>sem sessão</span>
+  </div>
+  <aside class="notes">A 26 de setembro só há o primeiro bloco — acaba às 10h30.</aside>
 </section>
 
 <section class="content-slide" data-ed="st">
   <h2>Cronograma — 10ª edição</h2>
   <div class="separator"></div>
   <p class="muted">Sextas-feiras, 15h00 às 19h00 · 30 horas · 11 de setembro a 30 de outubro de 2026</p>
-  <table class="crono">
-    <thead><tr><th>#</th><th>Data</th><th>Horário</th><th>Sessão</th></tr></thead>
-    <tbody>
-      <tr><td>1</td><td class="d">11 set</td><td class="h">15h00–19h00</td><td>Introdução à IA e ao ChatGPT</td></tr>
-      <tr><td>2</td><td class="d">18 set</td><td class="h">15h00–19h00</td><td>Engenharia de Prompts</td></tr>
-      <tr class="short"><td>3</td><td class="d">25 set</td><td class="h">17h00–19h00</td><td>ChatGPT Avançado e Ferramentas</td></tr>
-      <tr><td>4</td><td class="d">2 out</td><td class="h">15h00–19h00</td><td>Gemini, NotebookLM e Escrita Científica</td></tr>
-      <tr><td>5</td><td class="d">9 out</td><td class="h">15h00–19h00</td><td>Ética, Segurança e SOPs</td></tr>
-      <tr><td>6</td><td class="d">16 out</td><td class="h">15h00–19h00</td><td>Impacto Clínico e Assistentes Personalizados</td></tr>
-      <tr><td>7</td><td class="d">23 out</td><td class="h">15h00–19h00</td><td>Laboratório de Projeto</td></tr>
-      <tr><td>8</td><td class="d">30 out</td><td class="h">15h00–19h00</td><td>Apresentação de Projetos Finais</td></tr>
-    </tbody>
-  </table>
-  <aside class="notes">A sessão 3 é a única de 2 horas, e começa às 17h00 — assinalada a sálvia.</aside>
+  <div class="crono">
+    <div class="row"><span class="n">1</span><span class="dt">11 set</span>
+      <div class="track"><div class="seg b1" style="flex:2">2h</div><div class="seg b2" style="flex:2">2h</div></div>
+      <span class="hr">15h00–19h00</span></div>
+    <div class="row"><span class="n">2</span><span class="dt">18 set</span>
+      <div class="track"><div class="seg b1" style="flex:2">2h</div><div class="seg b2" style="flex:2">2h</div></div>
+      <span class="hr">15h00–19h00</span></div>
+    <div class="row short"><span class="n">3</span><span class="dt">25 set</span>
+      <div class="track"><div class="gap" style="flex:2"></div><div class="seg b2" style="flex:2">2h</div></div>
+      <span class="hr">17h00–19h00</span></div>
+    <div class="row"><span class="n">4</span><span class="dt">2 out</span>
+      <div class="track"><div class="seg b1" style="flex:2">2h</div><div class="seg b2" style="flex:2">2h</div></div>
+      <span class="hr">15h00–19h00</span></div>
+    <div class="row"><span class="n">5</span><span class="dt">9 out</span>
+      <div class="track"><div class="seg b1" style="flex:3">3h</div><div class="seg b2" style="flex:1">1h</div></div>
+      <span class="hr">15h00–19h00</span></div>
+    <div class="row"><span class="n">6</span><span class="dt">16 out</span>
+      <div class="track"><div class="seg b1" style="flex:2">2h</div><div class="seg b2" style="flex:2">2h</div></div>
+      <span class="hr">15h00–19h00</span></div>
+    <div class="row"><span class="n">7</span><span class="dt">23 out</span>
+      <div class="track"><div class="seg b1" style="flex:2">2h</div><div class="seg b2" style="flex:2">2h</div></div>
+      <span class="hr">15h00–19h00</span></div>
+    <div class="row"><span class="n">8</span><span class="dt">30 out</span>
+      <div class="track"><div class="seg b1" style="flex:2">2h</div><div class="seg b2" style="flex:2">2h</div></div>
+      <span class="hr">15h00–19h00</span></div>
+  </div>
+  <div class="crono-key">
+    <span><i class="b1"></i>1º bloco</span>
+    <span><i class="b2"></i>2º bloco</span>
+    <span><i class="gp"></i>sem sessão</span>
+  </div>
+  <aside class="notes">
+    A 25 de setembro só há o segundo bloco — começa às 17h00, não às 15h00.
+    A 9 de outubro os blocos são desiguais: 3h e depois 1h.
+  </aside>
 </section>
 
 <!-- ============ RECURSOS ============ -->
