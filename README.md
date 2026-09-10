@@ -17,7 +17,7 @@ Decks e materiais do curso **GenAI:med** da [Ciência e Letras](https://github.c
 | Caminho | O que é |
 |---|---|
 | `index.html` | Ponto de acesso dos formadores — lista **só** as sessões já publicadas |
-| `aula-N/` | Deck da aula N (`index.html`, reveal.js) |
+| `aula-N/` | Deck de um bloco (`index.html`, reveal.js). `aula-1/` é o bloco **1.1**; os blocos seguintes ficam em `aula-1-2/`, `aula-2-1/` e assim por diante |
 | `shared/` | `cel-base.css` (identidade dos decks), `landing.css`, logótipo |
 | `versions/` | Snapshots congelados por edição — não se mexe depois de criados |
 | `VERSIONS.md` | O que mudou entre versões, e que edição viu o quê |
@@ -32,9 +32,13 @@ Decks e materiais do curso **GenAI:med** da [Ciência e Letras](https://github.c
 **Enquanto a aula está viva:** editar `aula-N/index.html` directamente. O site actualiza-se no
 push, e as duas edições em curso apontam para o mesmo deck.
 
-**Etiqueta das ligações:** `aula<N>-<dia>/<mês>`, com a data em que *aquela* edição deu a sessão —
-`aula1-12/09` na 9ª, `aula1-11/09` na 10ª. É o que permite ao formador confirmar num relance que
-está a abrir o deck do dia certo.
+**Etiqueta das ligações:** `aula<bloco>-<dia>/<mês>`, com a data em que *aquela* edição deu a
+sessão — `aula1.1-12/09` na 9ª, `aula1.1-11/09` na 10ª. É o que permite ao formador confirmar
+num relance que está a abrir o deck do bloco e do dia certos.
+
+**Um deck por bloco, não por aula.** Uma sessão de 4H tem dois blocos e cada um é um deck
+próprio, listado na sua linha da landing. `aula-1/` ficou com o nome antigo por já estar
+publicado; os que vierem seguem `aula-<aula>-<bloco>/`.
 
 **No fim de uma edição, congelar:**
 
