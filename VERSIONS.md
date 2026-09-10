@@ -10,6 +10,17 @@ Convenção de tag: `<EdiçãoID>-aula<N>-v<major>.<minor>.<patch>`
 
 ## Aula 1 — Introdução à IA e ao ChatGPT
 
+### v0.4.0 — pré-submissão e entregáveis (2026-09-10)
+- Dois slides novos entre "O projeto final" e "Prazos e regras":
+  **A pré-submissão** (o que é, quando abre e fecha, as seis perguntas do quiz, e a nota
+  de que as quatro primeiras já são o rascunho do relatório) e **O que se entrega**
+  (relatório com as seis secções do template, apresentação, anexos).
+- Conteúdo transposto de `wip/projeto-final-avaliacao/06-B-pre-submissao.md` e
+  `05-A-templates.md` no repo dos cursos.
+- "Prazos e regras" enxugado na coluna do projeto, que passara a repetir a pré-submissão.
+- O bloco 1.1 fica em **14 slides**. Para 45 minutos é apertado: cinco são de avaliação.
+  Rever depois da primeira apresentação.
+
 ### v0.3.0 — avaliação em três slides (2026-09-10)
 - A secção de avaliação passa de um slide a três: **Avaliação** (mapa das componentes,
   sem pesos globais — a integração das três numa nota única está diferida para a v2 da
