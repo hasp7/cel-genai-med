@@ -3,70 +3,291 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aula 1 — Introdução à IA e ao ChatGPT · GenAI:med</title>
+<title>1.1 Apresentação do curso · GenAI:med</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reset.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/white.css" id="theme">
 <link rel="stylesheet" href="../shared/cel-base.css">
+<style>
+  /* Ajustes locais desta aula. Não mexer no cel-base.css — ver DESIGN.md. */
+  .people { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 28px; margin-top: 28px; }
+  .people .card { padding: 20px 24px; height: auto; }
+  .reveal .people h3 { font-size: 19pt; margin: 0 0 4px; }
+  .reveal .people p { font-size: 14pt; line-height: 1.4; margin: 0; color: var(--cel-slate); }
+  .reveal .people .li { font-size: 12pt; color: var(--cel-secondary); margin-top: 6px; display: block; }
+
+  table.crono { width: 100%; border-collapse: collapse; margin-top: 24px; }
+  .reveal table.crono th, .reveal table.crono td {
+    text-align: left; padding: 9px 12px; border-bottom: 1px solid #DFDFDF; font-size: 16pt;
+  }
+  .reveal table.crono thead th {
+    color: var(--cel-primary); font-family: var(--heading-font);
+    font-weight: 600; border-bottom: 2px solid var(--cel-light);
+  }
+  .reveal table.crono td.d { white-space: nowrap; font-weight: 600; color: var(--cel-primary); }
+  .reveal table.crono td.h { white-space: nowrap; color: var(--cel-slate); }
+  .reveal table.crono tr.short td { background: rgba(184,181,157,.28); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 24px; }
+  .reveal .two-col h3 { font-size: 22pt; color: var(--cel-primary); margin: 0 0 10px; }
+  .reveal .two-col li { font-size: 18pt; }
+</style>
 </head>
 <body>
 <div class="reveal"><div class="slides">
 
-<section class="cover">
+<!-- ============ CAPA (por edição) ============ -->
+<section class="cover" data-ed="fm">
   <div class="accent-line"></div>
-  <h1>Introdução à IA e ao ChatGPT</h1>
-  <p class="subtitle">GenAI:med · Aula 1</p>
+  <h1>Apresentação do curso</h1>
+  <p class="subtitle">GenAI:med · 9ª edição · Aula 1 — 12 de setembro de 2026</p>
   <img class="cover-logo" src="../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
-  <aside class="notes">
-    Enquadrar o curso antes de entrar no conteúdo. Apresentar formadores e formandos.
-  </aside>
+  <aside class="notes">45 minutos. Fechar com a apresentação dos formandos, que é a parte que demora.</aside>
 </section>
 
+<section class="cover" data-ed="st">
+  <div class="accent-line"></div>
+  <h1>Apresentação do curso</h1>
+  <p class="subtitle">GenAI:med · 10ª edição · APMGF · Aula 1 — 11 de setembro de 2026</p>
+  <img class="cover-logo" src="../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+  <aside class="notes">45 minutos. Fechar com a apresentação dos formandos, que é a parte que demora.</aside>
+</section>
+
+<!-- ============ TÓPICOS ============ -->
 <section class="content-slide">
-  <h2>O que vamos ver hoje</h2>
+  <h2>Tópicos</h2>
   <div class="separator"></div>
   <ul>
-    <li>Apresentação do curso, dos formadores e das regras <span class="muted">— 45 min</span></li>
-    <li>Introdução à IA, aos modelos de linguagem e ao ChatGPT <span class="muted">— 120 min</span></li>
-    <li>A interface do ChatGPT, com exploração guiada <span class="muted">— 60 min</span></li>
-    <li>Como se manterem actualizados <span class="muted">— 15 min</span></li>
+    <li>Quem somos — coordenação e equipa formativa</li>
+    <li>Objetivos do curso</li>
+    <li>Como funciona: sessões, materiais e Moodle</li>
+    <li>Avaliação e projeto final</li>
+    <li>Cronograma</li>
+    <li>Recursos necessários</li>
+    <li>Apresentação dos formandos</li>
   </ul>
-  <aside class="notes">
-    Fechar com o quiz no Moodle. Referir que o material assíncrono fica disponível no fim.
-  </aside>
 </section>
 
-<section class="section-divider">
-  <div class="label">Módulo 01</div>
-  <h2>Fundamentos de IA Generativa</h2>
-</section>
-
+<!-- ============ COORDENAÇÃO ============ -->
 <section class="content-slide">
-  <h2>Três termos que se confundem</h2>
+  <h2>Coordenação</h2>
   <div class="separator"></div>
-  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:36px;">
+  <div class="people">
     <div class="card">
-      <h3>Inteligência Artificial</h3>
-      <p>O campo inteiro. Qualquer sistema que resolve tarefas que associaríamos a inteligência humana.</p>
+      <h3>Mariana Canelas Pais</h3>
+      <p>Médica, Mestre em Informática Médica e Data Scientist Director na MTG Research and Development Lab</p>
+      <span class="li">linkedin.com/in/mariana-canelas-pais-304489175</span>
     </div>
-    <div class="card secondary">
-      <h3>Modelo de linguagem</h3>
-      <p>Um modelo treinado para prever texto. É a tecnologia por baixo, não o produto.</p>
+    <div class="card">
+      <h3>Ricardo Cruz-Correia</h3>
+      <p>Professor associado e especialista em informática em saúde</p>
+      <span class="li">linkedin.com/in/ricardojccorreia</span>
+    </div>
+    <div class="card">
+      <h3>Hélder Palheira</h3>
+      <p>Enfermeiro e Mestre em Informática Médica pela FMUP-FCUP</p>
+      <span class="li">linkedin.com/in/helderpalheira</span>
     </div>
     <div class="card accent">
-      <h3>ChatGPT</h3>
-      <p>Um produto concreto, construído sobre um modelo de linguagem. Há outros.</p>
+      <h3>Sara Matias Correia</h3>
+      <p>Contributo geral e marketing · Licenciada em Relações Internacionais, especializada em tecnologias digitais e análise estratégica</p>
+      <span class="li">linkedin.com/in/sara-matias-correia-93953a205</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EQUIPA FORMATIVA (por edição) ============ -->
+<section class="content-slide" data-ed="fm">
+  <h2>Equipa formativa</h2>
+  <div class="separator"></div>
+  <div class="people">
+    <div class="card secondary">
+      <h3>Daniel Rodrigues</h3>
+      <p>Especialista em Informática em Saúde e formador em Inteligência Artificial para a Saúde</p>
+      <span class="li">linkedin.com/in/daniel-rodrigues-ies</span>
+    </div>
+    <div class="card secondary">
+      <h3>Miguel Oliveira</h3>
+      <p>Psicólogo especialista em Psicologia da Educação e em Psicologia do Trabalho, Social e das Organizações</p>
+      <span class="li">linkedin.com/in/miguel-oliveira-8b7301125</span>
+    </div>
+    <!-- TODO: headline e bio por escrever — trainers.yaml, bio_source "por escrever" -->
+    <div class="card secondary">
+      <h3>Sandra Amaral</h3>
+      <p>Formadora</p>
+    </div>
+    <div class="card secondary">
+      <h3>Janinne Nascimento</h3>
+      <p>Formadora</p>
+    </div>
+  </div>
+  <aside class="notes">Sandra e Janinne estão na primeira edição como formadoras — acompanhamento próximo.</aside>
+</section>
+
+<section class="content-slide" data-ed="st">
+  <h2>Equipa formativa</h2>
+  <div class="separator"></div>
+  <div class="people">
+    <div class="card secondary">
+      <h3>Daniel Rodrigues</h3>
+      <p>Especialista em Informática em Saúde e formador em Inteligência Artificial para a Saúde</p>
+      <span class="li">linkedin.com/in/daniel-rodrigues-ies</span>
+    </div>
+    <div class="card secondary">
+      <h3>Miguel Oliveira</h3>
+      <p>Psicólogo especialista em Psicologia da Educação e em Psicologia do Trabalho, Social e das Organizações</p>
+      <span class="li">linkedin.com/in/miguel-oliveira-8b7301125</span>
+    </div>
+    <!-- TODO: headline e bio por escrever — trainers.yaml, bio_source "por escrever" -->
+    <div class="card secondary">
+      <h3>Juliano Gaspar</h3>
+      <p>Formador</p>
+    </div>
+    <div class="card secondary">
+      <h3>Sandra Amaral</h3>
+      <p>Formadora</p>
+    </div>
+    <div class="card secondary">
+      <h3>Janinne Nascimento</h3>
+      <p>Formadora</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OBJETIVOS ============ -->
+<section class="content-slide">
+  <h2>Objetivos do curso</h2>
+  <div class="separator"></div>
+  <p>Usar ferramentas de IA generativa — ChatGPT, Gemini, NotebookLM — de forma <strong>crítica, eficaz e segura</strong> na prática clínica, na investigação e na escrita científica.</p>
+  <ul>
+    <li>Engenharia de prompts: princípios e padrões</li>
+    <li>Funcionalidades avançadas — pesquisa em tempo real, <em>deep research</em>, análise de documentos, geração de imagem</li>
+    <li>Assistentes personalizados ancorados em fontes, com instruções de segurança</li>
+    <li>Riscos éticos, de segurança e o impacto da IA na saúde</li>
+  </ul>
+  <aside class="notes">Fechar com o projeto final: cada um aplica isto a um problema real da sua prática.</aside>
+</section>
+
+<!-- ============ FUNCIONAMENTO ============ -->
+<section class="content-slide">
+  <h2>Como funciona</h2>
+  <div class="separator"></div>
+  <div class="two-col">
+    <div>
+      <h3>Sessões</h3>
+      <ul>
+        <li>Formação à distância síncrona, por Zoom</li>
+        <li>Sessões teórico-práticas</li>
+        <li>Aulas gravadas, disponíveis durante algumas semanas</li>
+      </ul>
+    </div>
+    <div>
+      <h3>No Moodle</h3>
+      <ul>
+        <li>Materiais de cada sessão</li>
+        <li><em>Quizzes</em> formativos</li>
+        <li>Atividades para aprofundar depois da aula</li>
+        <li>Tutoriais e exercícios com as ferramentas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ AVALIAÇÃO ============ -->
+<section class="content-slide">
+  <h2>Avaliação</h2>
+  <div class="separator"></div>
+  <div class="two-col">
+    <div>
+      <h3>Ao longo do curso</h3>
+      <ul>
+        <li>Exercícios práticos e <em>quizzes</em> por sessão, no Moodle</li>
+        <li>Avaliação formativa — servem para aprender, não para reprovar</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Projeto final</h3>
+      <ul>
+        <li>Ideação começa na <strong>7ª sessão</strong></li>
+        <li>Apresentação individual na <strong>8ª sessão</strong></li>
+        <li>Um problema real da vossa prática profissional</li>
+      </ul>
     </div>
   </div>
   <aside class="notes">
-    A confusão entre os três é a origem de metade dos mal-entendidos sobre IA na clínica.
+    ATENÇÃO: a pipeline de avaliação foi revista (pré-submissão por quiz na aula 7, submissão no
+    próprio dia, rubricas com componente de apresentação). Confirmar com o Hélder se já vale para
+    esta edição antes de dar a aula — este slide ainda reflecte o modelo antigo.
   </aside>
 </section>
 
+<!-- ============ CRONOGRAMA (por edição) ============ -->
+<section class="content-slide" data-ed="fm">
+  <h2>Cronograma — 9ª edição</h2>
+  <div class="separator"></div>
+  <p class="muted">Sábados, 08h30 às 12h30 · 30 horas · 12 de setembro a 31 de outubro de 2026</p>
+  <table class="crono">
+    <thead><tr><th>#</th><th>Data</th><th>Horário</th><th>Sessão</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="d">12 set</td><td class="h">08h30–12h30</td><td>Introdução à IA e ao ChatGPT</td></tr>
+      <tr><td>2</td><td class="d">19 set</td><td class="h">08h30–12h30</td><td>Engenharia de Prompts</td></tr>
+      <tr class="short"><td>3</td><td class="d">26 set</td><td class="h">08h30–10h30</td><td>ChatGPT Avançado e Ferramentas</td></tr>
+      <tr><td>4</td><td class="d">3 out</td><td class="h">08h30–12h30</td><td>Gemini, NotebookLM e Escrita Científica</td></tr>
+      <tr><td>5</td><td class="d">10 out</td><td class="h">08h30–12h30</td><td>Ética, Segurança e SOPs</td></tr>
+      <tr><td>6</td><td class="d">17 out</td><td class="h">08h30–12h30</td><td>Impacto Clínico e Assistentes Personalizados</td></tr>
+      <tr><td>7</td><td class="d">24 out</td><td class="h">08h30–12h30</td><td>Laboratório de Projeto</td></tr>
+      <tr><td>8</td><td class="d">31 out</td><td class="h">08h30–12h30</td><td>Apresentação de Projetos Finais</td></tr>
+    </tbody>
+  </table>
+  <aside class="notes">A sessão 3 é a única de 2 horas — assinalada a sálvia.</aside>
+</section>
+
+<section class="content-slide" data-ed="st">
+  <h2>Cronograma — 10ª edição</h2>
+  <div class="separator"></div>
+  <p class="muted">Sextas-feiras, 15h00 às 19h00 · 30 horas · 11 de setembro a 30 de outubro de 2026</p>
+  <table class="crono">
+    <thead><tr><th>#</th><th>Data</th><th>Horário</th><th>Sessão</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td class="d">11 set</td><td class="h">15h00–19h00</td><td>Introdução à IA e ao ChatGPT</td></tr>
+      <tr><td>2</td><td class="d">18 set</td><td class="h">15h00–19h00</td><td>Engenharia de Prompts</td></tr>
+      <tr class="short"><td>3</td><td class="d">25 set</td><td class="h">17h00–19h00</td><td>ChatGPT Avançado e Ferramentas</td></tr>
+      <tr><td>4</td><td class="d">2 out</td><td class="h">15h00–19h00</td><td>Gemini, NotebookLM e Escrita Científica</td></tr>
+      <tr><td>5</td><td class="d">9 out</td><td class="h">15h00–19h00</td><td>Ética, Segurança e SOPs</td></tr>
+      <tr><td>6</td><td class="d">16 out</td><td class="h">15h00–19h00</td><td>Impacto Clínico e Assistentes Personalizados</td></tr>
+      <tr><td>7</td><td class="d">23 out</td><td class="h">15h00–19h00</td><td>Laboratório de Projeto</td></tr>
+      <tr><td>8</td><td class="d">30 out</td><td class="h">15h00–19h00</td><td>Apresentação de Projetos Finais</td></tr>
+    </tbody>
+  </table>
+  <aside class="notes">A sessão 3 é a única de 2 horas, e começa às 17h00 — assinalada a sálvia.</aside>
+</section>
+
+<!-- ============ RECURSOS ============ -->
+<section class="content-slide">
+  <h2>Recursos necessários</h2>
+  <div class="separator"></div>
+  <p>Cada formando precisa do <strong>seu computador com acesso à Internet</strong>.</p>
+  <p class="muted">As ferramentas exploradas no curso funcionam no browser — não é preciso instalar nada.</p>
+</section>
+
+<!-- ============ APRESENTAÇÃO DOS FORMANDOS ============ -->
+<section class="content-slide">
+  <h2>E vocês, quem são?</h2>
+  <div class="separator"></div>
+  <ul>
+    <li>Nome e onde trabalham</li>
+    <li>Experiência anterior com IA generativa, se alguma</li>
+    <li>O que esperam levar deste curso</li>
+  </ul>
+  <p class="muted">Fica também um formulário no Moodle, para preencher até à próxima sessão.</p>
+  <aside class="notes">É aqui que se percebe o nível da turma. Deixar correr — vale mais do que qualquer slide.</aside>
+</section>
+
+<!-- ============ FECHO ============ -->
 <section class="closing">
   <div class="accent-line"></div>
-  <h2>Até à próxima sessão</h2>
-  <p>Quiz no Moodle · dois vídeos de apoio</p>
+  <h2>Vamos a isto</h2>
+  <p>Próximo bloco: Introdução à IA, às LLMs e ao ChatGPT</p>
 </section>
 
 </div></div>
@@ -74,6 +295,17 @@
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
 <script>
+  // Este deck serve as duas edições. ?ed=fm → 9ª (CeL, sábados); ?ed=st → 10ª (APMGF, sextas).
+  // Os slides marcados com data-ed que não sejam da edição pedida são removidos antes de
+  // inicializar o reveal, para a numeração dos slides ficar certa.
+  (function () {
+    var ed = new URLSearchParams(location.search).get('ed');
+    if (ed !== 'fm' && ed !== 'st') ed = 'fm';
+    document.querySelectorAll('[data-ed]').forEach(function (el) {
+      if (el.dataset.ed !== ed) el.remove();
+    });
+  })();
+
   Reveal.initialize({
     hash: true,
     slideNumber: 'c/t',

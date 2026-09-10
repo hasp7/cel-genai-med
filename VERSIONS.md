@@ -10,10 +10,22 @@ Convenção de tag: `<EdiçãoID>-aula<N>-v<major>.<minor>.<patch>`
 
 ## Aula 1 — Introdução à IA e ao ChatGPT
 
+### v0.2.0 — bloco 1.1 "Apresentação do curso" (2026-09-10)
+- 11 slides, a partir do deck de referência `1.1 ChatGPT - Apresentação do curso.pptx`
+  (Drive, jan/2026): tópicos, coordenação, equipa formativa, objetivos, funcionamento,
+  avaliação, cronograma, recursos, apresentação dos formandos, fecho.
+- **Serve as duas edições no mesmo ficheiro.** `?ed=fm` → 9ª (CeL, sábados);
+  `?ed=st` → 10ª (APMGF, sextas). Sem parâmetro, assume a 9ª.
+  Diferem por edição: capa, equipa formativa e cronograma.
+- Cronogramas gerados a partir de `courses/genai-med/editions/` no repo dos cursos.
+- Equipa de cada edição resolvida pela regra do `slide_group` no `trainers.yaml`.
+- **Por fechar:** Sandra Amaral, Janinne Nascimento e Juliano Gaspar aparecem sem
+  descrição — falta-lhes a `headline` no `trainers.yaml`. E o slide de avaliação ainda
+  reflecte o modelo antigo (ver nota do orador).
+
 ### v0.1.0 — esqueleto (2026-09-10)
 - Estrutura inicial do deck: capa, agenda, separador de módulo, slide de cards, fecho.
-- Serve de exemplo de aplicação da identidade CeL; **o conteúdo ainda não é o da aula**.
-- Nenhuma edição congelada ainda.
+- Serviu de exemplo de aplicação da identidade CeL; substituído pela v0.2.0.
 
 ---
 
