@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap');
+
+:root {
+  --cel-primary: #2F4E5E;
+  --cel-secondary: #6D6D3E;
+  --cel-light: #B8B59D;
+  --cel-slate: #74808D;
+  --cel-text: #3A3838;
+  --cel-bg: #F3F3F3;
+  --cel-white: #FFFFFF;
+  --heading-font: "Libre Franklin", Helvetica, sans-serif;
+  --body-font: "Open Sans", Helvetica, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--cel-bg);
+  color: var(--cel-text);
+  font-family: var(--body-font);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.wrap { max-width: 1040px; margin: 0 auto; padding: 64px 32px 96px; }
+
+header { margin-bottom: 56px; }
+
+.accent-line {
+  width: 64px; height: 3px;
+  background: var(--cel-secondary);
+  margin-bottom: 24px;
+}
+
+h1 {
+  font-family: var(--heading-font);
+  font-weight: 700;
+  font-size: 2.4rem;
+  letter-spacing: -0.02em;
+  color: var(--cel-primary);
+  margin: 0 0 8px;
+}
+
+.subtitle { color: var(--cel-slate); font-size: 1.05rem; margin: 0; }
+
+h2 {
+  font-family: var(--heading-font);
+  font-weight: 600;
+  font-size: 1.4rem;
+  color: var(--cel-primary);
+  margin: 56px 0 8px;
+}
+
+.section-note { color: var(--cel-slate); margin: 0 0 24px; font-size: 0.95rem; }
+
+.label-tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-weight: 600;
+  color: var(--cel-secondary);
+  margin-bottom: 10px;
+}
+
+.matrix-scroll { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--cel-white);
+  font-size: 0.92rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 14px 16px;
+  border-bottom: 1px solid #E4E4E4;
+  vertical-align: top;
+}
+
+thead th {
+  font-family: var(--heading-font);
+  font-weight: 600;
+  color: var(--cel-primary);
+  border-bottom: 2px solid var(--cel-light);
+  white-space: nowrap;
+}
+
+thead th.current { color: var(--cel-secondary); }
+
+tbody th {
+  font-weight: 600;
+  color: var(--cel-text);
+  border-left: 3px solid var(--cel-primary);
+  min-width: 260px;
+}
+
+tbody th .num { color: var(--cel-slate); font-weight: 400; margin-right: 8px; }
+
+td.empty { color: var(--cel-slate); }
+
+a { color: var(--cel-primary); text-decoration: none; border-bottom: 1px solid var(--cel-light); }
+a:hover { border-bottom-color: var(--cel-secondary); }
+
+.pill {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 2px;
+  background: var(--cel-light);
+  color: var(--cel-primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: none;
+}
+
+footer {
+  margin-top: 72px;
+  padding-top: 24px;
+  border-top: 1px solid #E4E4E4;
+  color: var(--cel-slate);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+footer img { height: 28px; opacity: 0.7; }
+
+@media (prefers-color-scheme: dark) {
+  /* A identidade CeL é clara por definição — mantém-se em ambos os temas. */
+}
