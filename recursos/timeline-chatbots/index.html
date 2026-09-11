@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A evolução dos chatbots — GenAI:med</title>
+<meta name="description" content="Timeline das funcionalidades dos principais chatbots, por trimestre, de 2022 a 2026. Material de apoio do curso GenAI:med da Ciência e Letras.">
+<link rel="stylesheet" href="../../shared/landing.css">
+<style>
+  .lede { color: var(--cel-slate); max-width: 68ch; margin: 0; }
+  .controls { position: sticky; top: 0; z-index: 5; background: var(--cel-bg);
+               border-bottom: 1px solid #E4E4E4; padding: 16px 0 14px; margin-top: 32px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip { font: 600 0.82rem/1 var(--body-font); padding: 8px 14px; cursor: pointer;
+           background: var(--cel-white); color: var(--cel-slate);
+           border: 1px solid #DCDCDC; border-left: 3px solid var(--pc);
+           transition: background .12s, color .12s, opacity .12s; }
+  .chip[aria-pressed="true"] { color: var(--cel-text); background: var(--cel-white); }
+  .chip[aria-pressed="false"] { opacity: .42; border-left-color: #DCDCDC; }
+  .chip:hover { background: #FAFAFA; }
+  .bulk { display: flex; gap: 14px; margin-top: 12px; }
+  .bulk button { background: none; border: 0; padding: 0; cursor: pointer;
+                  font: 400 0.8rem/1 var(--body-font); color: var(--cel-primary);
+                  border-bottom: 1px solid var(--cel-light); }
+  .q { margin-top: 40px; }
+  .q h3 { font-family: var(--heading-font); font-weight: 600; font-size: 1.05rem;
+           color: var(--cel-primary); margin: 0 0 4px; letter-spacing: .01em; }
+  .q .rule { height: 1px; background: var(--cel-light); margin-bottom: 18px; }
+  .items { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .item { background: var(--cel-white); border-left: 3px solid var(--pc); padding: 16px 18px; }
+  .item .p { font-size: .7rem; text-transform: uppercase; letter-spacing: .1em;
+              font-weight: 600; color: var(--pc); }
+  .item h4 { font-family: var(--heading-font); font-weight: 600; font-size: .98rem;
+              margin: 6px 0 5px; color: var(--cel-text); }
+  .item p { margin: 0; font-size: .86rem; line-height: 1.5; color: var(--cel-slate); }
+  .empty { color: var(--cel-slate); font-size: .9rem; margin-top: 36px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="accent-line"></div>
+  <h1>A evolução dos chatbots, trimestre a trimestre</h1>
+  <p class="lede">
+    De novembro de 2022 ao presente. Filtre por produto para comparar percursos — quem chegou
+    primeiro a cada funcionalidade, e quem foi atrás. Material de apoio do bloco 1.2.
+  </p>
+</header>
+
+<div class="controls">
+  <div class="chips">
+    <button class="chip" data-p="chatgpt" style="--pc:#10A37F" aria-pressed="true">ChatGPT</button>
+    <button class="chip" data-p="claude" style="--pc:#C56A3E" aria-pressed="true">Claude</button>
+    <button class="chip" data-p="gemini" style="--pc:#3B82F6" aria-pressed="true">Gemini</button>
+    <button class="chip" data-p="copilot" style="--pc:#7C3AED" aria-pressed="true">Copilot</button>
+    <button class="chip" data-p="deepseek" style="--pc:#0E7FA6" aria-pressed="true">DeepSeek</button>
+    <button class="chip" data-p="llama" style="--pc:#D6297E" aria-pressed="true">Llama</button>
+    <button class="chip" data-p="grok" style="--pc:#5B6472" aria-pressed="true">Grok</button>
+    <button class="chip" data-p="mistral" style="--pc:#E2620C" aria-pressed="true">Mistral</button>
+  </div>
+  <div class="bulk">
+    <button id="all">Mostrar todos</button>
+    <button id="none">Limpar</button>
+  </div>
+</div>
+
+<div id="out"></div>
+
+<footer>
+  <img src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+  <span>GenAI:med · bloco 1.2 — Introdução à IA, LLMs e IA Generativa</span>
+</footer>
+
+</div>
+
+<script>
+const ITEMS = [{"q":"2022-Q4","p":"chatgpt","t":"ChatGPT (GPT-3.5)","d":"Lançamento a 30 nov 2022 — 1M de utilizadores em 5 dias."},{"q":"2023-Q1","p":"claude","t":"Claude 1","d":"A Anthropic lança o primeiro Claude."},{"q":"2023-Q1","p":"gemini","t":"Bard (anúncio)","d":"Google responde com o Bard, o futuro Gemini."},{"q":"2023-Q1","p":"chatgpt","t":"API + ChatGPT Plus","d":"Acesso por API e subscrição paga."},{"q":"2023-Q2","p":"chatgpt","t":"Plugins + navegação web","d":"O ChatGPT ganha ferramentas e app para telemóvel."},{"q":"2023-Q3","p":"claude","t":"Claude 2 · contexto 100k","d":"Janela de contexto muito maior; foco em documentos longos."},{"q":"2023-Q3","p":"llama","t":"Llama 2","d":"Meta lança um modelo aberto e de uso comercial."},{"q":"2023-Q3","p":"mistral","t":"Mistral 7B","d":"Startup europeia; modelo aberto e eficiente."},{"q":"2023-Q4","p":"chatgpt","t":"GPT-4 Turbo · GPTs · voz e visão","d":"Assistentes personalizados (GPTs), GPT-4V e DALL·E 3."},{"q":"2023-Q4","p":"gemini","t":"Gemini 1.0","d":"O Bard passa a Gemini (Ultra/Pro/Nano)."},{"q":"2023-Q4","p":"grok","t":"Grok (anúncio)","d":"A xAI, de Elon Musk, entra na corrida."},{"q":"2023-Q4","p":"mistral","t":"Mixtral 8x7B","d":"Arquitetura 'mixture-of-experts', aberta."},{"q":"2024-Q1","p":"gemini","t":"Gemini 1.5 · 1M tokens","d":"Contexto gigante (livros inteiros de uma vez)."},{"q":"2024-Q1","p":"claude","t":"Claude 3 (Opus/Sonnet/Haiku)","d":"Família de três tamanhos; salto de qualidade."},{"q":"2024-Q1","p":"mistral","t":"Mistral Large","d":"Modelo de topo da Mistral."},{"q":"2024-Q1","p":"chatgpt","t":"Sora (vídeo, pré-visualização)","d":"Geração de vídeo a partir de texto."},{"q":"2024-Q2","p":"chatgpt","t":"GPT-4o · multimodal em tempo real","d":"Texto, voz e imagem no mesmo modelo, em direto."},{"q":"2024-Q2","p":"claude","t":"Claude 3.5 Sonnet · Artifacts","d":"Melhor código; painel para criar artefactos."},{"q":"2024-Q2","p":"gemini","t":"Gemini no Workspace","d":"Integração no Gmail, Docs e Android."},{"q":"2024-Q3","p":"chatgpt","t":"OpenAI o1 · raciocínio","d":"Modelos que 'pensam' antes de responder."},{"q":"2024-Q3","p":"llama","t":"Llama 3.1 405B · 3.2 visão","d":"Modelo aberto gigante; versões com visão."},{"q":"2024-Q3","p":"grok","t":"Grok-2","d":"Segunda geração, com geração de imagem."},{"q":"2024-Q4","p":"claude","t":"Claude 3.5 · 'computer use'","d":"Primeiro passo agente: controla o computador."},{"q":"2024-Q4","p":"gemini","t":"Gemini 2.0 · agentic","d":"Orientado a agentes; Flash rápido."},{"q":"2024-Q4","p":"deepseek","t":"DeepSeek-V3","d":"Modelo aberto chinês, muito forte e barato."},{"q":"2024-Q4","p":"chatgpt","t":"Canvas · Sora lançado","d":"Edição lado-a-lado; vídeo disponível."},{"q":"2024-Q4","p":"llama","t":"Llama 3.3 70B","d":"Desempenho de topo num modelo mais pequeno."},{"q":"2025-Q1","p":"deepseek","t":"DeepSeek-R1 · raciocínio aberto","d":"Abala o mercado: raciocínio ao nível dos melhores, aberto."},{"q":"2025-Q1","p":"chatgpt","t":"Operator · Deep Research","d":"Agente que navega e faz tarefas; investigação automática."},{"q":"2025-Q1","p":"grok","t":"Grok-3","d":"Salto de capacidade da xAI."},{"q":"2025-Q1","p":"claude","t":"Claude 3.7 · raciocínio híbrido","d":"Responde depressa ou 'pensa' conforme a tarefa."},{"q":"2025-Q1","p":"mistral","t":"Mistral Small 3 · Le Chat","d":"App própria; modelo compacto."},{"q":"2025-Q2","p":"claude","t":"Claude 4 (Opus/Sonnet)","d":"Nova geração; forte em código e agentes."},{"q":"2025-Q2","p":"llama","t":"Llama 4 (Scout/Maverick)","d":"Nova geração aberta, multimodal."},{"q":"2025-Q2","p":"gemini","t":"Gemini 2.5 Pro","d":"Raciocínio 'Deep Think'; topo de tabela."},{"q":"2025-Q2","p":"chatgpt","t":"Imagens no GPT-4o","d":"Geração de imagem integrada (a onda 'Ghibli')."},{"q":"2025-Q2","p":"mistral","t":"Magistral · Devstral","d":"Modelos de raciocínio e de código."},{"q":"2025-Q3","p":"chatgpt","t":"GPT-5","d":"Nova geração da OpenAI."},{"q":"2025-Q3","p":"grok","t":"Grok-4","d":"Topo de capacidade da xAI."},{"q":"2025-Q3","p":"deepseek","t":"DeepSeek-V3.1","d":"Atualização do modelo aberto."},{"q":"2025-Q3","p":"claude","t":"Claude Sonnet 4.5","d":"Foco em agentes e uso prolongado."},{"q":"2025-Q4","p":"gemini","t":"Gemini 3","d":"Nova geração da Google."},{"q":"2025-Q4","p":"claude","t":"Claude Haiku 4.5 · Opus 4.x","d":"Rápido e barato; topo de gama."},{"q":"2025-Q4","p":"mistral","t":"Mistral 3 (Large 3)","d":"Nova geração europeia."},{"q":"2025-Q4","p":"deepseek","t":"DeepSeek-V3.2","d":"Continuação da série aberta."},{"q":"2026-Q1","p":"claude","t":"Claude Opus 4.6","d":"Atualização de topo."},{"q":"2026-Q1","p":"gemini","t":"Gemini 3.x Pro","d":"Refinamento da geração 3."},{"q":"2026-Q1","p":"chatgpt","t":"GPT-5.x","d":"Atualizações sucessivas do GPT-5."},{"q":"2026-Q1","p":"grok","t":"Grok 4.x","d":"Nova iteração da xAI."},{"q":"2026-Q2","p":"deepseek","t":"DeepSeek-V4 (pré-visualização)","d":"Próxima geração aberta."},{"q":"2026-Q2","p":"mistral","t":"Mistral Medium 3.5","d":"Atualização da gama."},{"q":"2026-Q2","p":"chatgpt","t":"GPT-5.x (agentes)","d":"Mais integração e autonomia."},{"q":"2026-Q3","p":"claude","t":"Claude (nova geração)","d":"Modelos mais capazes e agentes prolongados."},{"q":"2026-Q3","p":"gemini","t":"Gemini 3.x Flash","d":"Rápido e multimodal."},{"q":"2026-Q3","p":"chatgpt","t":"Agentes que constroem","d":"Ferramentas que geram apps — é aqui que entra o desafio 3."},{"q":"2023-Q1","p":"copilot","t":"Bing Chat (com GPT-4)","d":"A Microsoft integra a IA no motor de busca."},{"q":"2023-Q4","p":"copilot","t":"Copilot","d":"O Bing Chat passa a Copilot; entra no Windows e no Microsoft 365."},{"q":"2024-Q1","p":"copilot","t":"Copilot Pro · GPTs","d":"Versão paga e assistentes personalizados no Office."},{"q":"2024-Q4","p":"copilot","t":"Copilot no Microsoft 365","d":"Integrado no Word, Excel, Outlook e Teams."},{"q":"2025-Q2","p":"copilot","t":"Agentes no Copilot","d":"Agentes (Researcher, Analyst) para tarefas de trabalho."}];
+const COR = {"chatgpt": "#10A37F", "claude": "#C56A3E", "gemini": "#3B82F6", "copilot": "#7C3AED", "deepseek": "#0E7FA6", "llama": "#D6297E", "grok": "#5B6472", "mistral": "#E2620C"};
+const NOME = {"chatgpt": "ChatGPT", "claude": "Claude", "gemini": "Gemini", "copilot": "Copilot", "deepseek": "DeepSeek", "llama": "Llama", "grok": "Grok", "mistral": "Mistral"};
+const esc = t => t.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+const activos = new Set(Object.keys(NOME));
+
+function rotuloQ(q) {
+  const [ano, tri] = q.split('-');
+  return `${tri} · ${ano}`;
+}
+
+function render() {
+  const out = document.getElementById('out');
+  const vis = ITEMS.filter(i => activos.has(i.p));
+  if (!vis.length) {
+    out.innerHTML = '<p class="empty">Nenhum produto seleccionado.</p>';
+    return;
+  }
+  const porQ = {};
+  vis.forEach(i => (porQ[i.q] = porQ[i.q] || []).push(i));
+  out.innerHTML = Object.keys(porQ).sort().map(q => `
+    <section class="q">
+      <h3>${rotuloQ(q)}</h3>
+      <div class="rule"></div>
+      <div class="items">
+        ${porQ[q].map(i => `
+          <article class="item" style="--pc:${COR[i.p]}">
+            <span class="p">${NOME[i.p]}</span>
+            <h4>${esc(i.t)}</h4>
+            <p>${esc(i.d)}</p>
+          </article>`).join('')}
+      </div>
+    </section>`).join('');
+}
+
+document.querySelectorAll('.chip').forEach(b => b.addEventListener('click', () => {
+  const p = b.dataset.p;
+  activos.has(p) ? activos.delete(p) : activos.add(p);
+  b.setAttribute('aria-pressed', activos.has(p));
+  render();
+}));
+document.getElementById('all').addEventListener('click', () => {
+  Object.keys(NOME).forEach(p => activos.add(p));
+  document.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', 'true'));
+  render();
+});
+document.getElementById('none').addEventListener('click', () => {
+  activos.clear();
+  document.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', 'false'));
+  render();
+});
+render();
+</script>
+</body>
+</html>
