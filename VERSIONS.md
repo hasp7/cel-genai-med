@@ -101,6 +101,25 @@ Convenção de tag: `<EdiçãoID>-aula<N>-v<major>.<minor>.<patch>`
 
 ---
 
+## Bloco 1.2 — Introdução à IA, aos LLMs e à IA Generativa
+
+### v0.1.0 — primeira versão (2026-09-11)
+- 25 slides por edição, em quatro partes com separador: da IA ao deep learning; como prevê
+  texto e porque não "entende"; IA generativa e modalidades; o panorama actual.
+- Construído sobre o deck de referência de jan/2026, com os cortes decididos na revisão do
+  CORE-02: saem a tabela GPT-3.5 vs GPT-4, os "exames que o ChatGPT passou", os humanoides,
+  a tabela de datasets do GPT-3 e o detalhe por modalidade.
+- Entra material novo: as camadas encaixadas como slide de arrumação, a previsão do próximo
+  token com barras de probabilidade, o MedGemma, e o contraste pesos abertos vs serviço
+  fechado — que remete para a timeline em `recursos/`.
+- **O quinto tópico do CORE-02 (limites e validação) não entrou**, para o bloco caber nos
+  120 minutos. Está em `wip/core-02-limites-validacao/` no repo dos cursos. Enquanto lá
+  estiver, o objetivo 4 do CORE-02 não é servido por nenhum bloco.
+- Três placeholders de imagem, dois deles a identificar originais da Mariana no pptx de
+  referência — usar os dela se possível, em vez de gerar novos.
+
+---
+
 ## Edições
 
 | Edição | Datas | Estado |

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.2 Introdução à IA, LLMs e IA Generativa · GenAI:med</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/white.css" id="theme">
+<link rel="stylesheet" href="../shared/cel-base.css">
+<style>
+  /* Ajustes locais. Não mexer no cel-base.css — ver DESIGN.md. */
+  .reveal .content-slide h2 { font-size: 26pt; margin-bottom: 8px; }
+  .reveal .content-slide .separator { margin-bottom: 22px; }
+  .reveal .content-slide > ul > li, .reveal .content-slide > p { font-size: 18pt; }
+  .reveal .content-slide { display: flex; flex-direction: column; }
+  .fill { flex: 1 1 auto; min-height: 0; }
+
+  .reveal .cover h1 { font-size: 42pt; max-width: 15em; line-height: 1.2; margin-bottom: 18px; }
+  .reveal .cover .subtitle { font-size: 19pt; }
+  .cover .kicker { display: block; font-size: 14pt; text-transform: uppercase;
+                   letter-spacing: 0.1em; font-weight: 600; color: var(--cel-secondary);
+                   margin-bottom: 14px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; margin-top: 20px; }
+  .reveal .two-col h3 { font-size: 19pt; color: var(--cel-primary); margin: 0 0 9px; }
+  .reveal .two-col li, .reveal .two-col p { font-size: 15pt; }
+
+  /* Camadas encaixadas: IA ⊃ ML ⊃ DL ⊃ LM */
+  .nest { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+  .lay { border: 2px solid var(--cel-primary); padding: 20px 26px 22px; width: 100%;
+         max-width: 760px; position: relative; }
+  .lay + .lay { margin-top: 0; }
+  .reveal .lay .nm { font-family: var(--heading-font); font-weight: 600; font-size: 15pt;
+                     color: var(--cel-primary); display: block; margin-bottom: 12px; }
+  .lay.l2 { border-color: var(--cel-secondary); }
+  .lay.l2 .nm { color: var(--cel-secondary); }
+  .lay.l3 { border-color: var(--cel-slate); }
+  .lay.l3 .nm { color: var(--cel-slate); }
+  .lay.l4 { border-color: var(--cel-text); background: var(--cel-white); }
+  .lay.l4 .nm { color: var(--cel-text); }
+  .reveal .lay p { font-size: 13pt; color: var(--cel-slate); margin: 0; }
+
+  /* Programação tradicional vs machine learning */
+  .vs { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; margin-top: 18px; }
+  .flow { background: var(--cel-white); border-left: 3px solid var(--cel-primary); padding: 22px 24px; }
+  .flow.ml { border-left-color: var(--cel-secondary); }
+  .reveal .flow h3 { font-size: 17pt; margin: 0 0 16px; }
+  .flow .row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .flow .b { border: 1px solid var(--cel-light); padding: 7px 13px; font-size: 13pt; }
+  .flow .b.out { background: var(--cel-primary); color: var(--cel-white); border-color: var(--cel-primary); }
+  .flow.ml .b.out { background: var(--cel-secondary); border-color: var(--cel-secondary); }
+  .flow .ar { color: var(--cel-secondary); font-size: 16pt; }
+
+  /* Previsão do próximo token */
+  .pred { margin-top: 20px; }
+  .reveal .sent { font-family: var(--heading-font); font-size: 30pt; color: var(--cel-primary);
+                  font-weight: 600; margin: 0 0 26px; }
+  .sent .blank { border-bottom: 3px solid var(--cel-secondary); padding: 0 42px; }
+  .cands { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .cand { background: var(--cel-white); padding: 14px 16px; border-left: 3px solid var(--cel-light); }
+  .reveal .cand .w { font-size: 17pt; font-weight: 600; color: var(--cel-text); display: block; }
+  .cand .bar { height: 7px; background: var(--cel-secondary); margin-top: 9px; }
+  .reveal .cand .pc { font-size: 12pt; color: var(--cel-slate); margin-top: 5px; display: block; }
+
+  /* Modalidades */
+  .mods { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+          grid-auto-rows: 1fr; margin-top: 20px; }
+  .mod { background: var(--cel-white); border-left: 3px solid var(--cel-secondary);
+         padding: 18px 20px; display: flex; flex-direction: column; justify-content: center; }
+  .reveal .mod h3 { font-size: 17pt; margin: 0 0 5px; }
+  .reveal .mod p { font-size: 12.5pt; color: var(--cel-slate); margin: 0; line-height: 1.4; }
+  .mod.med { border-left-color: var(--cel-primary); background: rgba(184,181,157,.18); }
+
+  /* Acesso: pesos abertos vs serviço fechado */
+  .acc { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px; }
+  .acc > div { padding: 24px 26px; }
+  .acc .op { background: var(--cel-white); border-top: 4px solid var(--cel-secondary); }
+  .acc .cl { background: var(--cel-white); border-top: 4px solid var(--cel-primary); }
+  .reveal .acc h3 { font-size: 19pt; margin: 0 0 12px; }
+  .reveal .acc li { font-size: 14.5pt; line-height: 1.55; }
+  .reveal .acc .eg { font-size: 12.5pt; color: var(--cel-slate); margin: 14px 0 0; }
+
+  .ph { margin: 0; overflow: hidden; min-height: 0; }
+  .ph img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .imgph { border: 1px dashed var(--cel-light); background: rgba(184,181,157,.10);
+           display: flex; flex-direction: column; justify-content: center; gap: 8px;
+           padding: 20px 24px; min-height: 140px; }
+  .reveal .imgph .t { font-family: var(--heading-font); font-weight: 600; font-size: 13pt;
+                      color: var(--cel-primary); }
+  .reveal .imgph .d { font-family: "JetBrains Mono", monospace; font-size: 10.5pt;
+                      color: var(--cel-secondary); }
+  .reveal .imgph .o { font-size: 10.5pt; color: var(--cel-text); }
+  .reveal .imgph .p { font-size: 9.5pt; line-height: 1.45; color: var(--cel-slate); font-style: italic; }
+
+  .ref { position: absolute; bottom: 26px; left: 100px; right: 100px;
+         font-size: 10.5pt; color: var(--cel-slate); }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<!-- ============ CAPA (por edição) ============ -->
+<section class="cover" data-ed="fm">
+  <div class="accent-line"></div>
+  <span class="kicker">Bloco 1.2</span>
+  <h1>Introdução à IA, aos LLMs e à IA Generativa</h1>
+  <p class="subtitle">GenAI:med · 9ª edição · 12 de setembro de 2026</p>
+  <img class="cover-logo" src="../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+  <aside class="notes">120 minutos. É o bloco mais longo da aula 1.</aside>
+</section>
+
+<section class="cover" data-ed="st">
+  <div class="accent-line"></div>
+  <span class="kicker">Bloco 1.2</span>
+  <h1>Introdução à IA, aos LLMs e à IA Generativa</h1>
+  <p class="subtitle">GenAI:med · 10ª edição · APMGF · 11 de setembro de 2026</p>
+  <img class="cover-logo" src="../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+  <aside class="notes">120 minutos. É o bloco mais longo da aula 1.</aside>
+</section>
+
+<section class="content-slide">
+  <h2>O que vamos ver</h2>
+  <div class="separator"></div>
+  <ul>
+    <li>Da IA ao <em>deep learning</em> — as camadas e como encaixam</li>
+    <li>Como um modelo prevê texto, e porque não "entende"</li>
+    <li>IA generativa e modalidades para lá do texto</li>
+    <li>O panorama actual — os modelos que vão usar no curso</li>
+  </ul>
+  <p class="muted" style="font-size:15pt; margin-top:22px;">
+    Os limites e o que exigem de quem valida ficam para a sessão de ética e segurança.
+  </p>
+</section>
+
+<!-- ======================= T1 ======================= -->
+<section class="section-divider">
+  <div class="label">Parte um</div>
+  <h2>Da IA ao deep learning</h2>
+</section>
+
+<section class="content-slide">
+  <h2>Inteligência artificial — o que é</h2>
+  <div class="separator"></div>
+  <div class="two-col fill" style="grid-template-columns: 1.3fr 1fr; align-items:stretch;">
+    <div>
+      <p style="font-size:20pt; color:var(--cel-primary); font-weight:600; margin-bottom:16px;">
+        "Inteligência" demonstrada por máquinas.
+      </p>
+      <p>Máquinas que mimetizam funções que associamos à mente humana — perceber, decidir, aprender, comunicar.</p>
+      <p style="margin-top:14px;">É um <strong>campo multidisciplinar</strong>: informática, psicologia, linguística, filosofia. Não nasceu na informática sozinha, e isso explica muito do vocabulário que usa.</p>
+    </div>
+    <div class="imgph">
+      <span class="t">Artificial Intelligence as a technical drawing</span>
+      <span class="d">1200×1500</span>
+      <span class="o">Existe no deck original da Mariana (Midjourney). Usar o dela se possível — está no pptx "1.2 GenAI - Introdução AI, LLM, ChatGPT".</span>
+      <span class="p">Technical blueprint drawing of a human head in profile, fine olive line work on off-white paper, geometric construction lines, no colour fills, no text or labels, editorial illustration, 4:5 portrait</span>
+    </div>
+  </div>
+  <aside class="notes">
+    O ponto multidisciplinar não é decorativo: é o que explica porque é que se fala em
+    "neurónios", "aprendizagem" e "atenção" — vocabulário emprestado de outras áreas.
+  </aside>
+</section>
+
+<section class="content-slide">
+  <h2>Machine learning</h2>
+  <div class="separator"></div>
+  <p>Subcampo da IA focado em algoritmos que <strong>aprendem e evoluem a partir de dados</strong>, sem serem explicitamente programados para cada tarefa.</p>
+  <p class="muted" style="font-size:16pt; margin-top:16px;">
+    Já convivem com isto há anos: o filtro de spam, as recomendações da Netflix, a deteção de
+    fraude no cartão. Identificar padrões complexos em muitos dados para prever o que vem a seguir.
+  </p>
+</section>
+
+<section class="content-slide">
+  <h2>O que muda em relação a programar</h2>
+  <div class="separator"></div>
+  <div class="vs fill" style="align-items:stretch;">
+    <div class="flow">
+      <h3>Programação tradicional</h3>
+      <div class="row"><span class="b">Dados</span><span class="ar">+</span><span class="b">Programa</span></div>
+      <div class="row" style="margin:12px 0;"><span class="ar">↓</span></div>
+      <div class="row"><span class="b out">Resultado</span></div>
+      <p class="muted" style="font-size:13pt; margin-top:18px;">Alguém escreveu a regra.</p>
+    </div>
+    <div class="flow ml">
+      <h3>Machine learning</h3>
+      <div class="row"><span class="b">Dados</span><span class="ar">+</span><span class="b">Resultados</span></div>
+      <div class="row" style="margin:12px 0;"><span class="ar">↓</span></div>
+      <div class="row"><span class="b out">Programa</span></div>
+      <p class="muted" style="font-size:13pt; margin-top:18px;">A regra é inferida dos exemplos.</p>
+    </div>
+  </div>
+  <aside class="notes">
+    A inversão é o conceito todo. Em vez de escrever a regra, dá-se exemplos de entrada e saída
+    e o sistema infere a regra. Daí a dependência crítica da qualidade dos exemplos.
+  </aside>
+</section>
+
+<section class="content-slide">
+  <h2>Três formas de aprender</h2>
+  <div class="separator"></div>
+  <div class="mods fill">
+    <div class="mod"><h3>Supervisionada</h3><p>Treina com dados rotulados, em que o resultado certo é conhecido. É o caso de quase toda a IA clínica de imagem.</p></div>
+    <div class="mod"><h3>Não supervisionada</h3><p>Treina com dados sem rótulo. O objetivo é descobrir padrões e estruturas que ninguém apontou.</p></div>
+    <div class="mod"><h3>Por reforço</h3><p>Aprende por ações e recompensas — tenta, recebe sinal, ajusta. É o que afina o comportamento dos chatbots.</p></div>
+  </div>
+</section>
+
+<section class="content-slide">
+  <h2>Deep learning</h2>
+  <div class="separator"></div>
+  <div class="two-col fill" style="grid-template-columns: 1fr 1.15fr; align-items:stretch;">
+    <div>
+      <p>Redes neuronais com muitas camadas entre a entrada e a saída — as chamadas camadas escondidas. Cada camada transforma um pouco a representação.</p>
+      <ul style="margin-top:14px;">
+        <li>Recebe exemplos</li>
+        <li>Ajusta padrões com base em erro e acerto</li>
+        <li>Melhora com repetição</li>
+      </ul>
+    </div>
+    <div class="imgph">
+      <span class="t">Rede neuronal — camadas de entrada, escondidas e saída</span>
+      <span class="d">1400×1000</span>
+      <span class="o">Existe no deck original (slide "Rede Neuronal"). Reaproveitar se possível.</span>
+      <span class="p">Clean schematic diagram of a feed-forward neural network, four columns of circular nodes connected by thin straight lines, input layer on the left, two hidden layers, output layer on the right, deep teal nodes and olive connections on off-white background, flat vector, no text labels, 7:5 landscape</span>
+    </div>
+  </div>
+  <aside class="notes">
+    Sublinhar "melhora com repetição, não com compreensão". É a ponte para a parte dois.
+  </aside>
+</section>
+
+<section class="content-slide">
+  <h2>Como as camadas encaixam</h2>
+  <div class="separator"></div>
+  <div class="nest fill">
+    <div class="lay">
+      <span class="nm">Inteligência artificial</span>
+      <div class="lay l2">
+        <span class="nm">Machine learning</span>
+        <div class="lay l3">
+          <span class="nm">Deep learning</span>
+          <div class="lay l4">
+            <span class="nm">Modelos de linguagem</span>
+            <p>É aqui que vive o ChatGPT, o Claude, o Gemini.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">
+    Slide de arrumação. Se ficar só uma imagem da aula toda, é esta.
+  </aside>
+</section>
+
+<!-- ======================= T2 ======================= -->
+<section class="section-divider">
+  <div class="label">Parte dois</div>
+  <h2>Como prevê texto, e porque não "entende"</h2>
+</section>
+
+<section class="content-slide">
+  <h2>Três coisas que se confundem</h2>
+  <div class="separator"></div>
+  <div class="mods fill">
+    <div class="mod"><h3>NLP</h3><p>Interpretação e estrutura. Trabalhar com linguagem natural — o campo, não o produto.</p></div>
+    <div class="mod"><h3>LLM</h3><p>Geração probabilística. Escrever texto plausível a partir do que veio antes.</p></div>
+    <div class="mod"><h3>Chatbot</h3><p>Interação e interface. É a janela de diálogo por onde falam com o modelo.</p></div>
+  </div>
+  <p class="muted" style="font-size:15pt; margin-top:20px;">
+    O ChatGPT é um chatbot. Por baixo está um LLM. Não são a mesma coisa, e a diferença conta
+    quando se discute o que o sistema faz com o que lá escrevem.
+  </p>
+</section>
+
+<section class="content-slide">
+  <h2>Como se chega a um modelo destes</h2>
+  <div class="separator"></div>
+  <ol style="font-size:17pt; line-height:1.9;">
+    <li class="fragment"><strong>Pré-treino</strong> — o modelo lê um corpus enorme de texto e aprende a prever a palavra seguinte</li>
+    <li class="fragment"><strong>Afinação com instruções</strong> — aprende a responder a pedidos, não só a continuar texto</li>
+    <li class="fragment"><strong>Afinação com preferência humana</strong> — pessoas comparam respostas e o modelo ajusta-se ao que preferem</li>
+  </ol>
+  <p class="ref">Thirunavukarasu, A. J. et al. (2023). Large language models in medicine. <em>Nature Medicine</em>, 29(8), 1930-1940.</p>
+  <aside class="notes">
+    O terceiro passo é o que explica porque é que os modelos são simpáticos e concordantes — e
+    porque é que às vezes concordam com coisas erradas. Voltamos a isto na aula de ética.
+  </aside>
+</section>
+
+<section class="content-slide">
+  <h2>No fundo, é isto</h2>
+  <div class="separator"></div>
+  <div class="pred fill">
+    <p class="sent">"O gato sentou-se no <span class="blank">&nbsp;</span>"</p>
+    <div class="cands">
+      <div class="cand"><span class="w">tapete</span><div class="bar" style="width:88%"></div><span class="pc">muito provável</span></div>
+      <div class="cand"><span class="w">chão</span><div class="bar" style="width:62%"></div><span class="pc">provável</span></div>
+      <div class="cand"><span class="w">sofá</span><div class="bar" style="width:41%"></div><span class="pc">possível</span></div>
+      <div class="cand"><span class="w">telhado</span><div class="bar" style="width:9%"></div><span class="pc">improvável</span></div>
+    </div>
+    <p class="muted" style="font-size:15pt; margin-top:26px;">
+      O modelo estima, para cada palavra do seu vocabulário, a probabilidade de ser a próxima —
+      e escolhe. Depois repete, palavra a palavra. Uma resposta inteira é isto milhares de vezes.
+    </p>
+  </div>
+  <p class="ref">Bernard, E. (2023). What are Large Language Models? NuMind.</p>
+</section>
+
+<section class="content-slide">
+  <h2>O modelo não entende</h2>
+  <div class="separator"></div>
+  <p style="font-size:23pt; color:var(--cel-primary); font-weight:600; line-height:1.4; max-width:24em;">
+    Reconhece padrões — como nós no início da prática clínica.
+  </p>
+  <p style="margin-top:22px;">Quem começa reconhece a apresentação típica antes de perceber a fisiopatologia. Acerta muitas vezes, e falha exactamente onde o padrão engana.</p>
+  <p class="muted" style="font-size:16pt; margin-top:16px;">
+    A diferença é que o interno aprende com o caso que correu mal. O modelo, não — a menos que
+    alguém o volte a treinar.
+  </p>
+  <aside class="notes">
+    Esta analogia é a mais importante do bloco. Vale a pena parar e deixar a sala reagir.
+    É também o gancho para o trabalho de validação que vem na aula de ética.
+  </aside>
+</section>
+
+<!-- ======================= T3 ======================= -->
+<section class="section-divider">
+  <div class="label">Parte três</div>
+  <h2>IA generativa e modalidades</h2>
+</section>
+
+<section class="content-slide">
+  <h2>O que é IA generativa</h2>
+  <div class="separator"></div>
+  <p>Sistemas capazes de <strong>gerar</strong> texto, imagem ou outros média em resposta a pedidos em linguagem comum.</p>
+  <p style="margin-top:16px;">Não vão buscar uma resposta a uma base de dados: criam conteúdo novo, estatisticamente, a partir dos padrões do que viram em treino. É a diferença entre pesquisar e redigir.</p>
+  <aside class="notes">
+    "Não vai buscar, cria" é o ponto que evita metade dos mal-entendidos — e explica porque é
+    que pedir uma referência bibliográfica pode devolver uma que não existe.
+  </aside>
+</section>
+
+<section class="content-slide">
+  <h2>Não é só texto</h2>
+  <div class="separator"></div>
+  <div class="mods fill">
+    <div class="mod"><h3>Texto</h3><p>O que usam todos os dias. Resumir, redigir, traduzir, reformular.</p></div>
+    <div class="mod"><h3>Imagem e vídeo</h3><p>Gerar a partir de descrição, ou transformar o que já existe.</p></div>
+    <div class="mod"><h3>Código</h3><p>Treinados também em linguagens de programação. Escrevem e explicam código.</p></div>
+    <div class="mod"><h3>Moléculas</h3><p>Sequências de aminoácidos e representações moleculares — estrutura de proteínas, descoberta de fármacos.</p></div>
+    <div class="mod"><h3>Multimodal</h3><p>O mesmo modelo aceita texto e imagem em conjunto. É hoje a norma, não a exceção.</p></div>
+    <div class="mod med"><h3>E imagem médica</h3><p>Já há modelos treinados para o domínio — o slide seguinte.</p></div>
+  </div>
+</section>
+
+<section class="content-slide">
+  <h2>MedGemma — quando o modelo é do vosso domínio</h2>
+  <div class="separator"></div>
+  <div class="two-col fill" style="grid-template-columns: 1.1fr 1fr; align-items:stretch;">
+    <div>
+      <p style="font-size:16pt">Família aberta da Google, derivada do Gemma 3, treinada para texto e imagem médica.</p>
+      <ul style="font-size:14.5pt; line-height:1.65;">
+        <li>TC, RM e histopatologia</li>
+        <li>Imagem longitudinal — comparar exames ao longo do tempo</li>
+        <li>Leitura de documentos clínicos</li>
+        <li>O <em>MedASR</em> faz ditado médico com menos 58% de erros em radiografias de tórax do que alternativas genéricas</li>
+      </ul>
+      <p class="muted" style="font-size:13.5pt; margin-top:14px;">
+        Pesos abertos: pode correr dentro da instituição. Guardem este ponto para o slide a seguir.
+      </p>
+    </div>
+    <div class="imgph">
+      <span class="t">Imagem médica interpretada por modelo</span>
+      <span class="d">1100×1400</span>
+      <span class="p">Abstract editorial illustration of a chest radiograph rendered in deep teal monochrome, with subtle olive geometric annotation marks overlaid, clean off-white background, no patient identifiers, no text, no realistic anatomy detail, flat modern medical illustration, 4:5 portrait</span>
+    </div>
+  </div>
+  <p class="ref">research.google/blog — MedGemma 1.5 e MedASR, 13 de janeiro de 2026.</p>
+</section>
+
+<!-- ======================= T4 ======================= -->
+<section class="section-divider">
+  <div class="label">Parte quatro</div>
+  <h2>O panorama actual</h2>
+</section>
+
+<section class="content-slide">
+  <h2>A pergunta que interessa não é qual é o melhor</h2>
+  <div class="separator"></div>
+  <div class="acc fill" style="align-items:stretch;">
+    <div class="op">
+      <h3>Pesos abertos</h3>
+      <ul>
+        <li>Descarregam-se e correm onde quiserem</li>
+        <li>Podem correr <strong>dentro da instituição</strong></li>
+        <li>Os dados não saem</li>
+        <li>Exigem infraestrutura e quem a mantenha</li>
+      </ul>
+      <p class="eg">Llama · Qwen · DeepSeek · MedGemma</p>
+    </div>
+    <div class="cl">
+      <h3>Serviço fechado</h3>
+      <ul>
+        <li>Acedem por browser ou API</li>
+        <li>Estão sempre na versão mais recente</li>
+        <li>O que lá escrevem <strong>sai da instituição</strong></li>
+        <li>Nada para instalar nem manter</li>
+      </ul>
+      <p class="eg">ChatGPT · Claude · Gemini · Copilot</p>
+    </div>
+  </div>
+  <p class="muted" style="font-size:15pt; margin-top:18px;">
+    Para vocês, a pergunta prática é esta: <strong>os dados do doente saem, ou não saem?</strong>
+  </p>
+  <aside class="notes">
+    Não entrar em RGPD a fundo — é matéria da aula 5. Aqui basta que fiquem com a distinção e
+    com o reflexo de perguntar por onde passam os dados antes de escrever qualquer coisa.
+
+    Mistral e Grok têm modelos dos dois lados; se perguntarem, dizer isso.
+  </aside>
+</section>
+
+<section class="content-slide">
+  <h2>Quatro anos em que tudo mudou</h2>
+  <div class="separator"></div>
+  <p>Desde novembro de 2022 saíram dezenas de modelos, de dez famílias diferentes, e a cadência não abrandou.</p>
+  <p style="margin-top:18px;">Em vez de decorar nomes e versões — que estarão desactualizados quando este curso acabar — fica-vos uma linha do tempo que podem consultar e filtrar:</p>
+  <p style="margin-top:20px; font-size:19pt;">
+    <a href="../recursos/timeline-chatbots/" style="color:var(--cel-primary); border-bottom:2px solid var(--cel-secondary);">
+      A evolução dos chatbots, trimestre a trimestre
+    </a>
+  </p>
+  <p class="muted" style="font-size:14pt; margin-top:12px;">
+    Filtra por produto e por tipo de acesso. Fica no Moodle.
+  </p>
+  <aside class="notes">
+    Abrir ao vivo e filtrar por "pesos abertos" — mostra de relance que a alternativa aberta
+    não é marginal. Depois filtrar só MedGemma, para ligar à parte três.
+  </aside>
+</section>
+
+<section class="content-slide">
+  <h2>Narrow, geral, super</h2>
+  <div class="separator"></div>
+  <div class="mods fill" style="grid-template-columns: repeat(3, 1fr);">
+    <div class="mod"><h3>IA estreita</h3><p>Boa numa tarefa. É toda a IA que existe hoje, incluindo a que vamos usar no curso.</p></div>
+    <div class="mod"><h3>IA geral</h3><p>Competente em qualquer tarefa cognitiva humana. Não existe.</p></div>
+    <div class="mod"><h3>Superinteligência</h3><p>Acima do humano em tudo. Hipótese, não tecnologia.</p></div>
+  </div>
+  <p class="muted" style="font-size:15pt; margin-top:20px;">
+    Muito do que se lê na imprensa mistura as três. Saber separá-las é defesa contra exagero —
+    e contra desvalorização.
+  </p>
+</section>
+
+<section class="content-slide">
+  <h2>Como usar: assistente ou líder</h2>
+  <div class="separator"></div>
+  <div class="acc fill" style="align-items:stretch;">
+    <div class="op">
+      <h3>Como assistente</h3>
+      <ul>
+        <li>Em domínios onde <strong>são peritos</strong></li>
+        <li>Conseguem rever o resultado com segurança</li>
+        <li>Acelera uma tarefa que fariam sozinhos</li>
+      </ul>
+      <p class="eg">Risco baixo. É aqui que se começa.</p>
+    </div>
+    <div class="cl">
+      <h3>Como líder</h3>
+      <ul>
+        <li>Em domínios onde <strong>não têm competência</strong></li>
+        <li>O modelo ultrapassa-vos facilmente</li>
+        <li>Permite fazer o que não fariam sozinhos</li>
+      </ul>
+      <p class="eg">Exige muito mais esforço na avaliação da resposta.</p>
+    </div>
+  </div>
+  <aside class="notes">
+    O mais accionável do bloco todo. O paradoxo: é precisamente onde o modelo mais ajuda que
+    menos capacidade têm de detectar que errou.
+  </aside>
+</section>
+
+<section class="content-slide">
+  <h2>O que levar daqui</h2>
+  <div class="separator"></div>
+  <ul style="font-size:18pt; line-height:2;">
+    <li>A IA tem décadas; o que mudou foi o <em>deep learning</em> e a escala de computação</li>
+    <li>Um LLM prevê a palavra seguinte. Reconhece padrões, não compreende</li>
+    <li>As versões diferem muito entre si — e mudam depressa</li>
+    <li>Pesos abertos ou serviço fechado decide se os dados saem da instituição</li>
+    <li>Usar como assistente é seguro; como líder, exige validação a sério</li>
+  </ul>
+</section>
+
+<section class="closing">
+  <div class="accent-line"></div>
+  <h2>A seguir</h2>
+  <p>Interface do ChatGPT, na prática — e depois, engenharia de prompts</p>
+</section>
+
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
+<script>
+  // Serve as duas edições. ?ed=fm → 9ª (CeL); ?ed=st → 10ª (APMGF).
+  (function () {
+    var ed = new URLSearchParams(location.search).get('ed');
+    if (ed !== 'fm' && ed !== 'st') ed = 'fm';
+    document.querySelectorAll('[data-ed]').forEach(function (el) {
+      if (el.dataset.ed !== ed) el.remove();
+    });
+  })();
+  Reveal.initialize({ hash: true, slideNumber: 'c/t', transition: 'fade', plugins: [ RevealNotes ] });
+</script>
+</body>
+</html>
