@@ -70,6 +70,10 @@ html, body {
 
 .reveal strong { font-weight: 600; color: var(--cel-primary); }
 .reveal em { font-style: italic; }
+/* Acrescentado nesta reconstrução (não existe no commit beb24ec da fonte):
+   o reset Meyer do reveal inclui <i> no font: inherit e mata-lhe o itálico.
+   O <em> era reposto, o <i> não. Ver DESIGN.md, secção Proveniência. */
+.reveal i { font-style: italic; }
 
 .reveal a {
   color: var(--cel-primary);
