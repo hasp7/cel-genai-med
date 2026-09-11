@@ -590,3 +590,33 @@ html, body {
     opacity: 1 !important;
   }
 }
+
+/* ===========================================
+   Impressão (?print-pdf)
+   Acrescentado nesta reconstrução — não existe no commit beb24ec da fonte.
+   O CSS de impressão do reveal força em todas as secções display:block,
+   padding:0 e position:absolute com !important, e com center:true empurra
+   cada slide para baixo por um top calculado pela altura do conteúdo. Com o
+   height:100% deste ficheiro, isso deixa uma faixa branca em cima, encosta
+   o conteúdo às margens e parte o flex da capa, separadores e .fill.
+   Só actua em modo de impressão; a apresentação ao vivo não muda.
+   =========================================== */
+html.print-pdf .reveal .slides .pdf-page { background: var(--cel-bg); }
+html.print-pdf .reveal .slides section {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 80px 100px 60px 100px !important;
+}
+html.print-pdf .reveal .slides section.content-slide {
+  display: flex !important;
+  flex-direction: column !important;
+}
+html.print-pdf .reveal .slides section.cover,
+html.print-pdf .reveal .slides section.section-divider,
+html.print-pdf .reveal .slides section.closing {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
