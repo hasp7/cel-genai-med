@@ -22,8 +22,10 @@
 <p class="section-note">
   Uma faixa por edição a decorrer, com as oito sessões no dia em que acontecem. O ponto cheio
   é sessão dada, o vazio é sessão por dar, e a marca vertical é hoje. Passa o rato sobre um
-  ponto para ver o tema.
+  ponto para ver o tema. O período aperta a escala às próximas semanas.
 </p>
+
+<div class="tl-zoom" id="zoom" role="group" aria-label="Período da linha temporal"></div>
 
 <div class="matrix-scroll">
   <div class="tl"><div class="tl-inner" id="timeline"></div></div>
@@ -39,7 +41,6 @@
 
 <ul class="eventos" id="eventos"></ul>
 
-<span class="label-tag">Formadores</span>
 <h2>Decks das sessões</h2>
 <p class="section-note">
   Ponto de acesso aos decks. Cada sessão divide-se em blocos, e cada bloco tem o seu deck.
@@ -136,30 +137,66 @@
 
   /* ---------------- extremos da escala ---------------- */
 
+  /* `dias` recorta uma janela a partir de três dias antes de hoje; sem `dias`, a escala
+     apanha tudo. A janela é sempre virada para a frente — a página serve para ver o que
+     vem, não para rever o que passou. */
+  var JANELAS = [
+    { id: 'tudo', rotulo: 'Tudo' },
+    { id: '6s', rotulo: '6 semanas', dias: 42 },
+    { id: '2s', rotulo: '2 semanas', dias: 14 }
+  ];
+  var janela = 'tudo';
+
   var todas = [];
   EDICOES.forEach(function (ed) { ed.sessoes.forEach(function (s) { todas.push(dia(s.data)); }); });
-  var ini = new Date(Math.min.apply(null, todas));
-  var fim = new Date(Math.max.apply(null, todas));
-  ini.setDate(ini.getDate() - 6);
-  fim.setDate(fim.getDate() + 6);
-  var span = fim - ini;
+  var PRIMEIRA = new Date(Math.min.apply(null, todas));
+  var ULTIMA = new Date(Math.max.apply(null, todas));
+
+  var ini, fim, span;
+
+  function limites() {
+    var j = JANELAS.filter(function (x) { return x.id === janela; })[0];
+    if (!j.dias) {
+      ini = new Date(PRIMEIRA); ini.setDate(ini.getDate() - 6);
+      fim = new Date(ULTIMA); fim.setDate(fim.getDate() + 6);
+    } else {
+      ini = new Date(HOJE); ini.setDate(ini.getDate() - 3);
+      fim = new Date(HOJE); fim.setDate(fim.getDate() + j.dias);
+    }
+    span = fim - ini;
+  }
 
   function pct(d) { return ((d - ini) / span * 100).toFixed(3) + '%'; }
+  /* O fio da edição pode começar antes da janela e acabar depois dela. */
+  function pctPreso(d) {
+    return Math.max(0, Math.min(100, (d - ini) / span * 100)).toFixed(3) + '%';
+  }
 
   /* ---------------- linha temporal ---------------- */
 
   function desenhaTimeline(curso) {
+    limites();
     var alvo = document.getElementById('timeline');
     alvo.innerHTML = '';
+    /* Janela curta espalha poucas sessões por muito espaço; a régua passa de meses a semanas
+       para que a distância entre pontos continue a querer dizer alguma coisa. */
+    var porSemana = span <= 50 * 86400000;
 
     var escala = cria('div', 'tl-escala');
-    var m = new Date(ini.getFullYear(), ini.getMonth() + 1, 1);
+    var m;
+    if (porSemana) {
+      m = new Date(ini);
+      while (m.getDay() !== 1) m.setDate(m.getDate() + 1);   // começa na segunda seguinte
+    } else {
+      m = new Date(ini.getFullYear(), ini.getMonth() + 1, 1);
+    }
     while (m < fim) {
       var marca = cria('div', 'tl-mes');
       marca.style.left = pct(m);
-      texto(marca, MESES[m.getMonth()]);
+      texto(marca, porSemana ? m.getDate() + ' ' + MESES[m.getMonth()] : MESES[m.getMonth()]);
       escala.appendChild(marca);
-      m = new Date(m.getFullYear(), m.getMonth() + 1, 1);
+      if (porSemana) m = new Date(+m + 7 * 86400000);
+      else m = new Date(m.getFullYear(), m.getMonth() + 1, 1);
     }
     alvo.appendChild(escala);
 
@@ -177,21 +214,35 @@
 
       var pista = cria('div', 'tl-pista');
       var datas = ed.sessoes.map(function (s) { return dia(s.data); });
-      pista.style.setProperty('--ini', pct(datas[0]));
-      pista.style.setProperty('--fim', pct(datas[datas.length - 1]));
+      pista.style.setProperty('--ini', pctPreso(datas[0]));
+      pista.style.setProperty('--fim', pctPreso(datas[datas.length - 1]));
 
       var jaMarcou = false;
+      var naJanela = 0;
       ed.sessoes.forEach(function (s, i) {
         var d = datas[i];
-        var ponto = cria('span', 'tl-sessao');
-        if (d < HOJE) { ponto.classList.add('passou'); }
-        else if (+d === +HOJE) { ponto.classList.add('hoje'); jaMarcou = true; }
-        else if (!jaMarcou) { ponto.classList.add('proxima'); jaMarcou = true; }
+        /* O estado calcula-se sempre em todas as sessões: a "seguinte" é a seguinte da
+           edição, não a primeira que calha estar dentro da janela. */
+        var cls = '';
+        if (d < HOJE) { cls = 'passou'; }
+        else if (+d === +HOJE) { cls = 'hoje'; jaMarcou = true; }
+        else if (!jaMarcou) { cls = 'proxima'; jaMarcou = true; }
+        if (d < ini || d > fim) return;
+        naJanela++;
+        var ponto = cria('span', 'tl-sessao' + (cls ? ' ' + cls : ''));
         ponto.style.setProperty('--x', pct(d));
         ponto.title = 'S' + s.n + ' · ' + ddmm(d) + ' · ' + s.blocos[0].tema +
                       (s.nota ? '\n' + s.nota : '');
         pista.appendChild(ponto);
       });
+
+      /* Edição inteiramente fora da janela: em vez de uma faixa vazia e muda, diz porquê. */
+      if (!naJanela) {
+        var nota = texto(cria('span', 'tl-fora'),
+          datas[0] > fim ? 'arranca a ' + ddmm(datas[0])
+                         : 'terminou a ' + ddmm(datas[datas.length - 1]));
+        pista.appendChild(nota);
+      }
 
       if (dentro) {
         var agora = cria('div', 'tl-hoje' + (idx === 0 ? ' rotulo' : ''));
@@ -307,6 +358,24 @@
     b.addEventListener('click', function () { aplica(c.id); });
     filtro.appendChild(b);
   });
+
+  var zoom = document.getElementById('zoom');
+  zoom.appendChild(texto(cria('span'), 'Período:'));
+  JANELAS.forEach(function (j) {
+    var b = cria('button');
+    b.type = 'button';
+    b.dataset.janela = j.id;
+    texto(b, j.rotulo);
+    b.addEventListener('click', function () {
+      janela = j.id;
+      zoom.querySelectorAll('button').forEach(function (x) {
+        x.setAttribute('aria-pressed', String(x.dataset.janela === janela));
+      });
+      desenhaTimeline(actual);
+    });
+    zoom.appendChild(b);
+  });
+  zoom.querySelector('button[data-janela="tudo"]').setAttribute('aria-pressed', 'true');
 
   aplica('todos');
 })();

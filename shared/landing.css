@@ -168,6 +168,42 @@ footer img { height: 28px; opacity: 0.7; }
   border-color: var(--cel-primary);
 }
 
+/* ---- período da linha temporal ---- */
+
+.tl-zoom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.tl-zoom > span {
+  font-size: 0.78rem;
+  color: var(--cel-slate);
+  margin-right: 2px;
+}
+
+.tl-zoom button {
+  font-family: var(--body-font);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--cel-slate);
+  background: var(--cel-white);
+  border: 1px solid #E4E4E4;
+  border-radius: 2px;
+  padding: 4px 11px;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+}
+
+.tl-zoom button:hover { color: var(--cel-primary); border-color: var(--cel-light); }
+
+.tl-zoom button[aria-pressed="true"] {
+  color: var(--cel-secondary);
+  border-color: var(--cel-secondary);
+}
+
 /* ---- linha temporal ---- */
 
 .tl { background: var(--cel-white); padding: 24px 20px 16px; }
@@ -271,6 +307,16 @@ footer img { height: 28px; opacity: 0.7; }
   font-weight: 600;
   color: var(--cel-secondary);
   opacity: 1;
+}
+
+.tl-fora {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--cel-light);
 }
 
 .tl-legenda {
