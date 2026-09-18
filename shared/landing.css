@@ -55,14 +55,16 @@ h2 {
 .section-note { color: var(--cel-slate); margin: 0 0 24px; font-size: 0.95rem; }
 
 .label-tag {
-  display: inline-block;
+  display: block;
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.09em;
   font-weight: 600;
   color: var(--cel-secondary);
-  margin-bottom: 10px;
+  margin: 56px 0 6px;
 }
+
+.label-tag + h2 { margin-top: 0; }
 
 .matrix-scroll { overflow-x: auto; }
 
@@ -144,8 +146,10 @@ footer img { height: 28px; opacity: 0.7; }
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 0 0 28px;
+  margin: 0;
 }
+
+.filtro + .label-tag { margin-top: 32px; }
 
 .filtro button {
   font-family: var(--body-font);
@@ -345,12 +349,12 @@ footer img { height: 28px; opacity: 0.7; }
   background: var(--cel-white);
   border-bottom: 1px solid #E4E4E4;
   border-left: 3px solid transparent;
-  padding: 13px 16px;
+  padding: 12px 16px;
 }
 
 .eventos li.seguinte { border-left-color: var(--cel-secondary); }
 
-.ev-quando { width: 132px; flex: none; }
+.ev-quando { width: 132px; flex: none; line-height: 1.45; }
 
 .ev-data {
   display: block;
@@ -364,7 +368,7 @@ footer img { height: 28px; opacity: 0.7; }
 .ev-daqui { display: block; }
 .eventos li.seguinte .ev-daqui { color: var(--cel-secondary); font-weight: 600; }
 
-.ev-corpo { flex: 1; min-width: 0; }
+.ev-corpo { flex: 1; min-width: 0; line-height: 1.5; }
 .ev-tema { display: block; font-weight: 600; color: var(--cel-text); }
 .ev-onde { font-size: 0.82rem; color: var(--cel-slate); }
 
