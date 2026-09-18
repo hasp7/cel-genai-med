@@ -10,6 +10,22 @@ Convenção de tag: `<EdiçãoID>-aula<N>-v<major>.<minor>.<patch>`
 
 ## Aula 1 — Introdução à IA e ao ChatGPT
 
+### v0.8.0 — variante da 5ª edição de enfermagem, e códigos de edição novos (2026-09-18)
+- O deck passa a servir **três** edições. Ganha variante `enf5`: capa própria
+  (*— Enfermeiros*, 21 de setembro), equipa formativa sem o Miguel Oliveira, que não dá
+  blocos nesta edição, linha do tempo do projeto nas aulas de 2, 9 e 16 de novembro, e
+  cronograma com o feriado de 5 de outubro marcado como linha sem sessão.
+- **Os códigos do `?ed=` mudaram:** `fm` → `med9`, `st` → `apmgf10`, e a nova é `enf5`.
+  Vinham do sufixo do `edition_id`, e a 10ª de medicina (`GenAIMed0926ST`) e a 5ª de
+  enfermagem (`GenAIEnf0926ST`) acabam ambas em `ST` — com o esquema antigo, a
+  enfermagem abria o deck de medicina. Ligações antigas com `?ed=fm` ou `?ed=st` deixam
+  de ser reconhecidas e caem na 9ª edição, que é o valor por omissão.
+- O `aula-1-2/` continua com os códigos antigos: está fora da landing e não tem variante
+  de enfermagem. Quando voltar a circular, alinhar.
+- **Por fechar:** o slide de objetivos fala de "prática clínica, investigação e escrita
+  científica" para as três edições; o programa de enfermagem acrescenta a gestão de
+  cuidados. Decidir se ganha variante.
+
 ### v0.7.1 — segunda página de formadores da APMGF a três colunas (2026-09-10)
 - A 10ª edição tem cinco formadores na segunda página e a duas colunas ficava com uma
   linha órfã. Passa a **três colunas**, que comporta até seis cartões em duas linhas.

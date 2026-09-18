@@ -1,9 +1,12 @@
-# GenAI:med — IA Generativa para Profissionais de Saúde (Médicos)
+# Cursos GenAI — IA Generativa para Profissionais de Saúde
 
-Decks e materiais do curso **GenAI:med** da [Ciência e Letras](https://github.com/hasp7).
-30 horas, 8 sessões.
+Decks e materiais dos cursos **GenAI** da [Ciência e Letras](https://github.com/hasp7):
+`GenAI:med` (médicos), `GenAI:enf` (enfermeiros) e a linha ULSBA. 30 horas e 8 sessões cada.
 
 **Site:** https://hasp7.github.io/cel-genai-med/
+
+> O repositório chama-se `cel-genai-med` de quando só havia a linha de medicina. Se for
+> renomeado, o URL do Pages muda com ele (o GitHub mantém um redireccionamento do nome antigo).
 
 - **Coordenação:** Hélder Palheira, Mariana Canelas Pais
 - **Catálogo e calendário:** os conteúdos, atividades, edições e quizzes vivem em
@@ -16,11 +19,35 @@ Decks e materiais do curso **GenAI:med** da [Ciência e Letras](https://github.c
 
 | Caminho | O que é |
 |---|---|
-| `index.html` | Ponto de acesso dos formadores — lista **só** as sessões já publicadas |
+| `index.html` | Hub: linha temporal das edições, próximos blocos, e o acesso aos decks — lista **só** as sessões já publicadas |
+| `shared/edicoes.js` | Dados das edições que alimentam a linha temporal e os próximos blocos |
 | `aula-N/` | Deck de um bloco (`index.html`, reveal.js). `aula-1/` é o bloco **1.1**; os blocos seguintes ficam em `aula-1-2/`, `aula-2-1/` e assim por diante |
 | `shared/` | `cel-base.css` (identidade dos decks), `landing.css`, logótipo |
 | `versions/` | Snapshots congelados por edição — não se mexe depois de criados |
 | `VERSIONS.md` | O que mudou entre versões, e que edição viu o quê |
+
+## O hub
+
+A página de entrada deixou de ser um índice de decks e passou a acompanhar as turmas.
+Três secções, todas filtráveis pelo seletor de curso no topo:
+
+- **Linha temporal** — uma faixa por edição, as oito sessões no dia em que acontecem, e a marca
+  de hoje. Ponto cheio é sessão dada; a que tem o contorno grosso é a seguinte.
+- **Próximos blocos** — os oito blocos seguintes em todas as edições, com data, horário, tema e
+  formador.
+- **Decks das sessões** — a matriz de sempre, agora com uma coluna por edição publicada.
+
+A linha temporal e os próximos blocos calculam-se em cada visita a partir da data do browser:
+a página mantém-se sozinha entre edições e não precisa de ser tocada só porque passou uma semana.
+
+**Os dados vivem em `shared/edicoes.js`**, transcritos dos YAML em `courses/*/editions/` do repo
+dos cursos. A transcrição é manual até existir a skill de geração; quando um cronograma mudar,
+muda-se lá também.
+
+> **O que não entra aqui.** O site é público. Ligações de Zoom, passwords, URLs de Moodle e notas
+> internas de escala ficam de fora do `edicoes.js` e de tudo o mais que seja publicado — chegam
+> aos formadores pelo convite de calendário. Da escala publica-se o nome de quem dá o bloco, e
+> nada além disso.
 
 ## Como trabalhar
 
@@ -35,6 +62,10 @@ push, e as duas edições em curso apontam para o mesmo deck.
 **Etiqueta das ligações:** só a data, `<dia>/<mês>`, na qual *aquela* edição deu o bloco —
 `12/09` na 9ª, `11/09` na 10ª. O bloco já está identificado na linha, portanto repeti-lo na
 célula era ruído; a data é o que o formador precisa de confirmar num relance.
+
+**Código da edição no `?ed=`.** `med9`, `apmgf10`, `enf5` — o nome da edição, não o sufixo do
+`edition_id`. A 10ª de medicina e a 5ª de enfermagem acabam ambas em `ST`, por isso o sufixo não
+serve para distinguir. Código desconhecido cai na primeira edição da lista.
 
 **Um deck por bloco, não por aula.** Uma sessão de 4H tem dois blocos e cada um é um deck
 próprio, listado na sua linha da landing. `aula-1/` ficou com o nome antigo por já estar

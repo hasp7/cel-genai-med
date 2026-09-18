@@ -131,3 +131,204 @@ footer img { height: 28px; opacity: 0.7; }
 @media (prefers-color-scheme: dark) {
   /* A identidade CeL é clara por definição — mantém-se em ambos os temas. */
 }
+
+/* ============================================================
+   Hub dos cursos — seletor, linha temporal e próximos eventos.
+   Acrescentado quando a landing deixou de ser só de medicina.
+   Regras aditivas: nada aqui altera o que já existia acima.
+   ============================================================ */
+
+/* ---- seletor de curso ---- */
+
+.filtro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 28px;
+}
+
+.filtro button {
+  font-family: var(--body-font);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cel-slate);
+  background: var(--cel-white);
+  border: 1px solid #E4E4E4;
+  border-radius: 2px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: color .15s, border-color .15s, background .15s;
+}
+
+.filtro button:hover { color: var(--cel-primary); border-color: var(--cel-light); }
+
+.filtro button[aria-pressed="true"] {
+  color: var(--cel-white);
+  background: var(--cel-primary);
+  border-color: var(--cel-primary);
+}
+
+/* ---- linha temporal ---- */
+
+.tl { background: var(--cel-white); padding: 24px 20px 16px; }
+
+.tl-inner { min-width: 680px; }
+
+.tl-escala {
+  position: relative;
+  height: 20px;
+  margin-left: var(--tl-meta, 200px);
+  border-bottom: 1px solid #E4E4E4;
+}
+
+.tl-mes {
+  position: absolute;
+  top: 0;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  font-weight: 600;
+  color: var(--cel-slate);
+  padding-left: 6px;
+  border-left: 1px solid #E4E4E4;
+  height: 20px;
+  line-height: 20px;
+}
+
+.tl-linha { display: flex; align-items: center; min-height: 60px; }
+
+.tl-meta {
+  width: var(--tl-meta, 200px);
+  flex: none;
+  padding-right: 20px;
+  line-height: 1.3;
+}
+
+.tl-meta b {
+  display: block;
+  font-family: var(--heading-font);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--cel-primary);
+}
+
+.tl-meta span { display: block; font-size: 0.72rem; color: var(--cel-slate); }
+
+.tl-pista {
+  position: relative;
+  flex: 1;
+  height: 60px;
+  border-top: 1px solid #F0F0F0;
+}
+
+.tl-pista::before {                 /* o fio da edição, do 1º ao último dia */
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: var(--ini);
+  width: calc(var(--fim) - var(--ini));
+  height: 2px;
+  background: var(--cel-light);
+  transform: translateY(-1px);
+}
+
+.tl-sessao {
+  position: absolute;
+  top: 50%;
+  left: var(--x);
+  width: 13px;
+  height: 13px;
+  margin: -7px 0 0 -7px;
+  border-radius: 50%;
+  background: var(--cel-white);
+  border: 2px solid var(--cel-light);
+  cursor: help;
+}
+
+.tl-sessao.passou { background: var(--cel-primary); border-color: var(--cel-primary); }
+.tl-sessao.hoje   { background: var(--cel-secondary); border-color: var(--cel-secondary); box-shadow: 0 0 0 4px rgba(109,109,62,.18); }
+.tl-sessao.proxima { border-color: var(--cel-secondary); border-width: 3px; }
+
+.tl-hoje {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--x);
+  width: 1px;
+  background: var(--cel-secondary);
+  opacity: .5;
+  pointer-events: none;
+}
+
+.tl-hoje.rotulo::after {
+  content: "hoje";
+  position: absolute;
+  top: -16px;
+  left: 4px;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 600;
+  color: var(--cel-secondary);
+  opacity: 1;
+}
+
+.tl-legenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #F0F0F0;
+  font-size: 0.78rem;
+  color: var(--cel-slate);
+}
+
+.tl-legenda i { display: inline-block; width: 11px; height: 11px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; border: 2px solid var(--cel-light); background: var(--cel-white); font-style: normal; }
+.tl-legenda i.passou { background: var(--cel-primary); border-color: var(--cel-primary); }
+.tl-legenda i.proxima { border-color: var(--cel-secondary); border-width: 3px; }
+
+/* ---- próximos eventos ---- */
+
+.eventos { list-style: none; margin: 0; padding: 0; }
+
+.eventos li {
+  display: flex;
+  gap: 18px;
+  align-items: baseline;
+  background: var(--cel-white);
+  border-bottom: 1px solid #E4E4E4;
+  border-left: 3px solid transparent;
+  padding: 13px 16px;
+}
+
+.eventos li.seguinte { border-left-color: var(--cel-secondary); }
+
+.ev-quando { width: 132px; flex: none; }
+
+.ev-data {
+  display: block;
+  font-family: var(--heading-font);
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--cel-primary);
+}
+
+.ev-hora, .ev-daqui { font-size: 0.78rem; color: var(--cel-slate); }
+.ev-daqui { display: block; }
+.eventos li.seguinte .ev-daqui { color: var(--cel-secondary); font-weight: 600; }
+
+.ev-corpo { flex: 1; min-width: 0; }
+.ev-tema { display: block; font-weight: 600; color: var(--cel-text); }
+.ev-onde { font-size: 0.82rem; color: var(--cel-slate); }
+.ev-quem { font-size: 0.82rem; color: var(--cel-slate); }
+.ev-quem b { font-weight: 600; color: var(--cel-text); }
+.ev-aberto { color: var(--cel-secondary); font-style: italic; }
+
+.vazio { background: var(--cel-white); padding: 20px 16px; color: var(--cel-slate); font-size: 0.9rem; }
+
+@media (max-width: 720px) {
+  .eventos li { flex-direction: column; gap: 4px; }
+  .ev-quando { width: auto; }
+  .ev-daqui { display: inline; margin-left: 8px; }
+}

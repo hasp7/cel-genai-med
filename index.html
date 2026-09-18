@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GenAI:med — Ciência e Letras</title>
+<title>Cursos GenAI — Ciência e Letras</title>
 <link rel="stylesheet" href="shared/landing.css">
 </head>
 <body>
@@ -11,12 +11,36 @@
 
 <header>
   <div class="accent-line"></div>
-  <h1>IA Generativa para Profissionais de Saúde — Médicos</h1>
-  <p class="subtitle">GenAI:med · Ciência e Letras</p>
+  <h1>IA Generativa para Profissionais de Saúde</h1>
+  <p class="subtitle">Cursos GenAI · Ciência e Letras</p>
 </header>
 
+<div class="filtro" id="filtro" role="group" aria-label="Filtrar por curso"></div>
+
+<span class="label-tag">Onde vão as turmas</span>
+<h2>Linha temporal</h2>
+<p class="section-note">
+  Uma faixa por edição a decorrer, com as oito sessões no dia em que acontecem. O ponto cheio
+  é sessão dada, o vazio é sessão por dar, e a marca vertical é hoje. Passa o rato sobre um
+  ponto para ver o tema.
+</p>
+
+<div class="matrix-scroll">
+  <div class="tl"><div class="tl-inner" id="timeline"></div></div>
+</div>
+
+<span class="label-tag">O que vem a seguir</span>
+<h2>Próximos blocos</h2>
+<p class="section-note">
+  Os oito blocos seguintes, por ordem, em todas as edições. Data, horário, tema e quem dá —
+  nada mais. Ligações de sala e acessos ao Moodle não vivem aqui; chegam aos formadores pelo
+  convite de calendário.
+</p>
+
+<ul class="eventos" id="eventos"></ul>
+
 <span class="label-tag">Formadores</span>
-<h2>Sessões</h2>
+<h2>Decks das sessões</h2>
 <p class="section-note">
   Ponto de acesso aos decks. Cada sessão divide-se em blocos, e cada bloco tem o seu deck.
   A entrada abre o deck na data prevista para essa edição; os blocos vão sendo publicados
@@ -24,45 +48,43 @@
 </p>
 
 <div class="matrix-scroll">
-<table>
+<table id="decks">
   <thead>
     <tr>
       <th>Bloco</th>
-      <th class="current">9ª edição GenAI-Medicos-CeL<br><span class="pill">sábados · 08h30–12h30</span></th>
-      <th class="current">10ª edição GenAI-APMgF<br><span class="pill">sextas · 15h00–19h00</span></th>
+      <th class="current" data-curso="med">9ª edição GenAI-Medicos-CeL<br><span class="pill">sábados · 08h30–12h30</span></th>
+      <th class="current" data-curso="med">10ª edição GenAI-APMgF<br><span class="pill">sextas · 15h00–19h00</span></th>
+      <th class="current" data-curso="enf">5ª edição GenAI-Enfermeiros<br><span class="pill">segundas · 16h00–20h00</span></th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th><span class="num">1.1</span>Apresentação do curso</th>
-      <td><a href="aula-1/?ed=fm">12/09</a></td>
-      <td><a href="aula-1/?ed=st">11/09</a></td>
-    </tr>
-    <tr>
-      <th><span class="num">1.2</span>Introdução à IA, aos LLMs e à IA Generativa</th>
-      <td><a href="aula-1-2/?ed=fm">12/09</a></td>
-      <td><a href="aula-1-2/?ed=st">11/09</a></td>
+      <td data-curso="med"><a href="aula-1/?ed=med9">12/09</a></td>
+      <td data-curso="med"><a href="aula-1/?ed=apmgf10">11/09</a></td>
+      <td data-curso="enf"><a href="aula-1/?ed=enf5">21/09</a></td>
     </tr>
   </tbody>
 </table>
 </div>
+<p class="section-note" id="sem-decks" hidden>Sem decks publicados para este curso.</p>
 
 <span class="label-tag">Apoio</span>
 <h2>Recursos</h2>
 <p class="section-note">
-  Materiais de apoio, usáveis em sala ou deixados aos formandos.
+  Materiais de apoio, usáveis em sala ou deixados aos formandos. Não dependem de edição —
+  servem qualquer turma.
 </p>
 <div class="matrix-scroll">
 <table>
   <thead>
-    <tr><th>Recurso</th><th>Para que serve</th><th>Blocos</th></tr>
+    <tr><th>Recurso</th><th>Para que serve</th></tr>
   </thead>
   <tbody>
     <tr>
       <th><a href="recursos/timeline-chatbots/">A evolução dos chatbots</a></th>
       <td>Timeline trimestre a trimestre, de nov 2022 ao presente. Filtra por produto e por
           tipo de acesso — pesos abertos ou serviço fechado.</td>
-      <td>1.2</td>
     </tr>
   </tbody>
 </table>
@@ -85,5 +107,219 @@
 </footer>
 
 </div>
+
+<script src="shared/edicoes.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var MESES = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+  var DIAS  = ['dom','seg','ter','qua','qui','sex','sáb'];
+
+  /* Datas tratadas como dias civis, sem fuso: o dia é o que interessa, e comparar
+     objetos Date com hora zero evita que a sessão de hoje conte como passada. */
+  function dia(iso) { var p = iso.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function hoje() { var d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  function curto(d) { return DIAS[d.getDay()] + ', ' + d.getDate() + ' ' + MESES[d.getMonth()]; }
+  function ddmm(d) { return String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0'); }
+
+  /* "16h00–18h00" -> minutos desde a meia-noite do início do bloco */
+  function inicioBloco(h) {
+    var m = /^(\d{1,2})h(\d{2})/.exec(h);
+    return m ? (+m[1]) * 60 + (+m[2]) : 0;
+  }
+
+  function texto(el, t) { el.textContent = t; return el; }
+  function cria(tag, cls) { var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+
+  var HOJE = hoje();
+
+  /* ---------------- extremos da escala ---------------- */
+
+  var todas = [];
+  EDICOES.forEach(function (ed) { ed.sessoes.forEach(function (s) { todas.push(dia(s.data)); }); });
+  var ini = new Date(Math.min.apply(null, todas));
+  var fim = new Date(Math.max.apply(null, todas));
+  ini.setDate(ini.getDate() - 6);
+  fim.setDate(fim.getDate() + 6);
+  var span = fim - ini;
+
+  function pct(d) { return ((d - ini) / span * 100).toFixed(3) + '%'; }
+
+  /* ---------------- linha temporal ---------------- */
+
+  function desenhaTimeline(curso) {
+    var alvo = document.getElementById('timeline');
+    alvo.innerHTML = '';
+
+    var escala = cria('div', 'tl-escala');
+    var m = new Date(ini.getFullYear(), ini.getMonth() + 1, 1);
+    while (m < fim) {
+      var marca = cria('div', 'tl-mes');
+      marca.style.left = pct(m);
+      texto(marca, MESES[m.getMonth()]);
+      escala.appendChild(marca);
+      m = new Date(m.getFullYear(), m.getMonth() + 1, 1);
+    }
+    alvo.appendChild(escala);
+
+    var visiveis = EDICOES.filter(function (ed) { return curso === 'todos' || ed.curso === curso; });
+    var dentro = HOJE >= ini && HOJE <= fim;
+
+    visiveis.forEach(function (ed, idx) {
+      var linha = cria('div', 'tl-linha');
+
+      var meta = cria('div', 'tl-meta');
+      meta.appendChild(texto(cria('b'), ed.nome));
+      meta.appendChild(texto(cria('span'), ed.sub));
+      meta.appendChild(texto(cria('span'), ed.horario));
+      linha.appendChild(meta);
+
+      var pista = cria('div', 'tl-pista');
+      var datas = ed.sessoes.map(function (s) { return dia(s.data); });
+      pista.style.setProperty('--ini', pct(datas[0]));
+      pista.style.setProperty('--fim', pct(datas[datas.length - 1]));
+
+      var jaMarcou = false;
+      ed.sessoes.forEach(function (s, i) {
+        var d = datas[i];
+        var ponto = cria('span', 'tl-sessao');
+        if (d < HOJE) { ponto.classList.add('passou'); }
+        else if (+d === +HOJE) { ponto.classList.add('hoje'); jaMarcou = true; }
+        else if (!jaMarcou) { ponto.classList.add('proxima'); jaMarcou = true; }
+        ponto.style.setProperty('--x', pct(d));
+        ponto.title = 'S' + s.n + ' · ' + ddmm(d) + ' · ' + s.blocos[0].tema +
+                      (s.nota ? '\n' + s.nota : '');
+        pista.appendChild(ponto);
+      });
+
+      if (dentro) {
+        var agora = cria('div', 'tl-hoje' + (idx === 0 ? ' rotulo' : ''));
+        agora.style.setProperty('--x', pct(HOJE));
+        pista.appendChild(agora);
+      }
+
+      linha.appendChild(pista);
+      alvo.appendChild(linha);
+    });
+
+    if (!visiveis.length) {
+      alvo.appendChild(texto(cria('p', 'vazio'), 'Sem edições a decorrer neste curso.'));
+      return;
+    }
+
+    var leg = cria('div', 'tl-legenda');
+    leg.innerHTML = '<span><i class="passou"></i>sessão dada</span>' +
+                    '<span><i class="proxima"></i>sessão seguinte</span>' +
+                    '<span><i></i>por dar</span>';
+    alvo.appendChild(leg);
+  }
+
+  /* ---------------- próximos blocos ---------------- */
+
+  function proximos(curso, quantos) {
+    var lista = [];
+    EDICOES.forEach(function (ed) {
+      if (curso !== 'todos' && ed.curso !== curso) return;
+      ed.sessoes.forEach(function (s) {
+        var d = dia(s.data);
+        if (d < HOJE) return;
+        s.blocos.forEach(function (b, i) {
+          lista.push({ ed: ed, s: s, b: b, i: i, d: d, min: inicioBloco(b.h) });
+        });
+      });
+    });
+    lista.sort(function (a, z) { return (a.d - z.d) || (a.min - z.min); });
+    return lista.slice(0, quantos);
+  }
+
+  function desenhaEventos(curso) {
+    var alvo = document.getElementById('eventos');
+    alvo.innerHTML = '';
+
+    var itens = proximos(curso, 8);
+    if (!itens.length) {
+      alvo.appendChild(texto(cria('li', 'vazio'), 'Não há blocos por dar neste curso.'));
+      return;
+    }
+
+    itens.forEach(function (it, n) {
+      var li = cria('li', n === 0 ? 'seguinte' : '');
+
+      var quando = cria('div', 'ev-quando');
+      quando.appendChild(texto(cria('span', 'ev-data'), curto(it.d)));
+      quando.appendChild(texto(cria('span', 'ev-hora'), it.b.h));
+      var faltam = Math.round((it.d - HOJE) / 86400000);
+      quando.appendChild(texto(cria('span', 'ev-daqui'),
+        faltam === 0 ? 'hoje' : faltam === 1 ? 'amanhã' : 'daqui a ' + faltam + ' dias'));
+      li.appendChild(quando);
+
+      var corpo = cria('div', 'ev-corpo');
+      corpo.appendChild(texto(cria('span', 'ev-tema'), it.b.tema));
+      var onde = cria('span', 'ev-onde');
+      /* Com um só bloco na sessão, numerá-lo engana: tanto pode ser o 1 como o 2,
+         e a `nota` da sessão é que diz qual. */
+      texto(onde, it.ed.nome + ' · sessão ' + it.s.n +
+                  (it.s.blocos.length > 1 ? ' · bloco ' + (it.i + 1) : '') +
+                  (it.s.nota ? ' · ' + it.s.nota : ''));
+      corpo.appendChild(onde);
+      corpo.appendChild(document.createElement('br'));
+
+      var quem = cria('span', 'ev-quem');
+      if (!it.b.f.length) {
+        quem.innerHTML = '<span class="ev-aberto">formador por atribuir</span>';
+      } else {
+        quem.innerHTML = it.b.f.map(function (n) { return '<b>' + n + '</b>'; }).join(' e ') +
+                         (it.b.aberto ? ' <span class="ev-aberto">· por confirmar</span>' : '');
+      }
+      corpo.appendChild(quem);
+
+      li.appendChild(corpo);
+      alvo.appendChild(li);
+    });
+  }
+
+  /* ---------------- tabela dos decks ---------------- */
+
+  function filtraDecks(curso) {
+    var tabela = document.getElementById('decks');
+    var visiveis = 0;
+    tabela.querySelectorAll('[data-curso]').forEach(function (cel) {
+      var mostra = curso === 'todos' || cel.dataset.curso === curso;
+      cel.hidden = !mostra;
+      if (mostra && cel.tagName === 'TD') visiveis++;
+    });
+    var vazio = !visiveis;
+    tabela.parentElement.hidden = vazio;
+    document.getElementById('sem-decks').hidden = !vazio;
+  }
+
+  /* ---------------- seletor ---------------- */
+
+  var actual = 'todos';
+
+  function aplica(curso) {
+    actual = curso;
+    document.querySelectorAll('#filtro button').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.curso === curso));
+    });
+    desenhaTimeline(curso);
+    desenhaEventos(curso);
+    filtraDecks(curso);
+  }
+
+  var filtro = document.getElementById('filtro');
+  CURSOS.forEach(function (c) {
+    var b = cria('button');
+    b.type = 'button';
+    b.dataset.curso = c.id;
+    texto(b, c.rotulo);
+    b.addEventListener('click', function () { aplica(c.id); });
+    filtro.appendChild(b);
+  });
+
+  aplica('todos');
+})();
+</script>
 </body>
 </html>
