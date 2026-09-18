@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contexto persistente — construir e avaliar — GenAI Saúde</title>
+<meta name="description" content="Ferramenta de apoio do curso GenAI da Ciência e Letras: constrói uma especificação de contexto pessoal para ChatGPT ou Claude e avalia o que já tens configurado, com diagnóstico por dimensão. Corre no browser, nada sai do computador.">
+<link rel="stylesheet" href="../../shared/landing.css">
+<style>
+  .lede { color: var(--cel-slate); max-width: 70ch; margin: 0; }
+
+  /* ---- separadores de modo ---- */
+  .modos { display: flex; gap: 0; margin: 40px 0 8px; border-bottom: 2px solid #E0E0E0; }
+  .modo { font: 600 0.95rem/1 var(--heading-font); padding: 14px 22px; cursor: pointer;
+          background: none; border: 0; border-bottom: 2px solid transparent;
+          margin-bottom: -2px; color: var(--cel-slate); }
+  .modo[aria-selected="true"] { color: var(--cel-primary); border-bottom-color: var(--cel-secondary); }
+  .modo:hover { color: var(--cel-text); }
+  .painel[hidden] { display: none; }
+
+  /* ---- privacidade ---- */
+  .privado { display: flex; gap: 10px; align-items: flex-start; background: var(--cel-white);
+             border-left: 3px solid var(--cel-secondary); padding: 12px 16px;
+             font-size: .84rem; color: var(--cel-slate); margin: 20px 0 0; }
+  .privado strong { color: var(--cel-text); font-weight: 600; }
+
+  /* ---- secções do construtor ---- */
+  .sec { background: var(--cel-white); border-left: 3px solid var(--cel-light);
+         padding: 20px 22px; margin-bottom: 14px; }
+  .sec.preenchida { border-left-color: var(--cel-primary); }
+  .sec-cab { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .sec-letra { font: 700 .82rem/1 var(--heading-font); color: var(--cel-white);
+               background: var(--cel-primary); width: 26px; height: 26px; flex: 0 0 26px;
+               display: inline-flex; align-items: center; justify-content: center; }
+  .sec h3 { font-family: var(--heading-font); font-weight: 600; font-size: 1.02rem;
+            color: var(--cel-primary); margin: 0; }
+  .sec-camada { font-size: .68rem; text-transform: uppercase; letter-spacing: .1em;
+                font-weight: 600; color: var(--cel-secondary); margin-left: auto; }
+  .sec-ajuda { font-size: .87rem; color: var(--cel-slate); margin: 8px 0 12px; max-width: 76ch; }
+  .sec textarea { width: 100%; min-height: 84px; font: 400 .9rem/1.55 var(--body-font);
+                  color: var(--cel-text); background: #FBFBFA; border: 1px solid #DCDCDC;
+                  padding: 11px 13px; resize: vertical; }
+  .sec textarea:focus { outline: 2px solid var(--cel-light); outline-offset: -2px; }
+  .sec-pe { display: flex; justify-content: space-between; align-items: center;
+            gap: 14px; margin-top: 7px; flex-wrap: wrap; }
+  .exemplo-btn { background: none; border: 0; padding: 0; cursor: pointer;
+                 font: 400 .8rem/1 var(--body-font); color: var(--cel-primary);
+                 border-bottom: 1px solid var(--cel-light); }
+  .exemplo { background: #F7F7F4; border-left: 2px solid var(--cel-light);
+             padding: 11px 14px; margin-top: 10px; font-size: .84rem;
+             color: var(--cel-text); white-space: pre-wrap; line-height: 1.5; }
+  .exemplo[hidden] { display: none; }
+  .conta { font-size: .76rem; color: var(--cel-slate); font-variant-numeric: tabular-nums; }
+
+  /* ---- avisos por linha ---- */
+  .avisos { list-style: none; margin: 9px 0 0; padding: 0; }
+  .avisos li { font-size: .81rem; line-height: 1.45; color: var(--cel-text);
+               padding: 5px 0 5px 12px; border-left: 2px solid var(--g-nota); }
+  .avisos li.g-critico { border-left-color: var(--g-critico); }
+  .avisos li.g-aviso  { border-left-color: var(--g-aviso); }
+  .avisos li b { font-weight: 600; }
+
+  /* ---- gravidade: azeitona escurecida, nunca vermelho (ver DESIGN.md) ---- */
+  :root { --g-critico: #5A5A2E; --g-aviso: #8A8A5A; --g-nota: #B8B59D; }
+
+  /* ---- painel de pontuação ---- */
+  .placar { background: var(--cel-primary); color: var(--cel-white);
+            padding: 22px 24px; margin: 0 0 18px; }
+  .placar-topo { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .placar .num { font: 700 2.6rem/1 var(--heading-font); font-variant-numeric: tabular-nums; }
+  .placar .max { font-size: 1rem; opacity: .65; }
+  .placar .grau { font: 600 1.1rem/1 var(--heading-font); margin-left: auto;
+                  border: 1px solid rgba(255,255,255,.45); padding: 7px 14px; }
+  .placar .nota { font-size: .88rem; opacity: .85; margin: 12px 0 0; max-width: 72ch; }
+  .placar .travao { font-size: .84rem; margin: 12px 0 0; padding: 10px 13px;
+                    background: rgba(255,255,255,.10);
+                    border-left: 2px solid var(--cel-light); max-width: 72ch; }
+
+  .dims { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+          gap: 10px 22px; margin: 0 0 26px; }
+  .dim { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; align-items: center;
+         padding: 7px 0; border-bottom: 1px solid #E8E8E8; }
+  .dim .n { font-size: .87rem; font-weight: 600; color: var(--cel-text); }
+  .dim .v { font-size: .8rem; color: var(--cel-slate); font-variant-numeric: tabular-nums; }
+  .dim .barra { grid-column: 1 / -1; height: 4px; background: #E4E4E4; }
+  .dim .barra i { display: block; height: 4px; background: var(--cel-primary); }
+  .dim.d0 .barra i { background: var(--g-critico); }
+  .dim.d1 .barra i { background: var(--g-aviso); }
+  .dim .q { grid-column: 1 / -1; font-size: .76rem; color: var(--cel-slate); }
+
+  /* ---- achados ---- */
+  .achado { background: var(--cel-white); border-left: 3px solid var(--g-nota);
+            padding: 16px 20px; margin-bottom: 12px; }
+  .achado.g-critico { border-left-color: var(--g-critico); }
+  .achado.g-aviso { border-left-color: var(--g-aviso); }
+  .achado-cab { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap; }
+  .sev { font-size: .66rem; text-transform: uppercase; letter-spacing: .1em; font-weight: 700;
+         color: var(--cel-white); background: var(--g-nota); padding: 3px 8px; }
+  .g-critico .sev { background: var(--g-critico); }
+  .g-aviso .sev { background: var(--g-aviso); }
+  .achado h4 { font-family: var(--heading-font); font-weight: 600; font-size: .98rem;
+               margin: 0; color: var(--cel-text); }
+  .achado .onde { font-size: .72rem; color: var(--cel-slate); margin-left: auto; }
+  .excerto { font-family: var(--body-font); font-size: .86rem; background: #F7F7F4;
+             border-left: 2px solid var(--cel-light); padding: 9px 13px; margin: 11px 0 0;
+             color: var(--cel-text); white-space: pre-wrap; }
+  .achado dl { margin: 12px 0 0; display: grid; grid-template-columns: auto 1fr;
+               gap: 6px 14px; align-items: baseline; }
+  .achado dt { font-size: .68rem; text-transform: uppercase; letter-spacing: .09em;
+               font-weight: 700; color: var(--cel-secondary); }
+  .achado dd { margin: 0; font-size: .87rem; line-height: 1.55; color: var(--cel-text); }
+  .achado .fonte { margin: 11px 0 0; font-size: .77rem; color: var(--cel-slate); }
+  .achado .fonte a { color: var(--cel-primary); }
+
+  /* ---- controlos ---- */
+  .controlos { display: flex; gap: 22px; flex-wrap: wrap; align-items: flex-end;
+               margin: 0 0 16px; }
+  .campo { display: flex; flex-direction: column; gap: 5px; }
+  .campo label { font-size: .7rem; text-transform: uppercase; letter-spacing: .09em;
+                 font-weight: 600; color: var(--cel-secondary); }
+  .campo select { font: 400 .88rem/1 var(--body-font); padding: 8px 10px;
+                  border: 1px solid #DCDCDC; background: var(--cel-white); color: var(--cel-text); }
+  .botao { font: 600 .88rem/1 var(--body-font); padding: 11px 20px; cursor: pointer;
+           background: var(--cel-primary); color: var(--cel-white); border: 0; }
+  .botao:hover { background: #26404E; }
+  .botao.sec2 { background: none; color: var(--cel-primary); border: 1px solid #CFCFCF; }
+  .botao.sec2:hover { background: #EDEDEA; }
+  .acoes { display: flex; gap: 10px; flex-wrap: wrap; margin: 18px 0 0; }
+
+  #avaliar-texto { width: 100%; min-height: 220px; font: 400 .92rem/1.6 var(--body-font);
+                   color: var(--cel-text); background: var(--cel-white);
+                   border: 1px solid #DCDCDC; padding: 14px 16px; resize: vertical; }
+
+  /* ---- saída por fornecedor ---- */
+  .abas { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 14px; }
+  .aba { font: 600 .82rem/1 var(--body-font); padding: 9px 16px; cursor: pointer;
+         background: var(--cel-white); border: 1px solid #DCDCDC; color: var(--cel-slate); }
+  .aba[aria-selected="true"] { color: var(--cel-primary); border-color: var(--cel-primary); }
+  .bloco { background: var(--cel-white); border: 1px solid #E4E4E4; margin-bottom: 14px; }
+  .bloco-cab { display: flex; gap: 12px; align-items: baseline; flex-wrap: wrap;
+               padding: 13px 18px; border-bottom: 1px solid #EEE; }
+  .bloco-cab h4 { font-family: var(--heading-font); font-weight: 600; font-size: .95rem;
+                  margin: 0; color: var(--cel-primary); }
+  .bloco-cab .onde2 { font-size: .77rem; color: var(--cel-slate); }
+  .bloco-cab .copiar { margin-left: auto; }
+  .bloco pre { margin: 0; padding: 15px 18px; font: 400 .85rem/1.6 var(--body-font);
+               white-space: pre-wrap; color: var(--cel-text); max-height: 340px; overflow: auto; }
+  .bloco .vazio2 { padding: 15px 18px; font-size: .86rem; color: var(--cel-slate); }
+  .copiar { font: 600 .74rem/1 var(--body-font); padding: 7px 13px; cursor: pointer;
+            background: none; border: 1px solid #CFCFCF; color: var(--cel-primary); }
+  .copiar:hover { background: #EDEDEA; }
+
+  .vazio { color: var(--cel-slate); font-size: .92rem; padding: 26px 0; }
+  .fontes { font-size: .82rem; color: var(--cel-slate); }
+  .fontes li { margin-bottom: 5px; }
+  .fontes a { color: var(--cel-primary); }
+
+  @media (max-width: 620px) {
+    .modo { padding: 12px 14px; font-size: .88rem; }
+    .placar .grau { margin-left: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="accent-line"></div>
+  <h1>Contexto persistente: construir e avaliar</h1>
+  <p class="lede">
+    O que escreve nas instruções permanentes do ChatGPT ou do Claude influencia todas as
+    respostas seguintes, incluindo as de temas que nada têm a ver. Esta ferramenta ajuda a
+    escrever essa configuração e a examinar a que já tem. Material de apoio do bloco sobre
+    personalização e contexto persistente.
+  </p>
+  <div class="privado">
+    <div>
+      <strong>Nada sai deste computador.</strong> A análise corre no browser, sem servidor e
+      sem chave de API. O rascunho fica guardado só neste navegador — mesmo assim, não cole
+      aqui dados de doentes, que é precisamente o que a ferramenta o vai aconselhar a não fazer.
+    </div>
+  </div>
+</header>
+
+<div class="modos" role="tablist" aria-label="Modo">
+  <button class="modo" id="tab-construir" role="tab" aria-selected="true"
+          aria-controls="p-construir">Construir</button>
+  <button class="modo" id="tab-avaliar" role="tab" aria-selected="false"
+          aria-controls="p-avaliar">Avaliar o que já tenho</button>
+</div>
+
+<!-- ══════════════════════ CONSTRUIR ══════════════════════ -->
+<section class="painel" id="p-construir" role="tabpanel" aria-labelledby="tab-construir">
+
+  <p class="section-note" style="margin-top:28px">
+    Seis secções, no máximo 300 palavras no total. O limite faz parte do exercício: obriga a
+    escolher o que é mesmo estável. As secções A a F alimentam as instruções de perfil; as
+    marcadas como <em>projeto</em> pertencem a um trabalho delimitado e não ao perfil.
+  </p>
+
+  <div id="secoes"></div>
+
+  <div class="acoes">
+    <button class="botao" id="btn-avaliar-construido">Avaliar o que construí</button>
+    <button class="botao sec2" id="btn-exportar">Guardar ficheiro</button>
+    <button class="botao sec2" id="btn-importar">Abrir ficheiro</button>
+    <button class="botao sec2" id="btn-limpar">Limpar tudo</button>
+    <input type="file" id="ficheiro" accept="application/json" hidden>
+  </div>
+
+  <span class="label-tag" style="margin-top:48px">Pronto a colar</span>
+  <h2>Onde é que cada parte vai</h2>
+  <p class="section-note">
+    A mesma especificação, arrumada pelas camadas reais de cada produto. Os nomes dos campos
+    mudam com as versões — o que não muda é a separação entre o que vale para todas as
+    conversas e o que pertence a um projeto.
+  </p>
+  <div class="abas" role="tablist" aria-label="Fornecedor">
+    <button class="aba" role="tab" aria-selected="true" data-forn="chatgpt">ChatGPT</button>
+    <button class="aba" role="tab" aria-selected="false" data-forn="claude">Claude</button>
+    <button class="aba" role="tab" aria-selected="false" data-forn="neutro">Neutro</button>
+  </div>
+  <div id="saida"></div>
+</section>
+
+<!-- ══════════════════════ AVALIAR ══════════════════════ -->
+<section class="painel" id="p-avaliar" role="tabpanel" aria-labelledby="tab-avaliar" hidden>
+
+  <p class="section-note" style="margin-top:28px">
+    Cole aqui o que já tem configurado — instruções personalizadas, instruções de perfil,
+    instruções de projeto — e veja o que a análise levanta. Se ainda não tem nada, abra as
+    definições de personalização do produto que usa e copie de lá.
+  </p>
+
+  <div class="controlos">
+    <div class="campo">
+      <label for="camada">Onde está este texto</label>
+      <select id="camada">
+        <option value="global">Perfil — vale para todas as conversas</option>
+        <option value="projeto">Projeto — vale só dentro de um trabalho</option>
+      </select>
+    </div>
+    <div class="campo">
+      <label for="plano">Orçamento de caracteres</label>
+      <select id="plano">
+        <option value="5000">Plano pago (~5000)</option>
+        <option value="1500">Plano gratuito (~1500)</option>
+      </select>
+    </div>
+    <button class="botao" id="btn-analisar">Analisar</button>
+  </div>
+
+  <textarea id="avaliar-texto" spellcheck="true"
+    placeholder="Cole aqui o texto das suas instruções permanentes…"></textarea>
+  <p class="conta" id="conta-avaliar" style="margin-top:7px"></p>
+
+  <div id="resultado"></div>
+</section>
+
+<!-- ══════════════════════ CAMADA 2 ══════════════════════ -->
+<section id="camada2" hidden>
+  <span class="label-tag" style="margin-top:48px">Camada 2</span>
+  <h2>Segunda opinião, no seu próprio assistente</h2>
+  <p class="section-note">
+    A análise acima reconhece padrões; não lê sentido. Há problemas que só se apanham a ler —
+    uma preferência disfarçada de método, uma regra que parece neutra e não é. Copie este
+    prompt para o ChatGPT ou para o Claude que usa e compare o que ele diz com o que a
+    ferramenta disse. Onde discordarem, vale a pena perceber porquê.
+  </p>
+  <div class="bloco">
+    <div class="bloco-cab">
+      <h4>Prompt de auditoria</h4>
+      <span class="onde2">cole numa conversa nova, sem projeto</span>
+      <button class="copiar" data-copiar="#prompt-auditoria">Copiar</button>
+    </div>
+    <pre id="prompt-auditoria"></pre>
+  </div>
+</section>
+
+<span class="label-tag" style="margin-top:48px">Base</span>
+<h2>De onde vêm os critérios</h2>
+<p class="section-note">
+  As regras desta ferramenta seguem a documentação dos fornecedores e a rubrica do capítulo do
+  curso. Links levantados a 18/09/2026 — a documentação de personalização muda com frequência,
+  por isso confirme antes de citar em trabalho formal.
+</p>
+<ul class="fontes" id="lista-fontes"></ul>
+
+<footer>
+  <img src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+  <span>Ciência e Letras — formação desde 1996</span>
+</footer>
+
+</div>
+
+<script src="motor.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var M = window.MotorPersonalizacao;
+  var CHAVE = 'cel-personalizacao-v1';
+
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  function cria(tag, cls) { var e = document.createElement(tag); if (cls) e.className = cls; return e; }
+  function txt(el, t) { el.textContent = t; return el; }
+
+  /* ─────────────────────────────────────────────────────────
+     As seis secções da especificação. `camada` diz onde o
+     conteúdo pertence — é isso que alimenta a saída por fornecedor.
+     ───────────────────────────────────────────────────────── */
+  var SECOES = [
+    { id: 'a', letra: 'A', titulo: 'Identidade profissional', camada: 'perfil',
+      ajuda: 'Papel, domínio e à-vontade com IA. No máximo três linhas. Inclua apenas o que '
+           + 'muda alguma resposta — se não souber dizer que resposta muda, não escreva.',
+      dica: 'Papel · Domínio · Proficiência',
+      exemplo: 'Papel: enfermeiro especialista em cuidados intensivos.\n'
+             + 'Domínio: cuidados críticos e segurança do doente.\n'
+             + 'Proficiência em IA: utilizador intermédio.\n'
+             + 'Assume literacia clínica; não expliques terminologia corrente.' },
+    { id: 'b', letra: 'B', titulo: 'Comunicação', camada: 'perfil',
+      ajuda: 'No máximo cinco predefinições de forma: registo, profundidade, estruturas, '
+           + 'terminologia, idioma. Deixe-as anuláveis pela tarefa.',
+      dica: 'Como quer receber as respostas',
+      exemplo: 'Usa português europeu.\n'
+             + 'Responde diretamente a perguntas simples; em decisões complexas expõe '
+             + 'pressupostos, incerteza e alternativas.\n'
+             + 'Prefere tabela quando comparares mais de duas opções.\n'
+             + 'Define terminologia especializada na primeira ocorrência.' },
+    { id: 'c', letra: 'C', titulo: 'Preferências analíticas', camada: 'perfil',
+      ajuda: 'A secção de maior valor. Três a seis regras sobre COMO avaliar, não sobre como '
+           + 'escrever. É aqui que a personalização deixa de ser estilo e passa a ser método.',
+      dica: 'Como quer que se pense o problema',
+      exemplo: 'Separa evidência, inferência e recomendação.\n'
+             + 'Ao avaliar uma intervenção, considera evidência, exequibilidade, impacto no '
+             + 'fluxo de trabalho, segurança, governação e recursos.\n'
+             + 'Traz à superfície os pressupostos que sustentam a conclusão.\n'
+             + 'Quando a evidência for incerta, di-lo em vez de suavizar.' },
+    { id: 'd', letra: 'D', titulo: 'Evidência', camada: 'perfil',
+      ajuda: 'Que fontes prefere, que atualidade exige, o que espera em matéria de citação. '
+           + 'Protege contra respostas fluentes assentes em base fraca.',
+      dica: 'O que conta como fundamento',
+      exemplo: 'Para questões técnicas ou científicas, prefere fontes primárias e autoritativas.\n'
+             + 'Distingue documentação de fornecedor de investigação independente.\n'
+             + 'Inclui datas de publicação quando a atualidade importar.\n'
+             + 'Sinaliza quando a evidência for fraca ou contraditória.' },
+    { id: 'e', letra: 'E', titulo: 'Fronteiras', camada: 'perfil',
+      ajuda: 'O que não inferir, o que nunca assumir, quando exigir verificação humana, e a '
+           + 'instrução anti-viés. É esta secção que torna a especificação defensável.',
+      dica: 'Os limites — inclua pelo menos uma regra anti-viés',
+      exemplo: 'Não infiras factos sobre doentes que não estejam presentes.\n'
+             + 'Não apresentes conteúdo gerado como evidência clínica verificada.\n'
+             + 'Identifica quando é necessária verificação profissional.\n'
+             + 'Não trates a minha preferência declarada como evidência de que é a melhor '
+             + 'opção; em decisões consequentes identifica pelo menos uma interpretação '
+             + 'alternativa credível.\n'
+             + 'Não apliques o contexto profissional quando for irrelevante para a tarefa.' },
+    { id: 'f', letra: 'F', titulo: 'Convenções de saída', camada: 'perfil',
+      ajuda: 'Estruturas reutilizáveis, para o resultado poder ser colado noutro sítio sem '
+           + 'reformatar. Predefinições, não obrigações.',
+      dica: 'Como quer o resultado arrumado',
+      exemplo: 'Começa análises complexas pela conclusão.\n'
+             + 'Para decisões, usa: conclusão | evidência | riscos | alternativas | próxima ação.\n'
+             + 'Evita repetição desnecessária.' },
+    { id: 'p', letra: 'P', titulo: 'Contexto de projeto', camada: 'projeto',
+      ajuda: 'Só para um trabalho delimitado — uma investigação, um curso, um serviço. NÃO '
+           + 'vai para o perfil: vai para as instruções do projeto. Se puser isto no perfil, '
+           + 'contamina tudo o resto.',
+      dica: 'Vai para as instruções de projeto, não para o perfil',
+      exemplo: 'Audiência: profissionais de saúde em formação.\n'
+             + 'Abordagem: conceito → demonstração → prática → debrief.\n'
+             + 'Terminologia: usar «engenharia de contexto» de forma consistente.\n'
+             + 'Convenção de entrega: materiais versionados com data.' }
+  ];
+
+  var estado = {};
+  SECOES.forEach(function (s) { estado[s.id] = ''; });
+
+  /* ─────────────────────────────────────────────────────────
+     Persistência local. Um try/catch porque o armazenamento pode
+     estar bloqueado (janela privada, definições do browser) e isso
+     não pode partir a página.
+     ───────────────────────────────────────────────────────── */
+  function guarda() {
+    try { localStorage.setItem(CHAVE, JSON.stringify(estado)); } catch (e) {}
+  }
+  function carrega() {
+    try {
+      var b = localStorage.getItem(CHAVE);
+      if (!b) return;
+      var o = JSON.parse(b);
+      SECOES.forEach(function (s) {
+        if (typeof o[s.id] === 'string') estado[s.id] = o[s.id];
+      });
+    } catch (e) {}
+  }
+
+  /* Texto do perfil = todas as secções menos a de projeto. */
+  function textoPerfil() {
+    return SECOES.filter(function (s) { return s.camada === 'perfil'; })
+      .map(function (s) { return estado[s.id].trim(); })
+      .filter(Boolean).join('\n');
+  }
+  function textoProjeto() { return estado.p.trim(); }
+
+  function contaPalavras(t) {
+    var m = t.trim().match(/\S+/g);
+    return m ? m.length : 0;
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     Construtor
+     ───────────────────────────────────────────────────────── */
+  function montaSecoes() {
+    var alvo = $('#secoes');
+    SECOES.forEach(function (s) {
+      var sec = cria('div', 'sec');
+      sec.id = 'sec-' + s.id;
+
+      var cab = cria('div', 'sec-cab');
+      cab.appendChild(txt(cria('span', 'sec-letra'), s.letra));
+      var h = cria('h3'); h.id = 'h-' + s.id; txt(h, s.titulo); cab.appendChild(h);
+      cab.appendChild(txt(cria('span', 'sec-camada'),
+        s.camada === 'projeto' ? 'instruções de projeto' : 'perfil'));
+      sec.appendChild(cab);
+
+      sec.appendChild(txt(cria('p', 'sec-ajuda'), s.ajuda));
+
+      var ta = cria('textarea');
+      ta.id = 'ta-' + s.id;
+      ta.setAttribute('aria-labelledby', 'h-' + s.id);
+      ta.placeholder = s.dica;
+      ta.value = estado[s.id];
+      ta.addEventListener('input', function () {
+        estado[s.id] = ta.value;
+        guarda();
+        atualiza();
+      });
+      sec.appendChild(ta);
+
+      var pe = cria('div', 'sec-pe');
+      var btn = cria('button', 'exemplo-btn');
+      txt(btn, 'Ver exemplo');
+      var ex = cria('div', 'exemplo');
+      ex.hidden = true;
+      txt(ex, s.exemplo);
+      btn.addEventListener('click', function () {
+        ex.hidden = !ex.hidden;
+        txt(btn, ex.hidden ? 'Ver exemplo' : 'Esconder exemplo');
+      });
+      pe.appendChild(btn);
+      pe.appendChild(txt(cria('span', 'conta'), ''));
+      sec.appendChild(pe);
+      sec.appendChild(ex);
+
+      var ul = cria('ul', 'avisos');
+      ul.id = 'av-' + s.id;
+      sec.appendChild(ul);
+
+      alvo.appendChild(sec);
+    });
+  }
+
+  /* Avisos por secção: corre o motor só sobre aquela secção, para o
+     formando ver o problema onde ele está, e não numa lista ao fundo. */
+  function avisosDaSeccao(s) {
+    var ul = $('#av-' + s.id);
+    ul.innerHTML = '';
+    var t = estado[s.id].trim();
+    $('#sec-' + s.id).classList.toggle('preenchida', !!t);
+    $('.conta', $('#sec-' + s.id)).textContent =
+      t ? contaPalavras(t) + (contaPalavras(t) === 1 ? ' palavra' : ' palavras') : '';
+    if (!t) return;
+    var r = M.analisa(t, { camada: s.camada === 'projeto' ? 'projeto' : 'global' });
+    /* Numa secção isolada não faz sentido exigir regra anti-viés nem
+       condicionalidade — isso avalia-se no conjunto, não na parte. */
+    var ignorar = { 'Sem nenhuma instrução anti-viés': 1, 'Nenhuma regra condicional': 1,
+                    'Nenhuma instrução de comportamento': 1 };
+    r.achados.filter(function (a) { return !ignorar[a.titulo]; })
+      .slice(0, 4).forEach(function (a) {
+        var li = cria('li', 'g-' + a.gravidade);
+        var b = cria('b'); txt(b, a.titulo + ' — ');
+        li.appendChild(b);
+        li.appendChild(document.createTextNode(a.correcao));
+        ul.appendChild(li);
+      });
+  }
+
+  function atualiza() {
+    SECOES.forEach(avisosDaSeccao);
+    montaSaida();
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     Saída por fornecedor. O mapeamento reflete as camadas que a
+     documentação de cada produto descreve. Os nomes dos campos
+     mudam; a arrumação é que não.
+     ───────────────────────────────────────────────────────── */
+  var MAPA = {
+    chatgpt: [
+      { nome: 'Instruções personalizadas', onde: 'Definições → Personalização',
+        fonte: 'perfil',
+        nota: 'Limite indicativo: ~1500 caracteres nos planos gratuitos, ~5000 nos pagos.' },
+      { nome: 'Instruções do projeto', onde: 'dentro de cada Projeto', fonte: 'projeto',
+        nota: 'Mantém o trabalho fechado; considere memória limitada ao projeto.' },
+      { nome: 'O que deixar a memória guardar', onde: 'Definições → Personalização → Memória',
+        fonte: 'memoria',
+        nota: 'A memória serve contexto recorrente — papel, projetos habituais, preferências. '
+            + 'Não serve de registo autoritativo: o que for consequente, vá buscar à fonte.' }
+    ],
+    claude: [
+      { nome: 'Instruções para o Claude', onde: 'Definições → perfil', fonte: 'perfil',
+        nota: 'Aplicam-se a todas as conversas da conta.' },
+      { nome: 'Instruções de projeto', onde: 'dentro de cada Projeto', fonte: 'projeto',
+        nota: 'Só valem dentro do projeto, e cada projeto tem espaço de memória próprio.' },
+      { nome: 'Estilo / Skill de comunicação', onde: 'seletor de estilo na conversa',
+        fonte: 'estilo',
+        nota: 'Tom e formato podem sair do perfil para aqui, e ser ligados só quando precisa.' }
+    ],
+    neutro: [
+      { nome: 'Camada global', onde: 'o que vale em qualquer conversa', fonte: 'perfil', nota: '' },
+      { nome: 'Camada de projeto', onde: 'o que vale dentro de um trabalho', fonte: 'projeto', nota: '' }
+    ]
+  };
+
+  function conteudoPara(fonte) {
+    if (fonte === 'perfil') return textoPerfil();
+    if (fonte === 'projeto') return textoProjeto();
+    if (fonte === 'estilo') return estado.b.trim();
+    if (fonte === 'memoria') {
+      return 'Deixar guardar: papel profissional, domínio, preferências de comunicação e '
+           + 'convenções de trabalho recorrentes.\n'
+           + 'Não deixar guardar: casos concretos, dados de doentes, identificadores '
+           + 'pessoais, prazos e detalhes de tarefas isoladas.\n'
+           + 'Rever o que está guardado de três em três meses, ou ao mudar de funções.';
+    }
+    return '';
+  }
+
+  var fornAtual = 'chatgpt';
+
+  function montaSaida() {
+    var alvo = $('#saida');
+    alvo.innerHTML = '';
+    MAPA[fornAtual].forEach(function (b, i) {
+      var caixa = cria('div', 'bloco');
+      var cab = cria('div', 'bloco-cab');
+      var h = cria('h4'); txt(h, b.nome); cab.appendChild(h);
+      cab.appendChild(txt(cria('span', 'onde2'), b.onde));
+      var conteudo = conteudoPara(b.fonte);
+      var pid = 'saida-' + fornAtual + '-' + i;
+      if (conteudo) {
+        var cp = cria('button', 'copiar');
+        txt(cp, 'Copiar');
+        cp.setAttribute('data-copiar', '#' + pid);
+        cab.appendChild(cp);
+      }
+      caixa.appendChild(cab);
+      if (conteudo) {
+        var pre = cria('pre');
+        pre.id = pid;
+        txt(pre, conteudo);
+        caixa.appendChild(pre);
+      } else {
+        caixa.appendChild(txt(cria('div', 'vazio2'),
+          b.fonte === 'projeto' ? 'Preencha a secção P se tiver um projeto delimitado.'
+                                : 'Ainda sem conteúdo — preencha as secções acima.'));
+      }
+      if (b.nota) {
+        var n = cria('div', 'vazio2');
+        n.style.borderTop = '1px solid #EEE';
+        txt(n, b.nota);
+        caixa.appendChild(n);
+      }
+      alvo.appendChild(caixa);
+    });
+    var total = textoPerfil();
+    if (total) {
+      var res = cria('p', 'section-note');
+      txt(res, 'Perfil: ' + contaPalavras(total) + ' palavras, ' + total.length
+             + ' caracteres. O exercício pede no máximo 300 palavras.');
+      alvo.appendChild(res);
+    }
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     Avaliador
+     ───────────────────────────────────────────────────────── */
+  function desenhaResultado(r) {
+    var alvo = $('#resultado');
+    alvo.innerHTML = '';
+    if (r.vazio) {
+      alvo.appendChild(txt(cria('p', 'vazio'), 'Cole um texto para analisar.'));
+      $('#camada2').hidden = true;
+      return;
+    }
+
+    var pl = cria('div', 'placar');
+    var topo = cria('div', 'placar-topo');
+    topo.appendChild(txt(cria('span', 'num'), String(r.total)));
+    topo.appendChild(txt(cria('span', 'max'), 'de ' + r.maximo));
+    topo.appendChild(txt(cria('span', 'grau'), r.classificacao.grau));
+    pl.appendChild(topo);
+    pl.appendChild(txt(cria('p', 'nota'), r.classificacao.nota));
+    if (r.classificacao.travado) {
+      pl.appendChild(txt(cria('p', 'travao'), r.classificacao.motivoTravao));
+    }
+    alvo.appendChild(pl);
+
+    var dims = cria('div', 'dims');
+    r.dimensoes.forEach(function (d) {
+      var v = r.pontos[d.id];
+      var el = cria('div', 'dim d' + v);
+      el.appendChild(txt(cria('span', 'n'), d.nome));
+      el.appendChild(txt(cria('span', 'v'), v + '/2'));
+      var barra = cria('span', 'barra');
+      var i = cria('i');
+      i.style.width = (v / 2 * 100) + '%';
+      barra.appendChild(i);
+      el.appendChild(barra);
+      el.appendChild(txt(cria('span', 'q'), d.pergunta));
+      dims.appendChild(el);
+    });
+    alvo.appendChild(dims);
+
+    if (!r.achados.length) {
+      alvo.appendChild(txt(cria('p', 'vazio'),
+        'A análise por regras não levantou nada. Isso não quer dizer que esteja tudo bem — '
+        + 'quer dizer que não há padrões reconhecíveis de problema. Use a camada 2.'));
+    } else {
+      var h = cria('h2');
+      txt(h, r.achados.length === 1 ? '1 ponto a rever'
+                                    : r.achados.length + ' pontos a rever');
+      alvo.appendChild(h);
+      var nomes = {};
+      r.dimensoes.forEach(function (d) { nomes[d.id] = d.nome; });
+      var rotulo = { critico: 'crítico', aviso: 'aviso', nota: 'nota' };
+      r.achados.forEach(function (a) {
+        var c = cria('div', 'achado g-' + a.gravidade);
+        var cab = cria('div', 'achado-cab');
+        cab.appendChild(txt(cria('span', 'sev'), rotulo[a.gravidade]));
+        var h4 = cria('h4'); txt(h4, a.titulo); cab.appendChild(h4);
+        cab.appendChild(txt(cria('span', 'onde'), nomes[a.dimensao] || ''));
+        c.appendChild(cab);
+        if (a.excerto) c.appendChild(txt(cria('div', 'excerto'), a.excerto));
+        var dl = cria('dl');
+        dl.appendChild(txt(cria('dt'), 'Porquê'));
+        dl.appendChild(txt(cria('dd'), a.porque));
+        dl.appendChild(txt(cria('dt'), 'Correção'));
+        dl.appendChild(txt(cria('dd'), a.correcao));
+        c.appendChild(dl);
+        if (a.fonte && a.fonte.url) {
+          var f = cria('p', 'fonte');
+          f.appendChild(document.createTextNode('Fonte: '));
+          var link = cria('a');
+          link.href = a.fonte.url;
+          link.target = '_blank';
+          link.rel = 'noopener';
+          txt(link, a.fonte.rotulo);
+          f.appendChild(link);
+          c.appendChild(f);
+        } else if (a.fonte) {
+          c.appendChild(txt(cria('p', 'fonte'), 'Fonte: ' + a.fonte.rotulo));
+        }
+        alvo.appendChild(c);
+      });
+    }
+
+    $('#prompt-auditoria').textContent = M.promptAuditoria(r.texto, r);
+    $('#camada2').hidden = false;
+  }
+
+  function analisaAgora() {
+    var t = $('#avaliar-texto').value;
+    var r = M.analisa(t, {
+      camada: $('#camada').value,
+      orcamento: parseInt($('#plano').value, 10)
+    });
+    desenhaResultado(r);
+    if (!r.vazio) $('#resultado').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ─────────────────────────────────────────────────────────
+     Ligações
+     ───────────────────────────────────────────────────────── */
+  function mostraModo(qual) {
+    var c = qual === 'construir';
+    $('#tab-construir').setAttribute('aria-selected', String(c));
+    $('#tab-avaliar').setAttribute('aria-selected', String(!c));
+    $('#p-construir').hidden = !c;
+    $('#p-avaliar').hidden = c;
+  }
+
+  function copiaDe(sel) {
+    var el = $(sel);
+    if (!el) return Promise.reject();
+    var t = el.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(t);
+    }
+    /* Reserva para contextos sem a API de área de transferência. */
+    return new Promise(function (ok, falha) {
+      var ta = document.createElement('textarea');
+      ta.value = t;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); ok(); } catch (e) { falha(e); }
+      document.body.removeChild(ta);
+    });
+  }
+
+  document.addEventListener('click', function (ev) {
+    var b = ev.target.closest && ev.target.closest('[data-copiar]');
+    if (!b) return;
+    copiaDe(b.getAttribute('data-copiar')).then(function () {
+      var antes = b.textContent;
+      b.textContent = 'Copiado';
+      setTimeout(function () { b.textContent = antes; }, 1600);
+    }, function () {
+      b.textContent = 'Copie à mão';
+    });
+  });
+
+  $('#tab-construir').addEventListener('click', function () { mostraModo('construir'); });
+  $('#tab-avaliar').addEventListener('click', function () { mostraModo('avaliar'); });
+
+  $$('.aba').forEach(function (a) {
+    a.addEventListener('click', function () {
+      $$('.aba').forEach(function (o) { o.setAttribute('aria-selected', 'false'); });
+      a.setAttribute('aria-selected', 'true');
+      fornAtual = a.getAttribute('data-forn');
+      montaSaida();
+    });
+  });
+
+  $('#btn-analisar').addEventListener('click', analisaAgora);
+  $('#avaliar-texto').addEventListener('input', function () {
+    var n = this.value.length;
+    $('#conta-avaliar').textContent = n ? n + ' caracteres · ' + contaPalavras(this.value)
+      + ' palavras' : '';
+  });
+
+  $('#btn-avaliar-construido').addEventListener('click', function () {
+    var t = textoPerfil();
+    if (!t) { alert('Preencha pelo menos uma secção antes de avaliar.'); return; }
+    $('#avaliar-texto').value = t;
+    $('#camada').value = 'global';
+    $('#conta-avaliar').textContent = t.length + ' caracteres · ' + contaPalavras(t) + ' palavras';
+    mostraModo('avaliar');
+    analisaAgora();
+  });
+
+  $('#btn-exportar').addEventListener('click', function () {
+    var b = new Blob([JSON.stringify(estado, null, 2)], { type: 'application/json' });
+    var a = cria('a');
+    a.href = URL.createObjectURL(b);
+    a.download = 'especificacao-contexto-pessoal.json';
+    a.click();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+  });
+
+  $('#btn-importar').addEventListener('click', function () { $('#ficheiro').click(); });
+  $('#ficheiro').addEventListener('change', function (ev) {
+    var f = ev.target.files && ev.target.files[0];
+    if (!f) return;
+    var fr = new FileReader();
+    fr.onload = function () {
+      try {
+        var o = JSON.parse(fr.result);
+        SECOES.forEach(function (s) {
+          if (typeof o[s.id] === 'string') {
+            estado[s.id] = o[s.id];
+            $('#ta-' + s.id).value = o[s.id];
+          }
+        });
+        guarda();
+        atualiza();
+      } catch (e) { alert('Não consegui ler esse ficheiro.'); }
+    };
+    fr.readAsText(f);
+    ev.target.value = '';
+  });
+
+  $('#btn-limpar').addEventListener('click', function () {
+    if (!confirm('Apagar tudo o que escreveu nesta página?')) return;
+    SECOES.forEach(function (s) { estado[s.id] = ''; $('#ta-' + s.id).value = ''; });
+    guarda();
+    atualiza();
+  });
+
+  /* Fontes, a partir do motor — para a lista não divergir das regras. */
+  (function () {
+    var ul = $('#lista-fontes');
+    Object.keys(M.FONTES).forEach(function (k) {
+      var f = M.FONTES[k];
+      var li = cria('li');
+      if (f.url) {
+        var a = cria('a');
+        a.href = f.url; a.target = '_blank'; a.rel = 'noopener';
+        txt(a, f.rotulo);
+        li.appendChild(a);
+      } else {
+        txt(li, f.rotulo);
+      }
+      ul.appendChild(li);
+    });
+  })();
+
+  carrega();
+  montaSecoes();
+  atualiza();
+})();
+</script>
+</body>
+</html>
