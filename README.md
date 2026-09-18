@@ -33,8 +33,7 @@ Três secções, todas filtráveis pelo seletor de curso no topo:
 
 - **Linha temporal** — uma faixa por edição, as oito sessões no dia em que acontecem, e a marca
   de hoje. Ponto cheio é sessão dada; a que tem o contorno grosso é a seguinte.
-- **Próximos blocos** — os oito blocos seguintes em todas as edições, com data, horário, tema e
-  formador.
+- **Próximos blocos** — os oito blocos seguintes em todas as edições, com data, horário e tema.
 - **Decks das sessões** — a matriz de sempre, agora com uma coluna por edição publicada.
 
 A linha temporal e os próximos blocos calculam-se em cada visita a partir da data do browser:
@@ -44,10 +43,15 @@ a página mantém-se sozinha entre edições e não precisa de ser tocada só po
 dos cursos. A transcrição é manual até existir a skill de geração; quando um cronograma mudar,
 muda-se lá também.
 
-> **O que não entra aqui.** O site é público. Ligações de Zoom, passwords, URLs de Moodle e notas
-> internas de escala ficam de fora do `edicoes.js` e de tudo o mais que seja publicado — chegam
-> aos formadores pelo convite de calendário. Da escala publica-se o nome de quem dá o bloco, e
-> nada além disso.
+> **O que não entra aqui.** O site é público. Ligações de Zoom, passwords, URLs de Moodle e a
+> escala ficam de fora do `edicoes.js` e de tudo o mais que seja publicado.
+>
+> A escala saiu por decisão de 2026-09-18: quem dá cada bloco é a parte que mais muda nos YAML e
+> não há nada que detete a divergência, por isso uma página pública desatualizada engana mais do
+> que informa — e publicá-la punha a escala à vista antes de as pessoas serem convidadas. Quem dá
+> o quê chega aos formadores pelo convite de calendário, gerado do mesmo YAML pelo `eventos.mjs`.
+> Foi também o que dispensou gerar o `edicoes.js` a partir dos YAML: o que sobra — datas, horários
+> e temas — mexe pouco.
 
 ## Como trabalhar
 

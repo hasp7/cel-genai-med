@@ -2,17 +2,21 @@
  *
  * FONTE DE VERDADE: os YAML em `courses/<curso>/editions/` do repositório
  * marianacpais/cel-genai-healthcare-courses. Este ficheiro é uma transcrição do que lá está,
- * reduzida ao que pode ser público: data, horário, sessão, tema e formador. Zoom, Moodle,
- * password e notas internas não entram aqui nem em mais nada que seja publicado.
+ * reduzida ao que pode ser público: data, horário, sessão e tema.
  *
- * Quando um YAML mudar, esta transcrição tem de ser refeita à mão até a skill de geração
- * existir (está em STATUS.md, secção Ferramentas).
+ * A ESCALA NÃO ENTRA AQUI. Quem dá cada bloco fica de fora por duas razões. É a parte que mais
+ * muda nos YAML, e sem verificação automática uma página pública desatualizada engana mais do
+ * que informa. E publicá-la punha a escala à vista antes de as pessoas serem convidadas.
+ * Quem dá o quê chega aos formadores pelo convite de calendário, gerado do mesmo YAML pelo
+ * `eventos.mjs`. Zoom, Moodle, passwords e notas internas também não entram.
+ *
+ * Quando um YAML mudar, esta transcrição tem de ser refeita à mão. Datas e horários mexem
+ * pouco — foi por isso que se optou por transcrever em vez de gerar.
  *
  * Campos de uma sessão:
  *   n       número da sessão na edição
  *   data    ISO, o dia da sessão
- *   blocos  [] por ordem; cada um { h: "16h00–18h00", tema, f: [nomes], aberto?: true }
- *           `aberto` marca o bloco cujo formador ainda não está fechado.
+ *   blocos  [] por ordem; cada um { h: "16h00–18h00", tema }
  *   nota    linha curta, quando a sessão foge ao padrão (feriado antes, bloco único, etc.)
  */
 
@@ -25,28 +29,28 @@ const EDICOES = [
     horario: 'sábados · 08h30–12h30',
     sessoes: [
       { n: 1, data: '2026-09-12', blocos: [
-        { h: '08h30–10h30', tema: 'Introdução à IA e ao ChatGPT', f: ['Daniel Rodrigues'] },
-        { h: '10h30–12h30', tema: 'Introdução à IA e ao ChatGPT', f: ['Daniel Rodrigues', 'Sandra Amaral'] } ] },
+        { h: '08h30–10h30', tema: 'Introdução à IA e ao ChatGPT' },
+        { h: '10h30–12h30', tema: 'Introdução à IA e ao ChatGPT' } ] },
       { n: 2, data: '2026-09-19', blocos: [
-        { h: '08h30–10h30', tema: 'Engenharia de Prompts', f: ['Hélder Palheira'] },
-        { h: '10h30–12h30', tema: 'Engenharia de Prompts', f: ['Sandra Amaral'] } ] },
+        { h: '08h30–10h30', tema: 'Engenharia de Prompts' },
+        { h: '10h30–12h30', tema: 'Engenharia de Prompts' } ] },
       { n: 3, data: '2026-09-26', nota: 'Sessão de 2H, só com o bloco 1', blocos: [
-        { h: '08h30–10h30', tema: 'Impacto, Prática Clínica e o Papel do Profissional', f: ['Miguel Oliveira'] } ] },
+        { h: '08h30–10h30', tema: 'Impacto, Prática Clínica e o Papel do Profissional' } ] },
       { n: 4, data: '2026-10-03', blocos: [
-        { h: '08h30–10h30', tema: 'Gemini, NotebookLM e Escrita Científica', f: ['Daniel Rodrigues'] },
-        { h: '10h30–12h30', tema: 'Gemini, NotebookLM e Escrita Científica', f: ['Jannine Nascimento'] } ] },
+        { h: '08h30–10h30', tema: 'Gemini, NotebookLM e Escrita Científica' },
+        { h: '10h30–12h30', tema: 'Gemini, NotebookLM e Escrita Científica' } ] },
       { n: 5, data: '2026-10-10', blocos: [
-        { h: '08h30–10h30', tema: 'Ética, Segurança e SOPs', f: ['Hélder Palheira'] },
-        { h: '10h30–12h30', tema: 'Ética, Segurança e SOPs', f: ['Sandra Amaral'] } ] },
+        { h: '08h30–10h30', tema: 'Ética, Segurança e SOPs' },
+        { h: '10h30–12h30', tema: 'Ética, Segurança e SOPs' } ] },
       { n: 6, data: '2026-10-17', blocos: [
-        { h: '08h30–10h30', tema: 'Impacto Clínico e Assistentes Personalizados', f: ['Daniel Rodrigues'] },
-        { h: '10h30–12h30', tema: 'Impacto Clínico e Assistentes Personalizados', f: ['Jannine Nascimento'] } ] },
+        { h: '08h30–10h30', tema: 'Impacto Clínico e Assistentes Personalizados' },
+        { h: '10h30–12h30', tema: 'Impacto Clínico e Assistentes Personalizados' } ] },
       { n: 7, data: '2026-10-24', blocos: [
-        { h: '08h30–10h30', tema: 'Laboratório de Projeto', f: ['Hélder Palheira'] },
-        { h: '10h30–12h30', tema: 'Laboratório de Projeto', f: ['Sandra Amaral'] } ] },
+        { h: '08h30–10h30', tema: 'Laboratório de Projeto' },
+        { h: '10h30–12h30', tema: 'Laboratório de Projeto' } ] },
       { n: 8, data: '2026-10-31', blocos: [
-        { h: '08h30–10h30', tema: 'Apresentação de Projetos Finais', f: ['Sandra Amaral'] },
-        { h: '10h30–12h30', tema: 'Apresentação de Projetos Finais', f: ['Hélder Palheira'] } ] }
+        { h: '08h30–10h30', tema: 'Apresentação de Projetos Finais' },
+        { h: '10h30–12h30', tema: 'Apresentação de Projetos Finais' } ] }
     ]
   },
 
@@ -58,28 +62,28 @@ const EDICOES = [
     horario: 'sextas · 15h00–19h00',
     sessoes: [
       { n: 1, data: '2026-09-11', blocos: [
-        { h: '15h00–17h00', tema: 'Introdução à IA e ao ChatGPT', f: ['Hélder Palheira'] },
-        { h: '17h00–19h00', tema: 'Introdução à IA e ao ChatGPT', f: ['Hélder Palheira', 'Jannine Nascimento'] } ] },
+        { h: '15h00–17h00', tema: 'Introdução à IA e ao ChatGPT' },
+        { h: '17h00–19h00', tema: 'Introdução à IA e ao ChatGPT' } ] },
       { n: 2, data: '2026-09-18', blocos: [
-        { h: '15h00–17h00', tema: 'Engenharia de Prompts', f: ['Jannine Nascimento'] },
-        { h: '17h00–19h00', tema: 'Engenharia de Prompts', f: ['Sandra Amaral'] } ] },
+        { h: '15h00–17h00', tema: 'Engenharia de Prompts' },
+        { h: '17h00–19h00', tema: 'Engenharia de Prompts' } ] },
       { n: 3, data: '2026-09-25', nota: 'Sessão de 2H, só com o bloco 2', blocos: [
-        { h: '17h00–19h00', tema: 'ChatGPT Avançado e Ferramentas', f: ['Sandra Amaral'] } ] },
+        { h: '17h00–19h00', tema: 'ChatGPT Avançado e Ferramentas' } ] },
       { n: 4, data: '2026-10-02', blocos: [
-        { h: '15h00–17h00', tema: 'Impacto, Prática Clínica e o Papel do Profissional', f: ['Miguel Oliveira'] },
-        { h: '17h00–19h00', tema: 'Gemini, NotebookLM e Escrita Científica', f: ['Daniel Rodrigues'] } ] },
+        { h: '15h00–17h00', tema: 'Impacto, Prática Clínica e o Papel do Profissional' },
+        { h: '17h00–19h00', tema: 'Gemini, NotebookLM e Escrita Científica' } ] },
       { n: 5, data: '2026-10-09', nota: 'Blocos desiguais: 3H + 1H', blocos: [
-        { h: '15h00–18h00', tema: 'Análise de Dados em Python e Google Colab com recurso a IA', f: ['Juliano Gaspar'] },
-        { h: '18h00–19h00', tema: 'Ética, Segurança e SOPs', f: ['Jannine Nascimento'] } ] },
+        { h: '15h00–18h00', tema: 'Análise de Dados em Python e Google Colab com recurso a IA' },
+        { h: '18h00–19h00', tema: 'Ética, Segurança e SOPs' } ] },
       { n: 6, data: '2026-10-16', blocos: [
-        { h: '15h00–17h00', tema: 'Impacto Clínico e Assistentes Personalizados', f: ['Hélder Palheira'] },
-        { h: '17h00–19h00', tema: 'Impacto Clínico e Assistentes Personalizados', f: ['Daniel Rodrigues'] } ] },
+        { h: '15h00–17h00', tema: 'Impacto Clínico e Assistentes Personalizados' },
+        { h: '17h00–19h00', tema: 'Impacto Clínico e Assistentes Personalizados' } ] },
       { n: 7, data: '2026-10-23', blocos: [
-        { h: '15h00–17h00', tema: 'Laboratório de Projeto', f: ['Jannine Nascimento'] },
-        { h: '17h00–19h00', tema: 'Laboratório de Projeto', f: ['Sandra Amaral'] } ] },
+        { h: '15h00–17h00', tema: 'Laboratório de Projeto' },
+        { h: '17h00–19h00', tema: 'Laboratório de Projeto' } ] },
       { n: 8, data: '2026-10-30', blocos: [
-        { h: '15h00–17h00', tema: 'Apresentação de Projetos Finais', f: ['Hélder Palheira'], aberto: true },
-        { h: '17h00–19h00', tema: 'Apresentação de Projetos Finais', f: ['Sandra Amaral'] } ] }
+        { h: '15h00–17h00', tema: 'Apresentação de Projetos Finais' },
+        { h: '17h00–19h00', tema: 'Apresentação de Projetos Finais' } ] }
     ]
   },
 
@@ -91,28 +95,28 @@ const EDICOES = [
     horario: 'segundas · 16h00–20h00',
     sessoes: [
       { n: 1, data: '2026-09-21', blocos: [
-        { h: '16h00–18h00', tema: 'Introdução à IA e ao ChatGPT', f: ['Hélder Palheira'] },
-        { h: '18h00–20h00', tema: 'Introdução à IA e ao ChatGPT', f: ['Hélder Palheira'] } ] },
+        { h: '16h00–18h00', tema: 'Introdução à IA e ao ChatGPT' },
+        { h: '18h00–20h00', tema: 'Introdução à IA e ao ChatGPT' } ] },
       { n: 2, data: '2026-09-28', blocos: [
-        { h: '16h00–18h00', tema: 'Engenharia de Prompts', f: ['Daniel Rodrigues'] },
-        { h: '18h00–20h00', tema: 'Engenharia de Prompts', f: ['Sandra Amaral', 'Daniel Rodrigues'] } ] },
+        { h: '16h00–18h00', tema: 'Engenharia de Prompts' },
+        { h: '18h00–20h00', tema: 'Engenharia de Prompts' } ] },
       { n: 3, data: '2026-10-12', nota: '05/10 é feriado; sessão de 3H (2H + 1H)', blocos: [
-        { h: '16h00–18h00', tema: 'ChatGPT Avançado e Ferramentas', f: ['Jannine Nascimento'] },
-        { h: '18h00–19h00', tema: 'ChatGPT Avançado e Ferramentas', f: ['Jannine Nascimento', 'Sandra Amaral'] } ] },
+        { h: '16h00–18h00', tema: 'ChatGPT Avançado e Ferramentas' },
+        { h: '18h00–19h00', tema: 'ChatGPT Avançado e Ferramentas' } ] },
       { n: 4, data: '2026-10-19', blocos: [
-        { h: '16h00–18h00', tema: 'Gemini, NotebookLM e Escrita Científica', f: ['Jannine Nascimento', 'Daniel Rodrigues'] },
-        { h: '18h00–20h00', tema: 'Gemini, NotebookLM e Escrita Científica', f: ['Jannine Nascimento', 'Daniel Rodrigues'] } ] },
+        { h: '16h00–18h00', tema: 'Gemini, NotebookLM e Escrita Científica' },
+        { h: '18h00–20h00', tema: 'Gemini, NotebookLM e Escrita Científica' } ] },
       { n: 5, data: '2026-10-26', nota: 'Bloco único de 3H', blocos: [
-        { h: '16h00–19h00', tema: 'Análise de Dados em Python e Google Colab com recurso a IA', f: ['Juliano Gaspar'] } ] },
+        { h: '16h00–19h00', tema: 'Análise de Dados em Python e Google Colab com recurso a IA' } ] },
       { n: 6, data: '2026-11-02', blocos: [
-        { h: '16h00–18h00', tema: 'Laboratório de Projeto', f: ['Daniel Rodrigues'] },
-        { h: '18h00–20h00', tema: 'Laboratório de Projeto', f: ['Sandra Amaral', 'Daniel Rodrigues'] } ] },
+        { h: '16h00–18h00', tema: 'Laboratório de Projeto' },
+        { h: '18h00–20h00', tema: 'Laboratório de Projeto' } ] },
       { n: 7, data: '2026-11-09', blocos: [
-        { h: '16h00–18h00', tema: 'Ética, IA na Investigação e Escrita Científica', f: ['Jannine Nascimento'] },
-        { h: '18h00–20h00', tema: 'Ética, IA na Investigação e Escrita Científica', f: ['Jannine Nascimento', 'Sandra Amaral'] } ] },
+        { h: '16h00–18h00', tema: 'Ética, IA na Investigação e Escrita Científica' },
+        { h: '18h00–20h00', tema: 'Ética, IA na Investigação e Escrita Científica' } ] },
       { n: 8, data: '2026-11-16', blocos: [
-        { h: '16h00–18h00', tema: 'Apresentação de Projetos Finais', f: ['Jannine Nascimento', 'Daniel Rodrigues'] },
-        { h: '18h00–20h00', tema: 'Apresentação de Projetos Finais', f: ['Jannine Nascimento', 'Daniel Rodrigues'] } ] }
+        { h: '16h00–18h00', tema: 'Apresentação de Projetos Finais' },
+        { h: '18h00–20h00', tema: 'Apresentação de Projetos Finais' } ] }
     ]
   },
 
@@ -123,14 +127,14 @@ const EDICOES = [
     sub: '1ª edição',
     horario: 'terças · 14h00–18h00',
     sessoes: [
-      { n: 1, data: '2026-10-06', blocos: [ { h: '14h00–18h00', tema: 'Por definir', f: [] } ] },
-      { n: 2, data: '2026-10-13', blocos: [ { h: '14h00–18h00', tema: 'Por definir', f: [] } ] },
-      { n: 3, data: '2026-10-20', nota: 'Sessão de 3H', blocos: [ { h: '14h00–17h00', tema: 'Por definir', f: [] } ] },
-      { n: 4, data: '2026-10-27', nota: 'Sessão de 3H', blocos: [ { h: '14h00–17h00', tema: 'Por definir', f: [] } ] },
-      { n: 5, data: '2026-11-03', blocos: [ { h: '14h00–18h00', tema: 'Por definir', f: [] } ] },
-      { n: 6, data: '2026-11-10', blocos: [ { h: '14h00–18h00', tema: 'Por definir', f: [] } ] },
-      { n: 7, data: '2026-11-17', blocos: [ { h: '14h00–18h00', tema: 'Laboratório de Projeto', f: [] } ] },
-      { n: 8, data: '2026-11-24', blocos: [ { h: '14h00–18h00', tema: 'Apresentação de Projetos Finais', f: [] } ] }
+      { n: 1, data: '2026-10-06', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
+      { n: 2, data: '2026-10-13', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
+      { n: 3, data: '2026-10-20', nota: 'Sessão de 3H', blocos: [ { h: '14h00–17h00', tema: 'Por definir' } ] },
+      { n: 4, data: '2026-10-27', nota: 'Sessão de 3H', blocos: [ { h: '14h00–17h00', tema: 'Por definir' } ] },
+      { n: 5, data: '2026-11-03', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
+      { n: 6, data: '2026-11-10', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
+      { n: 7, data: '2026-11-17', blocos: [ { h: '14h00–18h00', tema: 'Laboratório de Projeto' } ] },
+      { n: 8, data: '2026-11-24', blocos: [ { h: '14h00–18h00', tema: 'Apresentação de Projetos Finais' } ] }
     ]
   },
 
@@ -141,14 +145,14 @@ const EDICOES = [
     sub: '1ª edição',
     horario: 'segundas · 14h00–18h00',
     sessoes: [
-      { n: 1, data: '2026-10-12', blocos: [ { h: '14h00–18h00', tema: 'Por definir', f: [] } ] },
-      { n: 2, data: '2026-10-19', blocos: [ { h: '14h00–18h00', tema: 'Por definir', f: [] } ] },
-      { n: 3, data: '2026-10-26', nota: 'Sessão de 3H', blocos: [ { h: '14h00–17h00', tema: 'Por definir', f: [] } ] },
-      { n: 4, data: '2026-11-02', nota: 'Sessão de 3H', blocos: [ { h: '14h00–17h00', tema: 'Por definir', f: [] } ] },
-      { n: 5, data: '2026-11-09', blocos: [ { h: '14h00–18h00', tema: 'Por definir', f: [] } ] },
-      { n: 6, data: '2026-11-16', blocos: [ { h: '14h00–18h00', tema: 'Por definir', f: [] } ] },
-      { n: 7, data: '2026-11-23', blocos: [ { h: '14h00–18h00', tema: 'Laboratório de Projeto', f: [] } ] },
-      { n: 8, data: '2026-11-30', blocos: [ { h: '14h00–18h00', tema: 'Apresentação de Projetos Finais', f: [] } ] }
+      { n: 1, data: '2026-10-12', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
+      { n: 2, data: '2026-10-19', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
+      { n: 3, data: '2026-10-26', nota: 'Sessão de 3H', blocos: [ { h: '14h00–17h00', tema: 'Por definir' } ] },
+      { n: 4, data: '2026-11-02', nota: 'Sessão de 3H', blocos: [ { h: '14h00–17h00', tema: 'Por definir' } ] },
+      { n: 5, data: '2026-11-09', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
+      { n: 6, data: '2026-11-16', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
+      { n: 7, data: '2026-11-23', blocos: [ { h: '14h00–18h00', tema: 'Laboratório de Projeto' } ] },
+      { n: 8, data: '2026-11-30', blocos: [ { h: '14h00–18h00', tema: 'Apresentação de Projetos Finais' } ] }
     ]
   }
 ];

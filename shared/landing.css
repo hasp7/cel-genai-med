@@ -321,9 +321,6 @@ footer img { height: 28px; opacity: 0.7; }
 .ev-corpo { flex: 1; min-width: 0; }
 .ev-tema { display: block; font-weight: 600; color: var(--cel-text); }
 .ev-onde { font-size: 0.82rem; color: var(--cel-slate); }
-.ev-quem { font-size: 0.82rem; color: var(--cel-slate); }
-.ev-quem b { font-weight: 600; color: var(--cel-text); }
-.ev-aberto { color: var(--cel-secondary); font-style: italic; }
 
 .vazio { background: var(--cel-white); padding: 20px 16px; color: var(--cel-slate); font-size: 0.9rem; }
 

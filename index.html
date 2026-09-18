@@ -32,9 +32,9 @@
 <span class="label-tag">O que vem a seguir</span>
 <h2>Próximos blocos</h2>
 <p class="section-note">
-  Os oito blocos seguintes, por ordem, em todas as edições. Data, horário, tema e quem dá —
-  nada mais. Ligações de sala e acessos ao Moodle não vivem aqui; chegam aos formadores pelo
-  convite de calendário.
+  Os oito blocos seguintes, por ordem, em todas as edições. Quem dá cada bloco não está aqui,
+  nem a sala nem o Moodle — isso chega aos formadores pelo convite de calendário, que sai do
+  mesmo cronograma.
 </p>
 
 <ul class="eventos" id="eventos"></ul>
@@ -263,16 +263,6 @@
                   (it.s.blocos.length > 1 ? ' · bloco ' + (it.i + 1) : '') +
                   (it.s.nota ? ' · ' + it.s.nota : ''));
       corpo.appendChild(onde);
-      corpo.appendChild(document.createElement('br'));
-
-      var quem = cria('span', 'ev-quem');
-      if (!it.b.f.length) {
-        quem.innerHTML = '<span class="ev-aberto">formador por atribuir</span>';
-      } else {
-        quem.innerHTML = it.b.f.map(function (n) { return '<b>' + n + '</b>'; }).join(' e ') +
-                         (it.b.aberto ? ' <span class="ev-aberto">· por confirmar</span>' : '');
-      }
-      corpo.appendChild(quem);
 
       li.appendChild(corpo);
       alvo.appendChild(li);
