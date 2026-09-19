@@ -25,6 +25,19 @@ body {
 
 .wrap { max-width: 1040px; margin: 0 auto; padding: 64px 32px 96px; }
 
+/* Regresso à landing, a partir de uma página de recurso. Fica acima do
+   filete de acento, para não competir com o título. */
+.voltar {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: var(--cel-slate);
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+.voltar:hover, .voltar:focus-visible { color: var(--cel-primary); }
+.voltar .seta { color: var(--cel-light); margin-right: 8px; }
+.voltar:hover .seta { color: var(--cel-secondary); }
+
 header { margin-bottom: 56px; }
 
 .accent-line {
