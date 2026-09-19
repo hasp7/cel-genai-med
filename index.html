@@ -52,23 +52,40 @@
 <table id="decks">
   <thead>
     <tr>
-      <th>Bloco</th>
-      <th class="current" data-curso="med">9ª edição GenAI-Medicos-CeL<br><span class="pill">sábados · 08h30–12h30</span></th>
-      <th class="current" data-curso="med">10ª edição GenAI-APMgF<br><span class="pill">sextas · 15h00–19h00</span></th>
-      <th class="current" data-curso="enf">5ª edição GenAI-Enfermeiros<br><span class="pill">segundas · 16h00–20h00</span></th>
+      <th scope="col">Edição</th>
+      <th scope="col"><span class="num">1.1</span>Apresentação do curso</th>
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th><span class="num">1.1</span>Apresentação do curso</th>
-      <td data-curso="med"><a href="aula-1/?ed=med9">12/09</a></td>
-      <td data-curso="med"><a href="aula-1/?ed=apmgf10">11/09</a></td>
-      <td data-curso="enf"><a href="aula-1/?ed=enf5">21/09</a></td>
+    <tr data-curso="med">
+      <th scope="row" class="current">9ª edição GenAI-Medicos-CeL<br><span class="pill">sábados · 08h30–12h30</span></th>
+      <td><a href="aula-1/?ed=med9">12/09</a></td>
+    </tr>
+    <tr data-curso="med">
+      <th scope="row" class="current">10ª edição GenAI-APMgF<br><span class="pill">sextas · 15h00–19h00</span></th>
+      <td><a href="aula-1/?ed=apmgf10">11/09</a></td>
+    </tr>
+    <tr data-curso="enf">
+      <th scope="row" class="current">5ª edição GenAI-Enfermeiros<br><span class="pill">segundas · 16h00–20h00</span></th>
+      <td><a href="aula-1/?ed=enf5">21/09</a></td>
     </tr>
   </tbody>
 </table>
 </div>
 <p class="section-note" id="sem-decks" hidden>Sem decks publicados para este curso.</p>
+
+<details class="ajuda-deck">
+  <summary>Como usar o deck</summary>
+  <p>
+    Setas ou espaço para avançar. <strong>S</strong> abre a vista de orador, com as notas da
+    sessão e o cronómetro numa segunda janela. <strong>Esc</strong> mostra todos os slides de
+    uma vez, para saltar depressa. <strong>F</strong> entra em ecrã inteiro.
+  </p>
+  <p>
+    Abre no browser sem instalar nada. Para dar a sessão sem depender da rede, guardar a página
+    completa antes (<em>Ficheiro → Guardar como</em>).
+  </p>
+</details>
 
 <span class="label-tag">Apoio</span>
 <h2>Recursos</h2>
@@ -96,17 +113,6 @@
   </tbody>
 </table>
 </div>
-
-<h2>Como usar o deck</h2>
-<p class="section-note">
-  Setas ou espaço para avançar. <strong>S</strong> abre a vista de orador, com as notas da sessão
-  e o cronómetro numa segunda janela. <strong>Esc</strong> mostra todos os slides de uma vez, para
-  saltar depressa. <strong>F</strong> entra em ecrã inteiro.
-</p>
-<p class="section-note">
-  O deck abre no browser sem instalar nada.
-  Para dar a sessão sem depender da rede, guardar a página completa antes (<em>Ficheiro → Guardar como</em>).
-</p>
 
 <footer>
   <img src="shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
@@ -331,10 +337,12 @@
   function filtraDecks(curso) {
     var tabela = document.getElementById('decks');
     var visiveis = 0;
-    tabela.querySelectorAll('[data-curso]').forEach(function (cel) {
-      var mostra = curso === 'todos' || cel.dataset.curso === curso;
-      cel.hidden = !mostra;
-      if (mostra && cel.tagName === 'TD') visiveis++;
+    /* Com as edições em linha, filtrar é esconder a linha inteira — já não é
+       preciso esconder célula a célula para manter as colunas alinhadas. */
+    tabela.querySelectorAll('tbody tr[data-curso]').forEach(function (linha) {
+      var mostra = curso === 'todos' || linha.dataset.curso === curso;
+      linha.hidden = !mostra;
+      if (mostra) visiveis++;
     });
     var vazio = !visiveis;
     tabela.parentElement.hidden = vazio;
