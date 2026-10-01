@@ -37,8 +37,8 @@ const EDICOES = [
       { n: 3, data: '2026-09-26', nota: 'Sessão de 2H, só com o bloco 1', blocos: [
         { h: '08h30–10h30', tema: 'Impacto, Prática Clínica e o Papel do Profissional' } ] },
       { n: 4, data: '2026-10-03', blocos: [
-        { h: '08h30–10h30', tema: 'Gemini, NotebookLM e Escrita Científica' },
-        { h: '10h30–12h30', tema: 'Gemini, NotebookLM e Escrita Científica' } ] },
+        { h: '08h30–10h30', tema: 'DeepResearch; Escrita Científica; Detetores de IA' },
+        { h: '10h30–12h30', tema: 'NotebookLM e AI Slop' } ] },
       { n: 5, data: '2026-10-10', blocos: [
         { h: '08h30–10h30', tema: 'Ética, Segurança e SOPs' },
         { h: '10h30–12h30', tema: 'Ética, Segurança e SOPs' } ] },
@@ -68,10 +68,10 @@ const EDICOES = [
         { h: '15h00–17h00', tema: 'Engenharia de Prompts' },
         { h: '17h00–19h00', tema: 'Engenharia de Prompts' } ] },
       { n: 3, data: '2026-09-25', nota: 'Sessão de 2H, só com o bloco 2', blocos: [
-        { h: '17h00–19h00', tema: 'ChatGPT Avançado e Ferramentas' } ] },
+        { h: '17h00–19h00', tema: 'NotebookLM e AI Slop' } ] },
       { n: 4, data: '2026-10-02', blocos: [
         { h: '15h00–17h00', tema: 'Impacto, Prática Clínica e o Papel do Profissional' },
-        { h: '17h00–19h00', tema: 'Gemini, NotebookLM e Escrita Científica' } ] },
+        { h: '17h00–19h00', tema: 'DeepResearch; Escrita Científica; Detetores de IA' } ] },
       { n: 5, data: '2026-10-09', nota: 'Blocos desiguais: 3H + 1H', blocos: [
         { h: '15h00–18h00', tema: 'Análise de Dados em Python e Google Colab com recurso a IA' },
         { h: '18h00–19h00', tema: 'Ética, Segurança e SOPs' } ] },
