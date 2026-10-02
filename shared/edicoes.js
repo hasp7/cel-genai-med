@@ -141,7 +141,7 @@ const EDICOES = [
         { h: '16h00–17h00', tema: 'Por definir' } ] },
       { n: 5, data: '2026-11-03', blocos: [
         { h: '14h00–16h00', tema: 'Por definir' },
-        { h: '16h00–18h00', tema: 'Por definir' } ] },
+        { h: '16h00–18h00', tema: 'Impacto, Prática Clínica e o Papel do Profissional' } ] },
       { n: 6, data: '2026-11-10', blocos: [
         { h: '14h00–16h00', tema: 'Por definir' },
         { h: '16h00–18h00', tema: 'Por definir' } ] },
@@ -175,7 +175,7 @@ const EDICOES = [
         { h: '16h00–17h00', tema: 'Por definir' } ] },
       { n: 5, data: '2026-11-09', blocos: [
         { h: '14h00–16h00', tema: 'Por definir' },
-        { h: '16h00–18h00', tema: 'Por definir' } ] },
+        { h: '16h00–18h00', tema: 'Impacto, Prática Clínica e o Papel do Profissional' } ] },
       { n: 6, data: '2026-11-16', blocos: [
         { h: '14h00–16h00', tema: 'Por definir' },
         { h: '16h00–18h00', tema: 'Por definir' } ] },
