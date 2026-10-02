@@ -72,7 +72,7 @@ const EDICOES = [
       { n: 4, data: '2026-10-02', blocos: [
         { h: '15h00–17h00', tema: 'Impacto, Prática Clínica e o Papel do Profissional' },
         { h: '17h00–19h00', tema: 'DeepResearch; Escrita Científica; Detetores de IA' } ] },
-      { n: 5, data: '2026-10-09', nota: 'Blocos desiguais: 3H + 1H', blocos: [
+      { n: 5, data: '2026-10-09', blocos: [
         { h: '15h00–18h00', tema: 'Análise de Dados em Python e Google Colab com recurso a IA' },
         { h: '18h00–19h00', tema: 'Ética e Segurança' } ] },
       { n: 6, data: '2026-10-16', blocos: [
