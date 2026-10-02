@@ -19,11 +19,6 @@
 
 <span class="label-tag">Onde vão as turmas</span>
 <h2>Linha temporal</h2>
-<p class="section-note">
-  Uma faixa por edição a decorrer, com as oito sessões no dia em que acontecem. O ponto cheio
-  é sessão dada, o vazio é sessão por dar, e a marca vertical é hoje. Passa o rato sobre um
-  ponto para ver o tema. O período aperta a escala às próximas semanas.
-</p>
 
 <div class="tl-zoom" id="zoom" role="group" aria-label="Período da linha temporal"></div>
 
@@ -257,7 +252,8 @@
       }
 
       if (dentro) {
-        var agora = cria('div', 'tl-hoje' + (idx === 0 ? ' rotulo' : ''));
+        /* A etiqueta vai por baixo da última faixa: em cima colidia com a régua dos meses. */
+        var agora = cria('div', 'tl-hoje' + (idx === visiveis.length - 1 ? ' rotulo' : ''));
         agora.style.setProperty('--x', pct(HOJE));
         pista.appendChild(agora);
       }
