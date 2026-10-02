@@ -127,14 +127,30 @@ const EDICOES = [
     sub: '1ª edição',
     horario: 'terças · 14h00–18h00',
     sessoes: [
-      { n: 1, data: '2026-10-06', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
-      { n: 2, data: '2026-10-13', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
-      { n: 3, data: '2026-10-20', nota: 'Sessão de 3H', blocos: [ { h: '14h00–17h00', tema: 'Por definir' } ] },
-      { n: 4, data: '2026-10-27', nota: 'Sessão de 3H', blocos: [ { h: '14h00–17h00', tema: 'Por definir' } ] },
-      { n: 5, data: '2026-11-03', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
-      { n: 6, data: '2026-11-10', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
-      { n: 7, data: '2026-11-17', blocos: [ { h: '14h00–18h00', tema: 'Laboratório de Projeto' } ] },
-      { n: 8, data: '2026-11-24', blocos: [ { h: '14h00–18h00', tema: 'Apresentação de Projetos Finais' } ] }
+      { n: 1, data: '2026-10-06', blocos: [
+        { h: '14h00–16h00', tema: 'Apresentação; Caracterização da Turma' },
+        { h: '16h00–18h00', tema: 'Intro IA' } ] },
+      { n: 2, data: '2026-10-13', blocos: [
+        { h: '14h00–16h00', tema: 'Personalização e Design prompting' },
+        { h: '16h00–18h00', tema: 'Prompt Engineering I/II' } ] },
+      { n: 3, data: '2026-10-20', nota: 'Sessão de 3H, bloco 2 de 1H', blocos: [
+        { h: '14h00–16h00', tema: 'Por definir' },
+        { h: '16h00–17h00', tema: 'Por definir' } ] },
+      { n: 4, data: '2026-10-27', nota: 'Sessão de 3H, bloco 2 de 1H', blocos: [
+        { h: '14h00–16h00', tema: 'Por definir' },
+        { h: '16h00–17h00', tema: 'Por definir' } ] },
+      { n: 5, data: '2026-11-03', blocos: [
+        { h: '14h00–16h00', tema: 'Por definir' },
+        { h: '16h00–18h00', tema: 'Por definir' } ] },
+      { n: 6, data: '2026-11-10', blocos: [
+        { h: '14h00–16h00', tema: 'Por definir' },
+        { h: '16h00–18h00', tema: 'Por definir' } ] },
+      { n: 7, data: '2026-11-17', blocos: [
+        { h: '14h00–16h00', tema: 'Laboratório de Projeto' },
+        { h: '16h00–18h00', tema: 'Laboratório de Projeto' } ] },
+      { n: 8, data: '2026-11-24', blocos: [
+        { h: '14h00–16h00', tema: 'Apresentação de Projetos Finais' },
+        { h: '16h00–18h00', tema: 'Apresentação de Projetos Finais' } ] }
     ]
   },
 
@@ -145,14 +161,30 @@ const EDICOES = [
     sub: '1ª edição',
     horario: 'segundas · 14h00–18h00',
     sessoes: [
-      { n: 1, data: '2026-10-12', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
-      { n: 2, data: '2026-10-19', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
-      { n: 3, data: '2026-10-26', nota: 'Sessão de 3H', blocos: [ { h: '14h00–17h00', tema: 'Por definir' } ] },
-      { n: 4, data: '2026-11-02', nota: 'Sessão de 3H', blocos: [ { h: '14h00–17h00', tema: 'Por definir' } ] },
-      { n: 5, data: '2026-11-09', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
-      { n: 6, data: '2026-11-16', blocos: [ { h: '14h00–18h00', tema: 'Por definir' } ] },
-      { n: 7, data: '2026-11-23', blocos: [ { h: '14h00–18h00', tema: 'Laboratório de Projeto' } ] },
-      { n: 8, data: '2026-11-30', blocos: [ { h: '14h00–18h00', tema: 'Apresentação de Projetos Finais' } ] }
+      { n: 1, data: '2026-10-12', blocos: [
+        { h: '14h00–16h00', tema: 'Apresentação; Caracterização da Turma' },
+        { h: '16h00–18h00', tema: 'Intro IA' } ] },
+      { n: 2, data: '2026-10-19', blocos: [
+        { h: '14h00–16h00', tema: 'Personalização e Design prompting' },
+        { h: '16h00–18h00', tema: 'Prompt Engineering I/II' } ] },
+      { n: 3, data: '2026-10-26', nota: 'Sessão de 3H, bloco 2 de 1H', blocos: [
+        { h: '14h00–16h00', tema: 'Por definir' },
+        { h: '16h00–17h00', tema: 'Por definir' } ] },
+      { n: 4, data: '2026-11-02', nota: 'Sessão de 3H, bloco 2 de 1H', blocos: [
+        { h: '14h00–16h00', tema: 'Por definir' },
+        { h: '16h00–17h00', tema: 'Por definir' } ] },
+      { n: 5, data: '2026-11-09', blocos: [
+        { h: '14h00–16h00', tema: 'Por definir' },
+        { h: '16h00–18h00', tema: 'Por definir' } ] },
+      { n: 6, data: '2026-11-16', blocos: [
+        { h: '14h00–16h00', tema: 'Por definir' },
+        { h: '16h00–18h00', tema: 'Por definir' } ] },
+      { n: 7, data: '2026-11-23', blocos: [
+        { h: '14h00–16h00', tema: 'Laboratório de Projeto' },
+        { h: '16h00–18h00', tema: 'Laboratório de Projeto' } ] },
+      { n: 8, data: '2026-11-30', blocos: [
+        { h: '14h00–16h00', tema: 'Apresentação de Projetos Finais' },
+        { h: '16h00–18h00', tema: 'Apresentação de Projetos Finais' } ] }
     ]
   }
 ];
