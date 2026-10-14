@@ -84,6 +84,15 @@
   .reveal .synth p { color: var(--cel-white); font-size: 15pt; margin: 0; }
 
   .reveal p.foot { font-size: 11pt; color: var(--cel-slate); margin-top: auto; padding-top: 10px; }
+
+  /* Capturas de ecrã: discretas, recortadas, com legenda */
+  .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  .shot { margin: 0; }
+  .shot img { width: 100%; display: block; border: 1px solid #D8D8D4; margin: 0; }
+  .reveal .shot figcaption { font-size: 12pt; color: var(--cel-slate); margin-top: 8px; line-height: 1.4; }
+  .reveal .shot figcaption strong { color: var(--cel-primary); }
+  .reveal p.note { font-size: 13pt; color: var(--cel-slate); border-left: 2px solid var(--cel-light);
+                   padding-left: 12px; margin-top: 16px; }
 </style>
 </head>
 <body>
@@ -144,6 +153,22 @@
 </section>
 
 <section class="content-slide">
+  <h2>Na prática: o ecrã inicial</h2>
+  <div class="separator"></div>
+  <div class="shots">
+    <figure class="shot">
+      <img src="img/chatgpt-inicio.png" alt="Ecrã inicial do ChatGPT: barra lateral à esquerda, seletor no topo, caixa de mensagem com o botão + ao centro">
+      <figcaption><strong>ChatGPT</strong> — barra lateral à esquerda; seletor "ChatGPT ▾" no topo; "+" e microfone na caixa de mensagem.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="img/gemini-inicio.png" alt="Ecrã inicial do Gemini: barra lateral à esquerda, caixa de mensagem com o botão + e o seletor de modelo">
+      <figcaption><strong>Gemini</strong> — barra lateral à esquerda; "+", seletor de modelo e microfone dentro da caixa de mensagem.</figcaption>
+    </figure>
+  </div>
+  <p class="note">Capturas sem sessão iniciada (14/10/2026). Com sessão aparecem o histórico, os Projetos ou Gems e o menu da conta. O Claude só mostra o ecrã de trabalho depois de iniciar sessão.</p>
+</section>
+
+<section class="content-slide">
   <h2>A caixa de mensagem faz mais do que escrever</h2>
   <div class="separator"></div>
   <div class="g3">
@@ -157,11 +182,11 @@
     </div>
     <div class="card accent">
       <h3>Sem memória</h3>
-      <p><strong>ChatGPT:</strong> chat temporário (topo).<br><strong>Claude:</strong> "+" → desligar a memória, antes da 1ª mensagem.</p>
+      <p><strong>ChatGPT:</strong> chat temporário (topo).<br><strong>Claude:</strong> conversa incógnita — ícone do fantasma, canto superior direito.<br><strong>Gemini:</strong> conversa temporária.</p>
     </div>
   </div>
   <p style="font-size:15pt; margin-top:22px;">Exercício: anexar um PDF de teste <strong>sem dados de doentes</strong> e pedir um resumo em 5 pontos.</p>
-  <aside class="notes">O chat temporário não fica no histórico e não cria memórias. No Claude, a opção só aparece antes de enviar a primeira mensagem.</aside>
+  <aside class="notes">As três modalidades não ficam no histórico e não alimentam a memória. No Claude, o fantasma aparece numa conversa nova fora de um projeto. No Gemini, a conversa temporária fica guardada até 72 horas.</aside>
 </section>
 
 <!-- ============ PARTE DOIS ============ -->
@@ -188,6 +213,7 @@
     </div>
   </div>
   <div class="synth"><p>As três camadas entram em cada resposta. Quem as controla, controla o assistente.</p></div>
+  <p class="note">Aqui fica o mapa dos menus. O que escrever em cada camada é aprofundado no módulo próprio de Personalização.</p>
 </section>
 
 <section class="content-slide">
@@ -241,9 +267,22 @@
     <tr><td>Instruções globais</td><td>Instruções personalizadas</td><td>Instruções para o Claude</td><td>Instruções</td></tr>
     <tr><td>Memória</td><td>Memórias guardadas + histórico</td><td>Memória</td><td>Memória</td></tr>
     <tr><td>Contexto por tema</td><td>Projetos</td><td>Projetos</td><td>Gems</td></tr>
-    <tr><td>Sem memória</td><td>Chat temporário</td><td>"+" → desligar memória</td><td>Atividade desligada</td></tr>
+    <tr><td>Sem memória</td><td>Chat temporário</td><td>Conversa incógnita (fantasma)</td><td>Conversa temporária</td></tr>
     <tr><td>Ver e apagar</td><td>Gerir memórias</td><td>Memória → pausar / repor</td><td>Contexto pessoal</td></tr>
   </table>
+</section>
+
+<section class="content-slide">
+  <h2>Quanto cabe nas instruções globais?</h2>
+  <div class="separator"></div>
+  <table class="t">
+    <tr><th style="width:24%">Assistente</th><th>Versão gratuita</th><th>Planos pagos</th></tr>
+    <tr><td>ChatGPT</td><td><strong>1500 caracteres</strong> (também no plano Go)</td><td><strong>5000 caracteres</strong> (desde julho de 2026)</td></tr>
+    <tr><td>Claude</td><td colspan="2">A Anthropic não publica um limite</td></tr>
+    <tr><td>Gemini</td><td colspan="2">A Google não publica um limite</td></tr>
+  </table>
+  <p style="font-size:15pt; margin-top:22px;">1500 caracteres são cerca de 200 a 250 palavras: chega para papel, contexto de trabalho e formato de resposta — <strong>se for escrito com intenção</strong>.</p>
+  <p class="note">Fonte: centro de ajuda da OpenAI, consultado a 14/10/2026. Os números que circulam para o Claude e o Gemini vêm de terceiros e não foram usados.</p>
 </section>
 
 <section class="content-slide">
@@ -311,7 +350,7 @@
 <section class="closing">
   <div class="accent-line"></div>
   <h2>A seguir</h2>
-  <p>Sandbox de personalização: o que escrever nas instruções — e depois, engenharia de prompts</p>
+  <p>A personalização tem módulo próprio: o que escrever em cada camada, com o sandbox do curso — e depois, engenharia de prompts</p>
   <aside class="notes">Sandbox: hasp7.github.io/cel-genai-med/recursos/personalizacao/</aside>
 </section>
 
