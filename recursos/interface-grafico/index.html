@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.3 Interface gráfico · GenAI:med</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/theme/white.css" id="theme">
+<link rel="stylesheet" href="../../shared/cel-base.css">
+<style>
+  /* Ajustes locais. Não mexer no cel-base.css — ver DESIGN.md. */
+  .reveal .content-slide h2 { font-size: 26pt; margin-bottom: 8px; }
+  .reveal .content-slide .separator { margin-bottom: 20px; }
+  .reveal .content-slide > ul > li, .reveal .content-slide > p { font-size: 18pt; }
+  .reveal .content-slide { display: flex; flex-direction: column; }
+
+  .reveal .cover h1 { font-size: 42pt; max-width: 15em; line-height: 1.2; margin-bottom: 18px; }
+  .reveal .cover .subtitle { font-size: 19pt; }
+  .cover .kicker { display: block; font-size: 14pt; text-transform: uppercase;
+                   letter-spacing: 0.1em; font-weight: 600; color: var(--cel-secondary);
+                   margin-bottom: 14px; }
+
+  /* Grelhas */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .reveal .content-slide .card { height: auto; padding: 22px 26px; }
+  .reveal .card h3 { font-size: 17pt; margin: 0 0 8px; }
+
+  /* Processo de quatro passos (o .process da casa é de três) */
+  .process.four { grid-template-columns: repeat(4, 1fr); gap: 26px; }
+  .reveal .process.four .step h3 { font-size: 18pt; margin: 0 0 8px; }
+  .reveal .process.four .step p { font-size: 14pt; line-height: 1.45; }
+  .reveal .card p, .reveal .card li { font-size: 13.5pt; line-height: 1.45; }
+  .reveal .card ul { margin: 0 0 0 1em; }
+
+  /* Trilho de menu: Definições › Personalização › … */
+  .trail { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 16px; }
+  .reveal .trail p { margin: 0; font-family: var(--heading-font); font-weight: 600; font-size: 14pt;
+                     color: var(--cel-white); background: var(--cel-primary); padding: 6px 13px; }
+  .reveal .trail p.sep { background: none; color: var(--cel-secondary); padding: 0; font-size: 16pt; }
+  .reveal .trail p.end { background: var(--cel-secondary); }
+
+  /* Tabelas */
+  .reveal table.t { border-collapse: collapse; width: 100%; font-size: 13pt; }
+  .reveal table.t th { text-align: left; font-family: var(--heading-font); font-weight: 600;
+                       color: var(--cel-primary); border-bottom: 2px solid var(--cel-primary);
+                       padding: 7px 10px; font-size: 13pt; }
+  .reveal table.t td { border-bottom: 1px solid #DDD; padding: 7px 10px; vertical-align: top;
+                       color: var(--cel-text); }
+  .reveal table.t td:first-child { font-weight: 600; color: var(--cel-primary); }
+
+  /* Anatomia: quatro zonas */
+  .anat { display: grid; grid-template-columns: 210px 1fr; grid-template-rows: auto 1fr auto;
+          gap: 10px; height: 330px; }
+  .zone { border: 2px solid var(--cel-primary); padding: 12px 16px; background: var(--cel-white); }
+  .zone.side { grid-row: 1 / 4; border-color: var(--cel-secondary); }
+  .zone.top { border-color: var(--cel-slate); }
+  .zone.box { border-color: var(--cel-secondary); background: #F7F7F2; }
+  .reveal .zone p { font-size: 12.5pt; margin: 0; line-height: 1.4; }
+  .reveal .zone p.zn { font-family: var(--heading-font); font-weight: 600; font-size: 14pt;
+                       color: var(--cel-primary); margin-bottom: 4px; }
+
+  /* Errado vs certo */
+  .vs { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+  .wrong { border-left: 3px solid #5A5A2E; background: var(--cel-white); padding: 16px 20px; }
+  .right { border-left: 3px solid var(--cel-primary); background: var(--cel-white); padding: 16px 20px; }
+  .reveal .wrong p.lab, .reveal .right p.lab { font-size: 11pt; text-transform: uppercase;
+        letter-spacing: .1em; font-weight: 700; margin: 0 0 8px; }
+  .reveal .wrong p.lab { color: #5A5A2E; }
+  .reveal .right p.lab { color: var(--cel-primary); }
+  .reveal .wrong p, .reveal .right p { font-size: 14pt; line-height: 1.45; }
+  .reveal p.quote { font-style: italic; background: #F7F7F4; padding: 10px 12px; font-size: 13pt; }
+
+  /* FAQ */
+  .faq { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 26px; }
+  .reveal .faq .q { font-family: var(--heading-font); font-weight: 600; font-size: 14pt;
+                    color: var(--cel-primary); margin: 0 0 4px; }
+  .reveal .faq .a { font-size: 12.5pt; line-height: 1.42; margin: 0; color: var(--cel-text); }
+  .faq > div { border-left: 3px solid var(--cel-light); padding: 4px 0 4px 14px; }
+
+  /* Painel de síntese */
+  .synth { background: var(--cel-primary); padding: 16px 22px; margin-top: 18px; }
+  .reveal .synth p { color: var(--cel-white); font-size: 15pt; margin: 0; }
+
+  .reveal p.foot { font-size: 11pt; color: var(--cel-slate); margin-top: auto; padding-top: 10px; }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<!-- ============ CAPA ============ -->
+<section class="cover">
+  <div class="accent-line"></div>
+  <span class="kicker">Bloco 1.3</span>
+  <h1>Interface gráfico: ChatGPT, Claude e Gemini</h1>
+  <p class="subtitle">Onde estão as coisas — e onde se personaliza o assistente</p>
+  <img class="cover-logo" src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+  <aside class="notes">60 minutos. Demonstração ao vivo nos três, com a turma a reproduzir. Os menus mudam: conferir os caminhos antes da aula (confirmados a 14/10/2026).</aside>
+</section>
+
+<section class="content-slide">
+  <h2>O que vamos conseguir fazer</h2>
+  <div class="separator"></div>
+  <ul style="line-height:1.9;">
+    <li>Orientar-nos em <strong>qualquer</strong> assistente pelas mesmas quatro zonas</li>
+    <li>Anexar ficheiros e ligar ferramentas a partir da caixa de mensagem</li>
+    <li><strong>Encontrar e configurar a personalização</strong>: instruções, memória, Projetos e Gems</li>
+    <li>Usar uma conversa sem memória</li>
+    <li>Rever e apagar o que o assistente guardou sobre nós</li>
+  </ul>
+  <aside class="notes">A personalização é o centro da aula: é o que mais muda as respostas e o que mais cuidado pede em saúde.</aside>
+</section>
+
+<!-- ============ PARTE UM ============ -->
+<section class="section-divider">
+  <div class="label">Parte um</div>
+  <h2>Uma anatomia comum</h2>
+</section>
+
+<section class="content-slide">
+  <h2>Quatro zonas, nos três assistentes</h2>
+  <div class="separator"></div>
+  <div class="anat">
+    <div class="zone side">
+      <p class="zn">Barra lateral</p>
+      <p>Nova conversa · pesquisa · histórico</p>
+      <p style="margin-top:8px;">Contexto por tema: <strong>Projetos</strong> (ChatGPT, Claude) · <strong>Gems</strong> (Gemini)</p>
+    </div>
+    <div class="zone top">
+      <p class="zn">Menu da conta</p>
+      <p>Nome ou iniciais → <strong>Definições</strong>: personalização, privacidade, dados</p>
+    </div>
+    <div class="zone">
+      <p class="zn">Área de conversa</p>
+      <p>Pergunta e resposta · copiar, regenerar, avaliar, partilhar</p>
+    </div>
+    <div class="zone box">
+      <p class="zn">Caixa de mensagem</p>
+      <p>Escrever · <strong>"+"</strong> para ficheiros e ferramentas · voz · seletor de modelo</p>
+    </div>
+  </div>
+  <aside class="notes">Mostrar no ChatGPT e pedir à turma que encontre o mesmo no Claude e no Gemini. Quem domina um, domina os três.</aside>
+</section>
+
+<section class="content-slide">
+  <h2>A caixa de mensagem faz mais do que escrever</h2>
+  <div class="separator"></div>
+  <div class="g3">
+    <div class="card">
+      <h3>Anexar</h3>
+      <p>PDF, imagens, folhas de cálculo — pelo "+" ou arrastando para a caixa.</p>
+    </div>
+    <div class="card secondary">
+      <h3>Ferramentas</h3>
+      <p>Pesquisa na web, investigação aprofundada, criação de imagem, conectores — também pelo "+".</p>
+    </div>
+    <div class="card accent">
+      <h3>Sem memória</h3>
+      <p><strong>ChatGPT:</strong> chat temporário (topo).<br><strong>Claude:</strong> "+" → desligar a memória, antes da 1ª mensagem.</p>
+    </div>
+  </div>
+  <p style="font-size:15pt; margin-top:22px;">Exercício: anexar um PDF de teste <strong>sem dados de doentes</strong> e pedir um resumo em 5 pontos.</p>
+  <aside class="notes">O chat temporário não fica no histórico e não cria memórias. No Claude, a opção só aparece antes de enviar a primeira mensagem.</aside>
+</section>
+
+<!-- ============ PARTE DOIS ============ -->
+<section class="section-divider">
+  <div class="label">Parte dois</div>
+  <h2>Personalização: o contexto que fica</h2>
+</section>
+
+<section class="content-slide">
+  <h2>Três camadas de contexto persistente</h2>
+  <div class="separator"></div>
+  <div class="g3">
+    <div class="card">
+      <h3>1 · Instruções globais</h3>
+      <p>Escritas por si. Aplicam-se a <strong>todas</strong> as conversas: quem é, como quer as respostas.</p>
+    </div>
+    <div class="card secondary">
+      <h3>2 · Memória</h3>
+      <p>O que o assistente guarda das conversas. Convém <strong>rever e apagar</strong>.</p>
+    </div>
+    <div class="card accent">
+      <h3>3 · Contexto por tema</h3>
+      <p>Projetos ou Gems: instruções e ficheiros para um assunto recorrente, separado dos outros.</p>
+    </div>
+  </div>
+  <div class="synth"><p>As três camadas entram em cada resposta. Quem as controla, controla o assistente.</p></div>
+</section>
+
+<section class="content-slide">
+  <h2>ChatGPT</h2>
+  <div class="separator"></div>
+  <div class="trail"><p>Conta</p><p class="sep">›</p><p>Definições</p><p class="sep">›</p><p class="end">Personalização</p></div>
+  <table class="t">
+    <tr><th style="width:30%">Opção</th><th>O que faz</th></tr>
+    <tr><td>Personalidade</td><td>Tom geral das respostas</td></tr>
+    <tr><td>Instruções personalizadas</td><td>Quem é e como quer as respostas — todas as conversas (até 5000 caracteres nos planos pagos)</td></tr>
+    <tr><td>Memórias guardadas</td><td>Factos guardados; rever e apagar em <strong>Gerir memórias</strong></td></tr>
+    <tr><td>Referenciar histórico</td><td>Usa conversas passadas; desligar não apaga as memórias</td></tr>
+  </table>
+  <p style="font-size:14pt; margin-top:14px;"><strong>Projetos</strong> podem ter memória só do projeto · <strong>Fontes</strong>, por baixo da resposta, mostra o que foi usado</p>
+</section>
+
+<section class="content-slide">
+  <h2>Claude</h2>
+  <div class="separator"></div>
+  <div class="g2">
+    <div>
+      <div class="trail"><p>Definições</p><p class="sep">›</p><p class="end">Geral</p></div>
+      <div class="card"><h3>Instruções para o Claude</h3><p>Preferências globais, aplicadas a todas as conversas.</p></div>
+    </div>
+    <div>
+      <div class="trail"><p>Definições</p><p class="sep">›</p><p class="end">Memória</p></div>
+      <div class="card secondary"><h3>Memória</h3><p>O que o Claude lembra, por tópicos. <strong>Pausar</strong> mantém; <strong>repor</strong> apaga tudo, incluindo os projetos.</p></div>
+    </div>
+  </div>
+  <div class="card accent" style="margin-top:18px;"><h3>Projetos</h3><p>Ficheiros de conhecimento, instruções do projeto (planos pagos) e memória própria — que não se mistura com a de outros projetos.</p></div>
+</section>
+
+<section class="content-slide">
+  <h2>Gemini</h2>
+  <div class="separator"></div>
+  <div class="trail"><p>Definições</p><p class="sep">›</p><p class="end">Contexto pessoal</p></div>
+  <table class="t">
+    <tr><th style="width:30%">Opção</th><th>O que faz</th></tr>
+    <tr><td>Instruções</td><td>O que deve saber sobre si e como responder ("Informações guardadas" em alguns países)</td></tr>
+    <tr><td>Memória</td><td>Usa conversas passadas (antes "conversas anteriores")</td></tr>
+    <tr><td>Apps ligadas</td><td>Gmail, Fotos, YouTube, Pesquisa — <strong>desligado por omissão</strong>, app a app</td></tr>
+  </table>
+  <p style="font-size:14pt; margin-top:14px;"><strong>Gems</strong> para contexto por tema · <strong>Atividade nas Apps Gemini</strong> controla o histórico · exige conta Google <strong>pessoal</strong></p>
+</section>
+
+<section class="content-slide">
+  <h2>A mesma ideia, com nomes diferentes</h2>
+  <div class="separator"></div>
+  <table class="t">
+    <tr><th style="width:24%">Ideia</th><th>ChatGPT</th><th>Claude</th><th>Gemini</th></tr>
+    <tr><td>Instruções globais</td><td>Instruções personalizadas</td><td>Instruções para o Claude</td><td>Instruções</td></tr>
+    <tr><td>Memória</td><td>Memórias guardadas + histórico</td><td>Memória</td><td>Memória</td></tr>
+    <tr><td>Contexto por tema</td><td>Projetos</td><td>Projetos</td><td>Gems</td></tr>
+    <tr><td>Sem memória</td><td>Chat temporário</td><td>"+" → desligar memória</td><td>Atividade desligada</td></tr>
+    <tr><td>Ver e apagar</td><td>Gerir memórias</td><td>Memória → pausar / repor</td><td>Contexto pessoal</td></tr>
+  </table>
+</section>
+
+<section class="content-slide">
+  <h2>Exercício: o que é que ele sabe sobre mim?</h2>
+  <div class="separator"></div>
+  <div class="process four">
+    <div class="step"><div class="step-num">1</div><h3>Abrir</h3><p>A página de memória do assistente que usa</p></div>
+    <div class="step"><div class="step-num">2</div><h3>Ler</h3><p>O que está guardado — reconhece tudo?</p></div>
+    <div class="step"><div class="step-num">3</div><h3>Apagar</h3><p>O que não devia lá estar</p></div>
+    <div class="step"><div class="step-num">4</div><h3>Escrever</h3><p>Duas linhas de instruções: papel e formato de resposta</p></div>
+  </div>
+  <aside class="notes">5–10 minutos. As instruções escritas aqui são o ponto de partida para o sandbox de personalização.</aside>
+</section>
+
+<section class="content-slide">
+  <h2>Em saúde: o que nunca entra na personalização</h2>
+  <div class="separator"></div>
+  <div class="vs">
+    <div class="wrong">
+      <p class="lab">Errado</p>
+      <p class="quote">"Sou médico na USF X. Tenho a utente M. S., 67 anos, com DPOC e FA, e preciso de ajuda a seguir o caso."</p>
+      <p>Dados de doente nas instruções ou na memória ficam guardados e reaparecem noutras conversas.</p>
+    </div>
+    <div class="right">
+      <p class="lab">Certo</p>
+      <p class="quote">"Sou médico de família em Portugal. Respostas curtas, com referência às normas DGS e indicação clara do que não sabes."</p>
+      <p>Papel e formato chegam. Casos clínicos, só anonimizados e numa conversa sem memória.</p>
+    </div>
+  </div>
+  <p style="font-size:14pt; margin-top:18px;">Contas da instituição têm outras regras — e no Gemini a personalização não existe em contas de trabalho.</p>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section-divider">
+  <div class="label">Perguntas frequentes</div>
+  <h2>O que a turma costuma perguntar</h2>
+</section>
+
+<section class="content-slide">
+  <h2>Perguntas frequentes (1/2)</h2>
+  <div class="separator"></div>
+  <div class="faq">
+    <div><p class="q">Qual devo usar?</p><p class="a">Os três fazem o essencial do curso e a estrutura é a mesma. Escolher um principal — de preferência o que a instituição autoriza.</p></div>
+    <div><p class="q">A versão gratuita chega?</p><p class="a">Para interface, prompts e personalização básica, sim. Limites, modelos e algumas funções variam com o plano.</p></div>
+    <div><p class="q">Instruções ou memória?</p><p class="a">Instruções: escritas por si, aplicam-se sempre. Memória: o que o assistente vai guardando — rever de vez em quando.</p></div>
+    <div><p class="q">Onde vejo o que sabe de mim?</p><p class="a">ChatGPT: Personalização → Gerir memórias. Claude: Definições → Memória. Gemini: Contexto pessoal.</p></div>
+    <div><p class="q">Desligar a memória apaga?</p><p class="a">Não necessariamente. Desligar o histórico no ChatGPT ou pausar no Claude mantém; apagar é explícito.</p></div>
+    <div><p class="q">Projetos e Gems, para quê?</p><p class="a">Trabalho recorrente sobre um tema: instruções e ficheiros próprios, sem misturar com o resto.</p></div>
+  </div>
+</section>
+
+<section class="content-slide">
+  <h2>Perguntas frequentes (2/2)</h2>
+  <div class="separator"></div>
+  <div class="faq">
+    <div><p class="q">Posso usar dados de doentes?</p><p class="a">Não em contas pessoais, nem em instruções, memória ou ficheiros. Anonimizar a sério e seguir as regras da instituição.</p></div>
+    <div><p class="q">Servem para treinar o modelo?</p><p class="a">Depende do assistente e do plano: ver as opções de privacidade nas Definições antes de usar.</p></div>
+    <div><p class="q">Porque muda a resposta?</p><p class="a">Os modelos geram com alguma variação, e a memória e as instruções mudam o contexto. Comparar respostas é um bom teste.</p></div>
+    <div><p class="q">Quando uso a conversa temporária?</p><p class="a">Para perguntas pontuais ou sensíveis, ou para ver como responde "sem me conhecer".</p></div>
+    <div><p class="q">Posso partilhar uma conversa?</p><p class="a">Sim, por link. Quem o tiver vê o conteúdo: rever antes de partilhar.</p></div>
+    <div><p class="q">E no telemóvel?</p><p class="a">A conta e a personalização são as mesmas; os menus ficam noutros sítios. A aula usa a versão web.</p></div>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="accent-line"></div>
+  <h2>A seguir</h2>
+  <p>Sandbox de personalização: o que escrever nas instruções — e depois, engenharia de prompts</p>
+  <aside class="notes">Sandbox: hasp7.github.io/cel-genai-med/recursos/personalizacao/</aside>
+</section>
+
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({ hash: true, slideNumber: 'c/t', transition: 'fade', plugins: [ RevealNotes ] });
+</script>
+</body>
+</html>
