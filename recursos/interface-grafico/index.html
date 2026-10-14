@@ -93,6 +93,17 @@
   .reveal .shot figcaption strong { color: var(--cel-primary); }
   .reveal p.note { font-size: 13pt; color: var(--cel-slate); border-left: 2px solid var(--cel-light);
                    padding-left: 12px; margin-top: 16px; }
+
+  /* Ecrã inicial: uma linha por assistente, captura à esquerda e legenda à direita */
+  .rows { display: grid; gap: 9px; }
+  .row { display: grid; grid-template-columns: 375px 1fr; gap: 22px; align-items: center; }
+  .row img { width: 100%; display: block; border: 1px solid #D8D8D4; margin: 0; }
+  .reveal .row p { font-size: 12.5pt; line-height: 1.4; margin: 0; color: var(--cel-text); }
+  .reveal .row p strong { color: var(--cel-primary); }
+
+  /* Menus da conta lado a lado */
+  .menus { display: grid; grid-template-columns: 230px 230px 1fr; gap: 26px; align-items: start; }
+  .menus img { width: 100%; display: block; border: 1px solid #D8D8D4; margin: 0; }
 </style>
 </head>
 <body>
@@ -155,17 +166,21 @@
 <section class="content-slide">
   <h2>Na prática: o ecrã inicial</h2>
   <div class="separator"></div>
-  <div class="shots">
-    <figure class="shot">
-      <img src="img/chatgpt-inicio.png" alt="Ecrã inicial do ChatGPT: barra lateral à esquerda, seletor no topo, caixa de mensagem com o botão + ao centro">
-      <figcaption><strong>ChatGPT</strong> — barra lateral à esquerda; seletor "ChatGPT ▾" no topo; "+" e microfone na caixa de mensagem.</figcaption>
-    </figure>
-    <figure class="shot">
-      <img src="img/gemini-inicio.png" alt="Ecrã inicial do Gemini: barra lateral à esquerda, caixa de mensagem com o botão + e o seletor de modelo">
-      <figcaption><strong>Gemini</strong> — barra lateral à esquerda; "+", seletor de modelo e microfone dentro da caixa de mensagem.</figcaption>
-    </figure>
+  <div class="rows">
+    <div class="row">
+      <img src="img/chatgpt-inicio.png" alt="Ecrã inicial do ChatGPT com sessão iniciada">
+      <p><strong>ChatGPT</strong> — barra lateral com Projetos e Recentes; seletor "ChatGPT ▾" no topo; <strong>chat temporário</strong> no canto superior direito; "+" e nível de raciocínio na caixa.</p>
+    </div>
+    <div class="row">
+      <img src="img/claude-inicio.png" alt="Ecrã inicial do Claude com sessão iniciada">
+      <p><strong>Claude</strong> — barra lateral com Projects e Artifacts; <strong>fantasma</strong> (conversa incógnita) no canto superior direito; "+", modo e modelo na caixa.</p>
+    </div>
+    <div class="row">
+      <img src="img/gemini-inicio.png" alt="Ecrã inicial do Gemini com sessão iniciada">
+      <p><strong>Gemini</strong> — barra lateral com Biblioteca e Notebooks; "+" e seletor de modelo ("Pro ▾") dentro da caixa de mensagem.</p>
+    </div>
   </div>
-  <p class="note">Capturas sem sessão iniciada (14/10/2026). Com sessão aparecem o histórico, os Projetos ou Gems e o menu da conta. O Claude só mostra o ecrã de trabalho depois de iniciar sessão.</p>
+  <p class="note" style="margin-top:10px;">Capturas de 14/10/2026, com sessão iniciada. A interface muda com o plano, o idioma e as atualizações.</p>
 </section>
 
 <section class="content-slide">
@@ -182,7 +197,7 @@
     </div>
     <div class="card accent">
       <h3>Sem memória</h3>
-      <p><strong>ChatGPT:</strong> chat temporário (topo).<br><strong>Claude:</strong> conversa incógnita — ícone do fantasma, canto superior direito.<br><strong>Gemini:</strong> conversa temporária.</p>
+      <p><strong>ChatGPT:</strong> chat temporário, canto superior direito.<br><strong>Claude:</strong> conversa incógnita — ícone do fantasma, canto superior direito.<br><strong>Gemini:</strong> conversa temporária.</p>
     </div>
   </div>
   <p style="font-size:15pt; margin-top:22px;">Exercício: anexar um PDF de teste <strong>sem dados de doentes</strong> e pedir um resumo em 5 pontos.</p>
@@ -217,13 +232,28 @@
 </section>
 
 <section class="content-slide">
+  <h2>Tudo começa no menu da conta</h2>
+  <div class="separator"></div>
+  <div class="menus">
+    <img src="img/chatgpt-menu.png" alt="Menu da conta do ChatGPT: Personalization, Profile, Settings">
+    <img src="img/claude-menu.png" alt="Menu da conta do Claude: Settings, Usage, Language">
+    <div>
+      <p style="font-size:15pt; margin:0 0 12px;">Clicar no <strong>nome</strong>, no canto inferior esquerdo.</p>
+      <p style="font-size:14pt; margin:0 0 10px;"><strong>ChatGPT</strong> — <em>Personalization</em> está logo no menu.</p>
+      <p style="font-size:14pt; margin:0 0 10px;"><strong>Claude</strong> — <em>Settings</em>, e daí Geral e Memória.</p>
+      <p style="font-size:14pt; margin:0;"><strong>Gemini</strong> — a roda dentada das <em>Definições</em> fica ao lado do nome.</p>
+    </div>
+  </div>
+</section>
+
+<section class="content-slide">
   <h2>ChatGPT</h2>
   <div class="separator"></div>
-  <div class="trail"><p>Conta</p><p class="sep">›</p><p>Definições</p><p class="sep">›</p><p class="end">Personalização</p></div>
+  <div class="trail"><p>Conta</p><p class="sep">›</p><p class="end">Personalização</p><p class="sep" style="font-size:12pt; color: var(--cel-slate);">também em Definições</p></div>
   <table class="t">
     <tr><th style="width:30%">Opção</th><th>O que faz</th></tr>
     <tr><td>Personalidade</td><td>Tom geral das respostas</td></tr>
-    <tr><td>Instruções personalizadas</td><td>Quem é e como quer as respostas — todas as conversas (até 5000 caracteres nos planos pagos)</td></tr>
+    <tr><td>Instruções personalizadas</td><td>Quem é e como quer as respostas — todas as conversas (1500 caracteres no gratuito, 5000 nos pagos)</td></tr>
     <tr><td>Memórias guardadas</td><td>Factos guardados; rever e apagar em <strong>Gerir memórias</strong></td></tr>
     <tr><td>Referenciar histórico</td><td>Usa conversas passadas; desligar não apaga as memórias</td></tr>
   </table>
