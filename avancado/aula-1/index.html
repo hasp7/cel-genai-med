@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apresentação do curso · GenAI Avançado</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.css">
+<style>
+  /* GenAI Avançado — identidade do Template CeL.pptx (inbox do HQ, set/2026):
+     fotografia de fundo, painel branco por cima com uma moldura estreita, Arial,
+     petróleo escuro com acentos teal. Os decks dos cursos base usam o cel-base.css
+     (petróleo + azeitona); este deck afasta-se de propósito, a pedido do Hélder
+     (2026-10-22). O logótipo continua o oficial, que é petróleo + azeitona. */
+  :root {
+    --pri: #0E3A4F;     /* títulos, chips */
+    --txt: #4A6472;     /* texto corrente */
+    --teal: #0E7C7B;    /* sobretítulos, destaque */
+    --teal2: #00A6A6;   /* traços, contornos */
+    --mint: #5BC8C0;    /* números sobre escuro */
+    --deep: #0A5655;    /* faixas de destaque */
+    --line: #E2EAEE;    /* bordas de cartão */
+    --soft: #EEF3F5;    /* fundos suaves */
+    --font: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  }
+  html, body { background: #0b1f28; }
+  .reveal { font-family: var(--font); color: var(--txt); font-size: 22px; }
+  .reveal .slides { text-align: left; }
+  .reveal .slides > section { height: 720px; padding: 0; }
+
+  /* A moldura: o fundo fotográfico vem do data-background-image de cada slide;
+     o painel branco fica 3% para dentro na horizontal e 4,5% na vertical, como no master. */
+  .panel { position: absolute; left: 38px; right: 38px; top: 32px; bottom: 32px;
+           background: #fff; padding: 56px 72px 64px; box-sizing: border-box; }
+  .logo { position: absolute; top: 34px; left: 44px; height: 34px; }
+  .cover .logo { left: 50%; transform: translateX(-50%); top: 52px; height: 72px; }
+  .foot { position: absolute; left: 72px; right: 140px; bottom: 26px; display: flex;
+          justify-content: space-between; font-size: 13px; color: var(--txt); }
+  .foot b { color: var(--teal); }
+
+  .reveal h1, .reveal h2, .reveal h3 { font-family: var(--font); color: var(--pri);
+          text-transform: none; letter-spacing: 0; margin: 0; }
+  .reveal h1 { font-size: 46px; font-weight: 700; line-height: 1.15; }
+  .reveal h2 { font-size: 34px; font-weight: 700; line-height: 1.2; }
+  .reveal h3 { font-size: 23px; font-weight: 700; line-height: 1.25; }
+  .reveal p, .reveal li { font-size: 19px; line-height: 1.45; color: var(--txt); }
+  .reveal ul { margin: 0 0 0 1.1em; }
+  .reveal li { margin-bottom: 8px; }
+  .reveal li::marker { color: var(--teal2); }
+  .reveal strong { color: var(--pri); }
+
+  .eyebrow { display: block; font-size: 15px; font-weight: 700; color: var(--teal);
+             text-transform: uppercase; letter-spacing: .08em; margin-bottom: 14px; }
+  .eyebrow::after { content: ""; display: block; width: 70px; height: 5px;
+                    background: var(--teal2); margin-top: 14px; }
+  .content .head { margin: 34px 0 26px 0; }
+  .content .head .sub { font-size: 17px; color: var(--txt); margin-top: 8px; }
+
+  /* Capa */
+  .cover .panel { padding: 210px 150px 0; }
+  .reveal .cover h1 { font-size: 50px; max-width: 900px; }
+  .reveal .cover .subtitle { font-size: 21px; margin-top: 14px; color: var(--txt); }
+  .badges { display: flex; gap: 14px; margin-top: 46px; }
+  .badge { border: 2px solid var(--teal2); color: var(--teal); border-radius: 999px;
+           padding: 9px 22px; font-size: 16px; font-weight: 700; }
+
+  /* Separador de secção */
+  .divider .panel { display: flex; flex-direction: column; justify-content: center; padding: 0 150px; }
+  .reveal .divider h2 { font-size: 48px; }
+  .divider .num { font-size: 92px; font-weight: 700; color: var(--line); line-height: 1; margin-bottom: 10px; }
+
+  /* Cartões elevados (Variante A) */
+  .cards { display: grid; gap: 22px; }
+  .cards.c2 { grid-template-columns: repeat(2, 1fr); }
+  .cards.c3 { grid-template-columns: repeat(3, 1fr); }
+  .cards.c4 { grid-template-columns: repeat(4, 1fr); }
+  .card { background: #fff; border: 1.5px solid var(--line); border-radius: 12px;
+          padding: 22px 24px; box-shadow: 0 6px 18px rgba(14,58,79,.07); }
+  .chip { display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px;
+          border-radius: 10px; background: var(--pri); color: var(--mint); font-weight: 700;
+          font-size: 17px; margin-bottom: 14px; }
+  .reveal .card h3 { margin-bottom: 8px; }
+  .reveal .card p, .reveal .card li { font-size: 17.5px; line-height: 1.45; }
+  .reveal .card ul { margin-left: 1em; }
+  .reveal .card li { margin-bottom: 4px; }
+  .card.dark { background: var(--pri); border-color: var(--pri); }
+  .reveal .card.dark h3 { color: #fff; }
+  .reveal .card.dark p, .reveal .card.dark li { color: #d6e4ea; }
+  .tag { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .08em;
+         text-transform: uppercase; color: var(--deep); background: var(--soft);
+         border-radius: 999px; padding: 4px 12px; margin-bottom: 10px; }
+  .card.dark .tag { background: var(--deep); color: var(--mint); }
+  .card.dark .chip { background: var(--deep); }
+
+  .strip { margin-top: 24px; background: var(--soft); border-left: 5px solid var(--deep);
+           border-radius: 8px; padding: 14px 22px; font-size: 18px; color: var(--deep); font-weight: 700; }
+
+  /* Tabelas */
+  .reveal table { border-collapse: collapse; width: 100%; font-size: 18px; }
+  .reveal th { text-align: left; font-size: 13px; text-transform: uppercase; letter-spacing: .06em;
+               color: var(--txt); border-bottom: 2px solid var(--teal2); padding: 8px 12px; }
+  .reveal td { padding: 9px 12px; border-bottom: 1px solid var(--line); color: var(--txt); vertical-align: top; }
+  .reveal td:first-child { font-weight: 700; color: var(--pri); white-space: nowrap; }
+  .reveal td.t { text-align: right; white-space: nowrap; color: var(--teal); font-weight: 700; }
+
+  /* Cronologia (Variante G): uma linha, um ponto por marco. */
+  .timeline { position: relative; display: grid; grid-template-columns: repeat(5, 1fr);
+              margin: 80px 0 0; }
+  .timeline::before { content: ""; position: absolute; left: 0; right: 0; top: 53px; height: 4px;
+                      background: var(--pri); }
+  .tl { text-align: center; padding: 0 8px; }
+  .tl .d { font-weight: 700; color: var(--pri); font-size: 21px; height: 40px; }
+  .tl .dot { display: block; position: relative; width: 26px; height: 26px; margin: 2px auto 22px;
+             border-radius: 50%; background: #fff; border: 5px solid var(--teal2); box-sizing: border-box; }
+  .tl.key .dot { background: var(--pri); border-color: var(--pri); }
+  .reveal .tl .w { font-size: 17px; line-height: 1.4; color: var(--txt); margin: 0; }
+  .tl.key .w { color: var(--pri); font-weight: 700; }
+
+  /* Percurso em passos (Variante D) */
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; align-items: end; }
+  .steps .card:nth-child(1) { min-height: 270px; }
+  .steps .card:nth-child(2) { min-height: 300px; }
+  .steps .card:nth-child(3) { min-height: 330px; }
+  .steps .card:nth-child(4) { min-height: 360px; }
+
+  .note { font-size: 14px; color: var(--txt); margin-top: 16px; font-style: italic; }
+  .reveal .slide-number { background: transparent; color: var(--txt); font-family: var(--font);
+                          font-size: 13px; right: 60px; bottom: 50px; }
+  .reveal .slide-number a { text-decoration: none; color: inherit; }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<!-- ===================== CAPA ===================== -->
+<section class="cover" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel">
+    <img class="logo" src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+    <span class="eyebrow">Curso de atualização · Parte II · 2.ª edição</span>
+    <h1>GenAI Avançado para Profissionais de Saúde</h1>
+    <p class="subtitle">Do assistente ao construtor: agentes, aplicações e o caminho do protótipo à prática</p>
+    <div class="badges">
+      <span class="badge">20 horas · 10 sessões</span>
+      <span class="badge">Live training</span>
+      <span class="badge">Projeto final em pitch</span>
+    </div>
+    <div class="foot"><span>Ciência e Letras · ciencia-letras.pt</span><b>22 out — 18 dez 2026</b></div>
+  </div>
+  <aside class="notes">Boas-vindas. Esta é a segunda edição do curso de atualização. Quem está aqui já fez o curso base: a partir de hoje deixamos de usar a IA só como assistente e passamos a construir com ela.</aside>
+</section>
+
+<!-- ===================== TÓPICOS ===================== -->
+<section class="content" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel">
+    <img class="logo" src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+    <div class="head"><h2>Hoje</h2></div>
+    <div class="cards c3">
+      <div class="card"><div class="chip">01</div><h3>O curso</h3><p>O que muda face ao curso base, como funcionam as sessões e os temas previstos.</p></div>
+      <div class="card"><div class="chip">02</div><h3>O projeto final</h3><p>Um pitch a um decisor, uma componente interativa a funcionar e um relatório curto.</p></div>
+      <div class="card"><div class="chip">03</div><h3>Datas e regras</h3><p>Calendário, pré-submissão, entrega e o que fazer com dados de doentes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== O CURSO ===================== -->
+<section class="divider" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel"><div class="num">01</div><span class="eyebrow">Parte 1</span><h2>O curso</h2></div>
+</section>
+
+<section class="content" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel">
+    <img class="logo" src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+    <div class="head"><h2>Do assistente ao construtor</h2><p class="sub">No curso base aprenderam a usar a IA para pensar e escrever. Aqui usam-na para construir.</p></div>
+    <div class="cards c2">
+      <div class="card"><span class="tag">Curso base</span><h3>A IA como assistente</h3>
+        <ul><li>Engenharia de prompts</li><li>Pesquisa, Deep Research, NotebookLM</li><li>GPTs e Gems ancorados em fontes</li><li>Projeto final: um documento ou um fluxo</li></ul></div>
+      <div class="card dark"><span class="tag">Avançado</span><h3>A IA como plataforma de construção</h3>
+        <ul><li>Agentes, Skills, conectores e MCP</li><li>Aplicações sem programar, e com código</li><li>Dados, modelos locais e APIs</li><li>Projeto final: algo que se usa, apresentado a um decisor</li></ul></div>
+    </div>
+    <div class="strip">Pré-requisito: ter concluído uma edição do curso GenAI para profissionais de saúde.</div>
+  </div>
+</section>
+
+<section class="content" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel">
+    <img class="logo" src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+    <div class="head"><h2>Temas previstos</h2><p class="sub">A ordem e a data de cada tema vão sendo anunciadas ao longo do curso.</p></div>
+    <div class="steps">
+      <div class="card"><span class="tag">Passo 01</span><h3>Claude como plataforma</h3><p>Cowork, Skills, conectores e MCP, personalização e contexto persistente.</p></div>
+      <div class="card"><span class="tag">Passo 02</span><h3>Construir aplicações</h3><p>Google AI Studio, Lovable, Claude Code, Claude Design e artefactos.</p></div>
+      <div class="card"><span class="tag">Passo 03</span><h3>Dados e modelos</h3><p>Análise de dados com Python e IA, modelos locais, APIs e agentes.</p></div>
+      <div class="card dark"><span class="tag">Passo 04</span><h3>Do protótipo ao serviço</h3><p>Limitações técnicas, escalabilidade, governação e AI Act.</p></div>
+    </div>
+  </div>
+  <aside class="notes">Não comprometer datas por tema: a escala ainda está a fechar. O passo 4 é a sessão de 17/12.</aside>
+</section>
+
+<section class="content" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel">
+    <img class="logo" src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+    <div class="head"><h2>Como funciona</h2></div>
+    <div class="cards c4">
+      <div class="card"><div class="chip">2h</div><h3>Sessões síncronas</h3><p>Quintas, 18h00–20h00. A última é sexta, 18/12.</p></div>
+      <div class="card"><div class="chip">10</div><h3>Sessões</h3><p>De 22/10 a 18/12. 20 horas no total.</p></div>
+      <div class="card"><div class="chip">▶</div><h3>Prática em sala</h3><p>Demonstração ao vivo e exercício guiado. Tragam o computador preparado.</p></div>
+      <div class="card"><div class="chip">M</div><h3>Moodle</h3><p>Materiais, atividades e entregas, sessão a sessão.</p></div>
+    </div>
+    <div class="strip">Contas recomendadas: Claude, ChatGPT e Google (Gemini, AI Studio, Colab). Algumas funções pedem plano pago — avisamos antes.</div>
+  </div>
+</section>
+
+<!-- ===================== PROJETO FINAL ===================== -->
+<section class="divider" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel"><div class="num">02</div><span class="eyebrow">Parte 2</span><h2>O projeto final</h2></div>
+</section>
+
+<section class="content" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel">
+    <img class="logo" src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+    <div class="head"><h2>Um projeto que se usa, apresentado a quem decide</h2></div>
+    <div class="cards c3">
+      <div class="card"><div class="chip">01</div><h3>Componente interativa</h3><p>Obrigatória: uma app, uma página, um protótipo ou um assistente que funciona.</p></div>
+      <div class="card dark"><div class="chip">02</div><h3>Pitch de 10 minutos</h3><p>Dirigido a um decisor que escolhem — um Conselho de Administração, uma direção de serviço, uma coordenação de USF.</p></div>
+      <div class="card"><div class="chip">03</div><h3>Relatório curto</h3><p>Uma ficha técnica de no máximo 4 páginas: como foi feito, como foi validado, o que não faz.</p></div>
+    </div>
+    <div class="strip">O projeto é a componente interativa e o pitch. O relatório só diz o que não se vê no pitch.</div>
+  </div>
+</section>
+
+<section class="content" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel">
+    <img class="logo" src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+    <div class="head"><h2>O pitch: capa + 5 slides, 10 minutos</h2><p class="sub">Inspirado no que a Y Combinator ensina: uma ideia por slide, o título diz a conclusão.</p></div>
+    <table>
+      <tr><th>#</th><th>Slide</th><th>O que diz</th><th></th></tr>
+      <tr><td>0</td><td>Capa</td><td>O nome e uma frase: o que é e para quem</td><td class="t">0:30</td></tr>
+      <tr><td>1</td><td>Problema</td><td>Com números e a sua fonte — e o que sabe por estar no terreno</td><td class="t">1:30</td></tr>
+      <tr><td>2</td><td>Demonstração</td><td>A componente interativa a funcionar, ao vivo ou gravada</td><td class="t">4:00</td></tr>
+      <tr><td>3</td><td>Dados e governação</td><td>Que dados, onde e quem acede; avisa que usa IA? que aprovação precisa? enquadramento no AI Act</td><td class="t">1:00</td></tr>
+      <tr><td>4</td><td>MVP + Pedido</td><td>O que faz, o impacto, como medir, como implementar — e o que pede</td><td class="t">2:00</td></tr>
+      <tr><td>5</td><td>Fecho</td><td>3 coisas a reter</td><td class="t">1:00</td></tr>
+    </table>
+  </div>
+</section>
+
+<section class="content" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel">
+    <img class="logo" src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+    <div class="head"><h2>A componente interativa</h2></div>
+    <div class="cards c2">
+      <div class="card"><h3>Com que ferramenta?</h3>
+        <ul><li>HTML interativo gerado com IA, ou uma página publicada (GitHub Pages)</li>
+            <li>Lovable · Google AI Studio · Claude (artefactos, Design)</li>
+            <li>ChatGPT Pages · um GPT, Gem, Projeto ou plugin configurado</li>
+            <li>Notebook Colab, para projetos de dados</li></ul></div>
+      <div class="card"><h3>Ao vivo ou gravada?</h3>
+        <table>
+          <tr><th>Pitch</th><th>Demonstração</th><th>Máx.</th></tr>
+          <tr><td>Ao vivo</td><td>Ao vivo</td><td class="t">4</td></tr>
+          <tr><td>Ao vivo</td><td>Gravada</td><td class="t">4</td></tr>
+          <tr><td>Gravado</td><td>—</td><td class="t">3</td></tr>
+        </table>
+        <p class="note">Tenham sempre a gravação como plano B.</p></div>
+    </div>
+    <div class="strip">Só dados fictícios ou sintéticos. Nunca dados reais de doentes, nem num protótipo "só para mostrar".</div>
+  </div>
+</section>
+
+<section class="content" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel">
+    <img class="logo" src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+    <div class="head"><h2>Como é avaliado</h2><p class="sub">Nota de 0 a 20: 16 pontos para a submissão, 4 para a apresentação.</p></div>
+    <div class="cards c2">
+      <div class="card"><span class="tag">Submissão · 16</span><h3>Cinco dimensões</h3>
+        <ul><li><strong>Metodologia e construção</strong> · 25%</li><li><strong>Curadoria, validação e testes</strong> · 25%</li>
+            <li><strong>Arquitetura e ecossistema</strong> · 20%</li><li><strong>Documentação do processo</strong> · 20%</li>
+            <li><strong>Replicabilidade e caminho para a prática</strong> · 10%</li></ul></div>
+      <div class="card dark"><span class="tag">Apresentação · 4</span><h3>O pitch</h3>
+        <p>Clareza, adequação ao decisor, demonstração e resposta às perguntas do júri.</p>
+        <p>Mais de 2 minutos acima dos 10 desce um nível.</p></div>
+    </div>
+    <div class="strip">Avalia-se o processo — como validou, que fontes usou, o que corrigiu — e não se o conteúdo clínico está certo.</div>
+  </div>
+</section>
+
+<section class="content" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel">
+    <img class="logo" src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+    <div class="head"><h2>O que se entrega</h2><p class="sub">Até ao fim do dia das apresentações, 18/12.</p></div>
+    <div class="cards c2">
+      <div class="card"><span class="tag">Relatório · máx. 4 páginas</span>
+        <ul><li><strong>1.</strong> Ficha do projeto</li><li><strong>2.</strong> Como foi construído</li><li><strong>3.</strong> Validação</li>
+            <li><strong>4.</strong> Dados, segurança e governação</li><li><strong>5.</strong> Limitações declaradas e possíveis mitigações</li></ul></div>
+      <div class="card"><span class="tag">Anexos</span>
+        <ul><li>Slides do pitch</li><li>Instruções persistentes (system prompt, Skill, plugin)</li><li>Gravação da demonstração, se houver</li></ul>
+        <p class="note">Template do relatório no Moodle. Tabelas e listas, não texto corrido.</p></div>
+    </div>
+    <div class="strip">Uma limitação declarada não desconta. Desconta a que o júri encontra e ninguém viu.</div>
+  </div>
+</section>
+
+<!-- ===================== DATAS ===================== -->
+<section class="divider" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel"><div class="num">03</div><span class="eyebrow">Parte 3</span><h2>Datas e regras</h2></div>
+</section>
+
+<section class="content" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel">
+    <img class="logo" src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+    <div class="head"><h2>Calendário</h2><p class="sub">Quintas, 18h00–20h00 · a última sessão é sexta, 18/12.</p></div>
+    <div class="timeline">
+      <div class="tl"><div class="d">22 out</div><span class="dot"></span><p class="w">Abertura</p></div>
+      <div class="tl"><div class="d">29 out — 3 dez</div><span class="dot"></span><p class="w">Sessões temáticas</p></div>
+      <div class="tl key"><div class="d">10 dez</div><span class="dot"></span><p class="w">Pré-submissão em sala (15 min)</p></div>
+      <div class="tl key"><div class="d">17 dez</div><span class="dot"></span><p class="w">Dúvidas + Do protótipo ao serviço</p></div>
+      <div class="tl key"><div class="d">18 dez</div><span class="dot"></span><p class="w">Apresentações · entrega até ao fim do dia</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="content" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel">
+    <img class="logo" src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+    <div class="head"><h2>Regras que convém saber já</h2></div>
+    <div class="cards c3">
+      <div class="card"><div class="chip">01</div><h3>Pré-submissão a 10/12</h3><p>Preenchida em sala, em 15 minutos, e fecha nesse dia. As perguntas são publicadas antes — venham com as respostas pensadas.</p></div>
+      <div class="card"><div class="chip">02</div><h3>Entrega no dia</h3><p>Relatório e anexos até ao fim do dia 18/12. Pode integrar o comentário do júri antes de submeter.</p></div>
+      <div class="card dark"><div class="chip">03</div><h3>Dados de doentes</h3><p>Nunca dados reais, em nenhuma fase. Se a solução avisa ou não que usa IA, isso é parte do projeto (AI Act, art. 50.º).</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="content" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel">
+    <img class="logo" src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+    <div class="head"><h2>E vocês, quem são?</h2><p class="sub">Um minuto cada.</p></div>
+    <div class="cards c4">
+      <div class="card"><div class="chip">01</div><h3>Quem é</h3><p>Nome, profissão, onde trabalha.</p></div>
+      <div class="card"><div class="chip">02</div><h3>O que já usa</h3><p>Que ferramentas de IA usa hoje, e para quê.</p></div>
+      <div class="card"><div class="chip">03</div><h3>O que quer construir</h3><p>Um problema do seu dia a dia que gostava de resolver.</p></div>
+      <div class="card dark"><div class="chip">04</div><h3>Para quem</h3><p>A quem faria o pitch: quem decide no seu serviço.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FECHO ===================== -->
+<section class="cover" data-background-image="assets/fundo-cel.jpg" data-background-size="cover">
+  <div class="panel">
+    <img class="logo" src="../../shared/logo-cel-horizontal.svg" alt="Ciência e Letras">
+    <span class="eyebrow">GenAI Avançado · 2.ª edição</span>
+    <h1>Vamos construir.</h1>
+    <p class="subtitle">Até quinta, 29 de outubro, às 18h00.</p>
+    <div class="foot"><span>Ciência e Letras · ciencia-letras.pt</span><b>Certificado DGERT</b></div>
+  </div>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@4.6.1/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true, slideNumber: 'c/t', transition: 'fade',
+    width: 1280, height: 720, margin: 0, center: false,
+    plugins: [ RevealNotes ]
+  });
+</script>
+</body>
+</html>
