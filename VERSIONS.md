@@ -20,8 +20,8 @@ Convenção de tag: `<EdiçãoID>-aula<N>-v<major>.<minor>.<patch>`
   enfermagem (`GenAIEnf0926ST`) acabam ambas em `ST` — com o esquema antigo, a
   enfermagem abria o deck de medicina. Ligações antigas com `?ed=fm` ou `?ed=st` deixam
   de ser reconhecidas e caem na 9ª edição, que é o valor por omissão.
-- O `aula-1-2/` continua com os códigos antigos: está fora da landing e não tem variante
-  de enfermagem. Quando voltar a circular, alinhar.
+- O `aula-1-2/` foi retirado a 2026-11-03, por decisão do Hélder (não quer aulas públicas).
+  O bloco 1.2 circula em PDF no Moodle.
 - **Por fechar:** o slide de objetivos fala de "prática clínica, investigação e escrita
   científica" para as três edições; o programa de enfermagem acrescenta a gestão de
   cuidados. Decidir se ganha variante.

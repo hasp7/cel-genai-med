@@ -21,7 +21,7 @@ Decks e materiais dos cursos **GenAI** da [Ciência e Letras](https://github.com
 |---|---|
 | `index.html` | Hub: linha temporal das edições, próximos blocos, e o acesso aos decks — lista **só** as sessões já publicadas |
 | `shared/edicoes.js` | Dados das edições que alimentam a linha temporal e os próximos blocos |
-| `aula-N/` | Deck de um bloco (`index.html`, reveal.js). `aula-1/` é o bloco **1.1**; os blocos seguintes ficam em `aula-1-2/`, `aula-2-1/` e assim por diante |
+| `aula-N/` | Deck de um bloco (`index.html`, reveal.js). `aula-1/` é o bloco **1.1**. Os decks dos blocos seguintes não são publicados aqui (decisão do Hélder, 2026-11-03) |
 | `shared/` | `cel-base.css` (identidade dos decks), `landing.css`, logótipo |
 | `versions/` | Snapshots congelados por edição — não se mexe depois de criados |
 | `VERSIONS.md` | O que mudou entre versões, e que edição viu o quê |
