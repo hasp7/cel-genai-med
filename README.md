@@ -1,7 +1,8 @@
 # Cursos GenAI — IA Generativa para Profissionais de Saúde
 
 Decks e materiais dos cursos **GenAI** da [Ciência e Letras](https://github.com/hasp7):
-`GenAI:med` (médicos), `GenAI:enf` (enfermeiros) e a linha ULSBA. 30 horas e 8 sessões cada.
+`GenAI:med` (médicos), `GenAI:enf` (enfermeiros), `GenAI:pro` (profissionais de saúde, turma mista,
+desde 2026-11-14) e a linha ULSBA. 30 horas e 8 sessões cada.
 
 **Site:** https://hasp7.github.io/cel-genai-med/
 
