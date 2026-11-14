@@ -10,6 +10,15 @@ Convenção de tag: `<EdiçãoID>-aula<N>-v<major>.<minor>.<patch>`
 
 ## Aula 1 — Introdução à IA e ao ChatGPT
 
+### v0.9.0 — variante da 1ª edição de profissionais de saúde (2026-11-14)
+- O deck passa a servir **quatro** edições. Ganha variante `pro1` (GenAIPF1126FM, turma
+  mista, sábados 08h30–12h30): capa sem sufixo de profissão (14 de novembro), formadores
+  previstos (Daniel Rodrigues, Miguel Oliveira, Sandra Amaral, além da coordenação),
+  linha do tempo do projeto nas aulas de 19/12, 9/1 e 16/1 com a nota das férias de
+  Natal, e cronograma com 26/12 e 2/1 como linhas sem sessão e as sessões de 3h a 28/11
+  e 5/12.
+- Landing: linha na matriz de decks, edição na linha temporal e filtro **GenAI:pro**.
+
 ### v0.8.0 — variante da 5ª edição de enfermagem, e códigos de edição novos (2026-09-18)
 - O deck passa a servir **três** edições. Ganha variante `enf5`: capa própria
   (*— Enfermeiros*, 21 de setembro), equipa formativa sem o Miguel Oliveira, que não dá

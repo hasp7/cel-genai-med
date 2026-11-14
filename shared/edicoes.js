@@ -120,6 +120,42 @@ const EDICOES = [
     ]
   },
 
+  /* GenAIPF1126FM — courses/GenAI-Pro1/editions/pro1-01-1126FM.yaml. Temas = títulos do modelo
+     do curso (sessions.yaml), ainda por acertar com a escala. 26/12 e 02/01 são férias. */
+  {
+    id: 'pro1',
+    curso: 'pro',
+    nome: 'GenAI:pro · 1ª edição',
+    sub: 'Ciência e Letras',
+    horario: 'sábados · 08h30–12h30',
+    sessoes: [
+      { n: 1, data: '2026-11-14', blocos: [
+        { h: '08h30–10h30', tema: 'Introdução à IA e ao ChatGPT' },
+        { h: '10h30–12h30', tema: 'Introdução à IA e ao ChatGPT' } ] },
+      { n: 2, data: '2026-11-21', blocos: [
+        { h: '08h30–10h30', tema: 'Personalização e Engenharia de Prompts' },
+        { h: '10h30–12h30', tema: 'Personalização e Engenharia de Prompts' } ] },
+      { n: 3, data: '2026-11-28', nota: 'Sessão de 3H, bloco 2 de 1H', blocos: [
+        { h: '08h30–10h30', tema: 'Impacto, Prática Clínica e o Papel do Profissional' },
+        { h: '10h30–11h30', tema: 'Por definir' } ] },
+      { n: 4, data: '2026-12-05', nota: 'Sessão de 3H, bloco 2 de 1H', blocos: [
+        { h: '08h30–10h30', tema: 'Deep Research, Escrita Científica, NotebookLM e AI Slop' },
+        { h: '10h30–11h30', tema: 'Deep Research, Escrita Científica, NotebookLM e AI Slop' } ] },
+      { n: 5, data: '2026-12-12', blocos: [
+        { h: '08h30–10h30', tema: 'Monitorização de Conteúdo, Ética e Segurança' },
+        { h: '10h30–12h30', tema: 'Monitorização de Conteúdo, Ética e Segurança' } ] },
+      { n: 6, data: '2026-12-19', blocos: [
+        { h: '08h30–10h30', tema: 'Skills, Conectores e Co-Work; SOPs e Geração de Imagem' },
+        { h: '10h30–12h30', tema: 'Skills, Conectores e Co-Work; SOPs e Geração de Imagem' } ] },
+      { n: 7, data: '2027-01-09', nota: '26/12 e 02/01 são férias de Natal', blocos: [
+        { h: '08h30–10h30', tema: 'Laboratório de Projeto' },
+        { h: '10h30–12h30', tema: 'Laboratório de Projeto' } ] },
+      { n: 8, data: '2027-01-16', blocos: [
+        { h: '08h30–10h30', tema: 'Apresentação de Projetos Finais' },
+        { h: '10h30–12h30', tema: 'Apresentação de Projetos Finais' } ] }
+    ]
+  },
+
   {
     id: 'ulsba-saude1',
     curso: 'ulsba',
@@ -193,5 +229,6 @@ const CURSOS = [
   { id: 'todos', rotulo: 'Todos os cursos' },
   { id: 'med',   rotulo: 'GenAI:med' },
   { id: 'enf',   rotulo: 'GenAI:enf' },
+  { id: 'pro',   rotulo: 'GenAI:pro' },
   { id: 'ulsba', rotulo: 'ULSBA' }
 ];
