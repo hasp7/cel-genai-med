@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cursos GenAI — Ciência e Letras</title>
-<link rel="stylesheet" href="shared/landing.css">
+<link rel="stylesheet" href="shared/landing.css?v=2026-11-14b">
 </head>
 <body>
 <div class="wrap">
@@ -126,7 +126,9 @@
 
 </div>
 
-<script src="shared/edicoes.js"></script>
+<!-- ?v= força o browser a ir buscar a versão nova (o Pages serve com max-age=600).
+     Mudar a data sempre que o edicoes.js ou o landing.css mudarem. -->
+<script src="shared/edicoes.js?v=2026-11-14b"></script>
 <script>
 (function () {
   'use strict';
@@ -157,6 +159,15 @@
   /* `dias` recorta uma janela a partir de três dias antes de hoje; sem `dias`, a escala
      apanha tudo. A janela é sempre virada para a frente — a página serve para ver o que
      vem, não para rever o que passou. */
+  /* Edições terminadas (última sessão antes de hoje): escondidas por omissão, para a linha
+     temporal mostrar só o que está a decorrer ou por começar. O interruptor junto ao período
+     volta a mostrá-las; a escolha fica neste browser. */
+  var CHAVE_TERMINADOS = 'cel-tl-terminados';
+  var terminados = false;
+  try { terminados = localStorage.getItem(CHAVE_TERMINADOS) === '1'; } catch (e) {}
+
+  function terminou(ed) { return dia(ed.sessoes[ed.sessoes.length - 1].data) < HOJE; }
+
   var JANELAS = [
     { id: 'tudo', rotulo: 'Tudo' },
     { id: '6s', rotulo: '6 semanas', dias: 42 },
@@ -164,15 +175,18 @@
   ];
   var janela = 'tudo';
 
-  var todas = [];
-  EDICOES.forEach(function (ed) { ed.sessoes.forEach(function (s) { todas.push(dia(s.data)); }); });
-  var PRIMEIRA = new Date(Math.min.apply(null, todas));
-  var ULTIMA = new Date(Math.max.apply(null, todas));
-
   var ini, fim, span;
 
-  function limites() {
+  /* Em "Tudo", a escala vai da primeira à última sessão das edições visíveis: esconder as
+     terminadas encolhe-a para o que interessa. */
+  function limites(eds) {
     var j = JANELAS.filter(function (x) { return x.id === janela; })[0];
+    var todas = [];
+    (eds.length ? eds : EDICOES).forEach(function (ed) {
+      ed.sessoes.forEach(function (s) { todas.push(dia(s.data)); });
+    });
+    var PRIMEIRA = new Date(Math.min.apply(null, todas));
+    var ULTIMA = new Date(Math.max.apply(null, todas));
     if (!j.dias) {
       ini = new Date(PRIMEIRA); ini.setDate(ini.getDate() - 6);
       fim = new Date(ULTIMA); fim.setDate(fim.getDate() + 6);
@@ -192,7 +206,15 @@
   /* ---------------- linha temporal ---------------- */
 
   function desenhaTimeline(curso) {
-    limites();
+    var doCurso = EDICOES.filter(function (ed) { return curso === 'todos' || ed.curso === curso; });
+    var visiveis = doCurso.filter(function (ed) { return terminados || !terminou(ed); });
+    var nTerminadas = doCurso.filter(terminou).length;
+    var sw = document.getElementById('sw-terminados');
+    sw.setAttribute('aria-checked', String(terminados));
+    sw.querySelector('.n').textContent = nTerminadas ? ' (' + nTerminadas + ')' : '';
+    sw.disabled = !nTerminadas;
+
+    limites(visiveis);
     var alvo = document.getElementById('timeline');
     alvo.innerHTML = '';
     /* Janela curta espalha poucas sessões por muito espaço; a régua passa de meses a semanas
@@ -217,7 +239,6 @@
     }
     alvo.appendChild(escala);
 
-    var visiveis = EDICOES.filter(function (ed) { return curso === 'todos' || ed.curso === curso; });
     var dentro = HOJE >= ini && HOJE <= fim;
 
     visiveis.forEach(function (ed, idx) {
@@ -273,7 +294,9 @@
     });
 
     if (!visiveis.length) {
-      alvo.appendChild(texto(cria('p', 'vazio'), 'Sem edições a decorrer neste curso.'));
+      alvo.appendChild(texto(cria('p', 'vazio'), nTerminadas
+        ? 'Sem edições a decorrer neste curso. Liga "Terminados" para ver as anteriores.'
+        : 'Sem edições a decorrer neste curso.'));
       return;
     }
 
@@ -396,6 +419,20 @@
     zoom.appendChild(b);
   });
   zoom.querySelector('button[data-janela="tudo"]').setAttribute('aria-pressed', 'true');
+
+  var sw = cria('button', 'tl-switch');
+  sw.type = 'button';
+  sw.id = 'sw-terminados';
+  sw.setAttribute('role', 'switch');
+  sw.setAttribute('aria-checked', String(terminados));
+  sw.innerHTML = '<span class="trilho" aria-hidden="true"></span>Terminados<span class="n"></span>';
+  sw.title = 'Mostrar as edições que já terminaram';
+  sw.addEventListener('click', function () {
+    terminados = !terminados;
+    try { localStorage.setItem(CHAVE_TERMINADOS, terminados ? '1' : '0'); } catch (e) {}
+    desenhaTimeline(actual);
+  });
+  zoom.appendChild(sw);
 
   aplica('todos');
 })();

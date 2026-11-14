@@ -33,7 +33,9 @@ A página de entrada deixou de ser um índice de decks e passou a acompanhar as 
 Três secções, todas filtráveis pelo seletor de curso no topo:
 
 - **Linha temporal** — uma faixa por edição, as oito sessões no dia em que acontecem, e a marca
-  de hoje. Ponto cheio é sessão dada; a que tem o contorno grosso é a seguinte.
+  de hoje. Ponto cheio é sessão dada; a que tem o contorno grosso é a seguinte. As edições
+  terminadas ficam escondidas por omissão; o interruptor **Terminados** volta a mostrá-las
+  (a escolha fica guardada no browser).
 - **Próximos blocos** — os oito blocos seguintes em todas as edições, com data, horário e tema.
 - **Decks das sessões** — a matriz de sempre, agora com uma coluna por edição publicada.
 
